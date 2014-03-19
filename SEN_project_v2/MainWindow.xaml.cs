@@ -24,21 +24,22 @@ namespace SEN_project_v2
     public partial class MainWindow : Window
     {
 
-       static UDP udp;
-       Threads threads;
-       Dictionary<IPAddress, int> indexer;
-       private RTPClient rtpClient;
-       public VideoConf videoConf;
-       public static List<IPAddress> hostIPS;
+        static UDP udp;
+        public UDP rtpUDP;
+        Threads threads;
+        Dictionary<IPAddress, int> indexer;
+        private RTPClient rtpClient;
+        public VideoConf videoConf;
+        public static List<IPAddress> hostIPS;
         public MainWindow()
         {
             InitializeComponent();
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
-            threads=new Threads();
+            threads = new Threads();
             indexer = new Dictionary<IPAddress, int>();
             #region hostIP init
-            hostIPS  = new List<IPAddress>();
+            hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
@@ -53,8 +54,8 @@ namespace SEN_project_v2
         public void AddToUserList(UserView uv)
         {
             indexer.Add(uv.u_ip, _listView.Items.Count);
-            _listView.Items.Insert(indexer[uv.u_ip], uv); 
-            
+            _listView.Items.Insert(indexer[uv.u_ip], uv);
+
         }
 
         public void RemoverFromUserList(IPAddress ip)
@@ -73,35 +74,38 @@ namespace SEN_project_v2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-        
-            
+
+
             threads.StartAll();
-       
+
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-    
-         class Threads
+
+        class Threads
         {
             public static Thread broadcast;
             public static Thread udpReceving;
             public static Thread tcpReceving;
             public static Thread fileSending;
             public static Thread fileReceving;
+            public static Thread rtpReceving;
             public Threads()
             {
                 broadcast = new Thread(new ThreadStart(broadcast_proc));
-                udpReceving = new Thread(new ThreadStart(udp.recevingThread));                
+                udpReceving = new Thread(new ThreadStart(udp.recevingThread));
+                udpReceving.SetApartmentState(ApartmentState.STA);
+                rtpReceving=new Thread(new ThreadStart(udp.RTPPacket_thread));
                 udpReceving.SetApartmentState(ApartmentState.STA);
             }
 
             private void broadcast_proc()
             {
-                while(true)
+                while (true)
                 {
-                    udp.SendMessageTo(UDP.Connect+Environment.MachineName, BroadCasting.SEND.Address);
+                    udp.SendMessageTo(UDP.Connect + Environment.MachineName, BroadCasting.SEND.Address);
                     Thread.Sleep(5000);
                     String list = string.Join(" ", UserList.Selected.Select(x => x.ToString()).ToArray());
                     System.Diagnostics.Debug.WriteLine(list);
@@ -110,10 +114,10 @@ namespace SEN_project_v2
             public void StartAll()
             {
                 udpReceving.Start();
-               broadcast.Start();
-               
+                broadcast.Start();
+
             }
-           public void StopAll()
+            public void StopAll()
             {
                 StopThread(broadcast);
                 udp.SendMessageTo(UDP.Disconnect, BroadCasting.SEND.Address);
@@ -123,54 +127,69 @@ namespace SEN_project_v2
                 StopThread(fileSending);
                 StopThread(fileReceving);
             }
-          
-            public  void StopThread(Thread thread)
-           {
-               if (thread != null && thread.IsAlive)
-                   thread.Abort();
-           }
+
+            public void StopThread(Thread thread)
+            {
+                if (thread != null && thread.IsAlive)
+                    thread.Abort();
+            }
         }
-         public struct BroadCasting{
-         public static IPEndPoint SEND = new IPEndPoint(IPAddress.Parse("255.255.255.255"),(int)Ports.UDP);
-         public static IPEndPoint RECEIVE = new IPEndPoint(IPAddress.Any, (int)Ports.UDP);
+        public struct BroadCasting
+        {
+            public static IPEndPoint SEND = new IPEndPoint(IPAddress.Parse("255.255.255.255"), (int)Ports.UDP);
+            public static IPEndPoint RECEIVE = new IPEndPoint(IPAddress.Any, (int)Ports.UDP);
 
         }
-        public  enum Ports:int{
-            UDP = 5004,
-            TCP=12316,
-            RTP=55555,
+        public enum Ports : int
+        {
+            UDP = 1716,
+            TCP = 12316,
+            RTP = 5555,
 
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-           
+
             threads.StopAll();
-           
+
             udp.recevingClient.Close();
         }
 
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
 
-            CreateVideoConf(null);
+            videoConf = new VideoConf(udp, null);
+
+            videoConf.Show();//  CreateVideoConf(null);
             videoConf.statusLabel.Content = "Waiting For Users's Responses...";
             foreach (IPAddress ip in videoConf.requestedUsers)
             {
-                videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting,null) { Nick = UserList.Get(ip).nick });
+                videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
                 videoConf._stack.Children.Add(videoConf.vp[ip]);
             }
             videoConf.Start();
         }
         public void CreateVideoConf(IPAddress host)
         {
-            videoConf = new VideoConf(udp,host);
-           
-            videoConf.Show();
-             
+        //    videoConf = new VideoConf(udp, host);
+
+//            videoConf.Show();
+
+            waiting = new Window();
+            VideoPreview vp = new VideoPreview(VideoPreview.Mode.Request,host);
+            vp.Nick = UserList.Get(host).nick;
+            vp.window = this;
+            waiting.Content = vp;
+            waiting.SizeToContent =SizeToContent.WidthAndHeight;
+            waiting.WindowStyle = WindowStyle.ToolWindow;
+            vp.udp = udp;
+            waiting.Show();
 
         }
-  
-        
+        public Window waiting;
+
+
+
     }
 }

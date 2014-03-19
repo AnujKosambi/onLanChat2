@@ -39,7 +39,7 @@ namespace SEN_project_v2
                     timer.Stop();
             }
         }
-
+        public MainWindow window;
         public string Nick
         {
             set
@@ -99,7 +99,12 @@ namespace SEN_project_v2
         {
             _Mode = Mode.InCall;
             udp.SendMessageTo(UDP.RVideocall, hostIP);
-            
+            window.videoConf = new VideoConf(udp,hostIP);
+            window.videoConf.Show();
+            window.videoConf.statusLabel.Content = "Connected to Host ...";
+            window.videoConf.AddUser(hostIP);
+            window.videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+            window.waiting.Close();
         }
 
         private void decline_Click(object sender, RoutedEventArgs e)
