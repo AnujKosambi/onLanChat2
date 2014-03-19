@@ -21,7 +21,7 @@ namespace SEN_project_v2
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
         public const string AddMember =  "<#Add#>" ;
-
+        public const string RemoveMember = "<#Remove#>";
         private int port;
         private MainWindow window;
         public UDP(int port)
@@ -52,7 +52,7 @@ namespace SEN_project_v2
                 byte[] data;
                 IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
                 data = recevingClient.Receive(ref recevied);
-
+                
                 string stringData = Encoding.ASCII.GetString(data);
                 System.Diagnostics.Debug.WriteLine("-----Recevied " +stringData + " from "+recevied.Address+" ----");
                 #region
@@ -126,50 +126,61 @@ namespace SEN_project_v2
                 #region VideoCall Connection
 
                 else if(stringData.StartsWith(Videocall))
-                { 
-                    SendMessageTo(RVideocall, recevied.Address);
+                {
+               
+                    
                       window.Dispatcher.Invoke((Action)(() =>
-                    {window.CreateVideoConf();}));
+                    {window.CreateVideoConf(recevied.Address);}));
                       window.videoConf.Dispatcher.Invoke((Action)(() =>
                       {
-
+                          window.videoConf.statusLabel.Content = "Connected to Host ...";
                           window.videoConf.AddUser(recevied.Address);
+                          window.videoConf.MakeUserPreview(recevied.Address, VideoPreview.Mode.Request);
+                          
                       }));
                     
                 }
                 else if(stringData.StartsWith(RVideocall))
                 {
-                    foreach (IPAddress ip in window.videoConf.Users.Select(x => x.ip))
+                    foreach (IPAddress ip in window.videoConf.Users)
                     {
                         SendMessageTo(AddMember + recevied.Address + AddMember, ip);
                     }
-                    foreach (IPAddress ip in window.videoConf.Users.Select(x => x.ip))
+                    foreach (IPAddress ip in window.videoConf.Users)
                     {
                         SendMessageTo(AddMember + ip.ToString() + AddMember, recevied.Address);
                     }
-               
+                    window.videoConf.Users.Add(recevied.Address);
                     window.videoConf.Dispatcher.Invoke((Action)(() =>
                     {
-                     
-                        window.videoConf.AddUser(recevied.Address);
+                        window.videoConf.vp[recevied.Address]._Mode = VideoPreview.Mode.InCall;
+                        if (window.videoConf.Users.Count == window.videoConf.requestedUsers.Count)
+                            window.videoConf.statusLabel.Content = "Room Created Successfully...";
                     }));
-
-                 
                 }
                 else if(stringData.StartsWith(AddMember))
                 {
                     string[] splits = stringData.Split(new String[] { AddMember }, StringSplitOptions.RemoveEmptyEntries);
                     if (splits.Length > 0)
                     {
-                        window.videoConf.Dispatcher.Invoke((Action)(() => { window.videoConf.AddUser(IPAddress.Parse(splits[0])); }));
+                        window.videoConf.Dispatcher.Invoke((Action)(() => {
+                            window.videoConf.AddUser(IPAddress.Parse(splits[0]));
+                            window.videoConf.MakeUserPreview(IPAddress.Parse(splits[0]), VideoPreview.Mode.InCall);
+                        }));
                     }
                     
 
                 }
-
-                     
-#endregion
-
+                else if(stringData.StartsWith(RemoveMember))
+                {  window.videoConf.Dispatcher.Invoke((Action)(() => {
+                    window.videoConf.requestedUsers.Remove(recevied.Address);
+                    window.videoConf._stack.Children.Remove(window.videoConf.vp[recevied.Address]);
+                    if (window.videoConf.Users.Count == window.videoConf.requestedUsers.Count)
+                        window.videoConf.statusLabel.Content = "Room Created Successfully...";
+                }));
+                }
+           
+                    #endregion
 
             }
 

@@ -153,15 +153,21 @@ namespace SEN_project_v2
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
 
-            CreateVideoConf();
+            CreateVideoConf(null);
+            videoConf.statusLabel.Content = "Waiting For Users's Responses...";
+            foreach (IPAddress ip in videoConf.requestedUsers)
+            {
+                videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting,null) { Nick = UserList.Get(ip).nick });
+                videoConf._stack.Children.Add(videoConf.vp[ip]);
+            }
             videoConf.Start();
         }
-        public void CreateVideoConf()
+        public void CreateVideoConf(IPAddress host)
         {
-            videoConf = new VideoConf(udp);
+            videoConf = new VideoConf(udp,host);
            
             videoConf.Show();
-        
+             
 
         }
   

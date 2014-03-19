@@ -20,21 +20,35 @@ namespace SEN_project_v2
     /// </summary>
     public partial class VideoConf : Window
     {
-        public List<User> Users;
+        public List<IPAddress> Users;
         private UDP udp;
-        public VideoConf(UDP udp)
+        public List<IPAddress> requestedUsers;
+        public Dictionary<IPAddress,VideoPreview> vp;
+        public IPAddress host;
+        public VideoConf(UDP udp,IPAddress host)
         {
+            this.host = host;
             this.udp = udp;
-            Users = new List<User>();
-         
+            Users = new List<IPAddress>();
+            vp = new Dictionary<IPAddress, VideoPreview>();
+            requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
             InitializeComponent();
         }
+
         public void AddUser(IPAddress ip)
         {
-            Users.Add(UserList.Get(ip));
+            Users.Add(ip);
+
             
-            _stack.Children.Add(new Label() { Content = ip.ToString() });
         }
+        public void MakeUserPreview(IPAddress ip,VideoPreview.Mode mode)
+        {
+            vp.Add(ip, new VideoPreview(mode, ip) { Nick = UserList.Get(ip).nick });
+            vp[ip].udp = udp;
+            vp[ip].hostIP = host;
+            _stack.Children.Add(vp[ip]);
+        }
+ 
         public void Start() //IF Host
         {
             foreach (IPAddress ip in UserList.Selected)
@@ -46,6 +60,7 @@ namespace SEN_project_v2
                
 
         }
+        
 
 
     }
