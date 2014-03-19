@@ -10,16 +10,17 @@ using RTPLib;
 using System.Runtime.InteropServices;
 namespace SEN_project_v2
 {
-    class UDP
+    public class UDP
     {
-        public static UdpClient recevingClient = null;
-        public static UdpClient sendingClient = null;
+        public  UdpClient recevingClient = null;
+        public  UdpClient sendingClient = null;
         public const string Connect = "<#Connect#>";
         public const string RConnect = "<\\#Connect#>";
         public const string Disconnect = "<#Disconnect#>";
         public const string Message = "<#Message#>";
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
+        public const string AddMember =  "<#Add#>" ;
 
         private int port;
         private MainWindow window;
@@ -35,6 +36,8 @@ namespace SEN_project_v2
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
             sendingClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
+            System.Diagnostics.Debug.WriteLine("-----Sending:" + value +" to "+ip.ToString()+ "------");
+                    
         }
         public void recevingThread()
         {
@@ -51,6 +54,7 @@ namespace SEN_project_v2
                 data = recevingClient.Receive(ref recevied);
 
                 string stringData = Encoding.ASCII.GetString(data);
+                System.Diagnostics.Debug.WriteLine("-----Recevied " +stringData + " from "+recevied.Address+" ----");
                 #region
                 // window.Dispatcher.Invoke((Action)(() =>
                // {
@@ -120,14 +124,49 @@ namespace SEN_project_v2
                 }
                 #endregion
                 #region VideoCall Connection
-                else if(stringData.StartsWith(Videocall))
-                {
 
+                else if(stringData.StartsWith(Videocall))
+                { 
+                    SendMessageTo(RVideocall, recevied.Address);
+                      window.Dispatcher.Invoke((Action)(() =>
+                    {window.CreateVideoConf();}));
+                      window.videoConf.Dispatcher.Invoke((Action)(() =>
+                      {
+
+                          window.videoConf.AddUser(recevied.Address);
+                      }));
+                    
                 }
                 else if(stringData.StartsWith(RVideocall))
                 {
+                    foreach (IPAddress ip in window.videoConf.Users.Select(x => x.ip))
+                    {
+                        SendMessageTo(AddMember + recevied.Address + AddMember, ip);
+                    }
+                    foreach (IPAddress ip in window.videoConf.Users.Select(x => x.ip))
+                    {
+                        SendMessageTo(AddMember + ip.ToString() + AddMember, recevied.Address);
+                    }
+               
+                    window.videoConf.Dispatcher.Invoke((Action)(() =>
+                    {
+                     
+                        window.videoConf.AddUser(recevied.Address);
+                    }));
+
+                 
+                }
+                else if(stringData.StartsWith(AddMember))
+                {
+                    string[] splits = stringData.Split(new String[] { AddMember }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length > 0)
+                    {
+                        window.videoConf.Dispatcher.Invoke((Action)(() => { window.videoConf.AddUser(IPAddress.Parse(splits[0])); }));
+                    }
+                    
 
                 }
+
                      
 #endregion
 

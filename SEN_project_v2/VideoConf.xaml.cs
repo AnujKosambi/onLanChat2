@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 //using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -20,14 +21,31 @@ namespace SEN_project_v2
     public partial class VideoConf : Window
     {
         public List<User> Users;
-        public VideoConf(List<IPAddress> selectedUsers)
+        private UDP udp;
+        public VideoConf(UDP udp)
         {
+            this.udp = udp;
             Users = new List<User>();
-            foreach (IPAddress ip in selectedUsers)
-                Users.Add(UserList.Get(ip));
+         
             InitializeComponent();
         }
+        public void AddUser(IPAddress ip)
+        {
+            Users.Add(UserList.Get(ip));
+            
+            _stack.Children.Add(new Label() { Content = ip.ToString() });
+        }
+        public void Start() //IF Host
+        {
+            foreach (IPAddress ip in UserList.Selected)
+            {
+                if (!MainWindow.hostIPS.Contains(ip))
+                    udp.SendMessageTo(UDP.Videocall, ip);
 
+            }
+               
+
+        }
 
 
     }

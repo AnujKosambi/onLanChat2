@@ -12,7 +12,7 @@
 
             </Image>
         </Grid>
-        <StackPanel   Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Red" />
+        <StackPanel x:Name="_stack"  Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Red" />
 
     </Grid>
 </Window>

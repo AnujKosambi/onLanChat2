@@ -28,8 +28,8 @@ namespace SEN_project_v2
        Threads threads;
        Dictionary<IPAddress, int> indexer;
        private RTPClient rtpClient;
-       private VideoConf videoConf;
-
+       public VideoConf videoConf;
+       public static List<IPAddress> hostIPS;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +37,18 @@ namespace SEN_project_v2
             udp.SetWindow(this);
             threads=new Threads();
             indexer = new Dictionary<IPAddress, int>();
-          
+            #region hostIP init
+            hostIPS  = new List<IPAddress>();
+            foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
+            {
+                foreach (var x in ni.GetIPProperties().UnicastAddresses)
+                {
+                    if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        hostIPS.Add(x.Address);
+
+                }
+            }
+            #endregion
         }
         public void AddToUserList(UserView uv)
         {
@@ -91,7 +102,7 @@ namespace SEN_project_v2
                 while(true)
                 {
                     udp.SendMessageTo(UDP.Connect+Environment.MachineName, BroadCasting.SEND.Address);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(5000);
                     String list = string.Join(" ", UserList.Selected.Select(x => x.ToString()).ToArray());
                     System.Diagnostics.Debug.WriteLine(list);
                 }
@@ -136,19 +147,24 @@ namespace SEN_project_v2
            
             threads.StopAll();
            
-            UDP.recevingClient.Close();
+            udp.recevingClient.Close();
         }
 
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
 
-            videoConf = new VideoConf(UserList.Selected);
+            CreateVideoConf();
+            videoConf.Start();
+        }
+        public void CreateVideoConf()
+        {
+            videoConf = new VideoConf(udp);
+           
             videoConf.Show();
         
 
         }
-
-    
+  
         
     }
 }
