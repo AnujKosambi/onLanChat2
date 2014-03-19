@@ -32,14 +32,15 @@ namespace SEN_project_v2
             if (port == (int)MainWindow.Ports.UDP)
             {
                 recevingClient = new UdpClient(port);
-                sendingClient = new UdpClient();
+               
             }
             else if (port == (int)MainWindow.Ports.RTP)
             {
                 rtpReceClient = new UdpClient(port);
-                rtpSendClient = new UdpClient();
+              
             }
-
+            sendingClient = new UdpClient();
+            rtpSendClient = new UdpClient();
             this.port = port;
 
 
@@ -49,9 +50,17 @@ namespace SEN_project_v2
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
             sendingClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
-            System.Diagnostics.Debug.WriteLine("-----Sending:" + value + " to " + ip.ToString() + "------");
+            System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 
         }
+        public void SendRTPMessageTo(string value, IPAddress ip)
+        {
+              rtpSendClient.Connect(new IPEndPoint(ip, (int)MainWindow.Ports.RTP));
+              rtpSendClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
+              System.Diagnostics.Debug.WriteLine("RTP:||-----Sending:" + value + " to " + ip.ToString() + "------");
+            
+        }
+
         public void recevingThread()
         {
             recevingClient.Client.ReceiveBufferSize = 1024 * 1024;
@@ -65,7 +74,7 @@ namespace SEN_project_v2
                 data = recevingClient.Receive(ref recevied);
 
                 string stringData = Encoding.ASCII.GetString(data);
-                System.Diagnostics.Debug.WriteLine("-----Recevied " + stringData + " from " + recevied.Address + " ----");
+                System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
                 #region
                 // window.Dispatcher.Invoke((Action)(() =>
                 // {
@@ -167,7 +176,9 @@ namespace SEN_project_v2
                         window.videoConf.vp[recevied.Address]._Mode = VideoPreview.Mode.InCall;
                         if (window.videoConf.Users.Count == window.videoConf.requestedUsers.Count)
                             window.videoConf.statusLabel.Content = "Room Created Successfully...";
+
                     }));
+                    
                 }
                 else if (stringData.StartsWith(AddMember))
                 {
@@ -191,6 +202,7 @@ namespace SEN_project_v2
                         window.videoConf._stack.Children.Remove(window.videoConf.vp[recevied.Address]);
                         if (window.videoConf.Users.Count == window.videoConf.requestedUsers.Count)
                             window.videoConf.statusLabel.Content = "Room Created Successfully...";
+
                     }));
                 }
 
@@ -209,7 +221,11 @@ namespace SEN_project_v2
             rtpReceClient.Client.ReceiveBufferSize = 1024 * 1024;
             while (true)
             {
-
+                byte[] data;
+                IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
+                data = rtpReceClient.Receive(ref recevied);
+                string stringData = Encoding.ASCII.GetString(data);
+                System.Diagnostics.Debug.WriteLine("RTP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
             }
         }
     }

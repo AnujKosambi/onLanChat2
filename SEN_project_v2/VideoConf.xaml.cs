@@ -48,7 +48,10 @@ namespace SEN_project_v2
             vp[ip].hostIP = host;
             _stack.Children.Add(vp[ip]);
         }
- 
+/// <summary>
+/// only for host
+/// </summary>
+
         public void Start() //IF Host
         {
             foreach (IPAddress ip in UserList.Selected)

@@ -25,7 +25,7 @@ namespace SEN_project_v2
     {
 
         static UDP udp;
-        public UDP rtpUDP;
+        public static UDP rtpUDP;
         Threads threads;
         Dictionary<IPAddress, int> indexer;
         private RTPClient rtpClient;
@@ -34,7 +34,10 @@ namespace SEN_project_v2
         public MainWindow()
         {
             InitializeComponent();
+
             udp = new UDP((int)Ports.UDP);
+            rtpUDP = new UDP((int)MainWindow.Ports.RTP);
+            rtpUDP.SetWindow(this);
             udp.SetWindow(this);
             threads = new Threads();
             indexer = new Dictionary<IPAddress, int>();
@@ -84,7 +87,7 @@ namespace SEN_project_v2
             this.Close();
         }
 
-        class Threads
+        public class Threads
         {
             public static Thread broadcast;
             public static Thread udpReceving;
@@ -97,7 +100,7 @@ namespace SEN_project_v2
                 broadcast = new Thread(new ThreadStart(broadcast_proc));
                 udpReceving = new Thread(new ThreadStart(udp.recevingThread));
                 udpReceving.SetApartmentState(ApartmentState.STA);
-                rtpReceving=new Thread(new ThreadStart(udp.RTPPacket_thread));
+                rtpReceving = new Thread(new ThreadStart(rtpUDP.RTPPacket_thread));
                 udpReceving.SetApartmentState(ApartmentState.STA);
             }
 
@@ -126,6 +129,7 @@ namespace SEN_project_v2
                 StopThread(tcpReceving);
                 StopThread(fileSending);
                 StopThread(fileReceving);
+                StopThread(rtpReceving);
             }
 
             public void StopThread(Thread thread)

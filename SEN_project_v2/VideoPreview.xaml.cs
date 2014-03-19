@@ -100,6 +100,9 @@ namespace SEN_project_v2
             _Mode = Mode.InCall;
             udp.SendMessageTo(UDP.RVideocall, hostIP);
             window.videoConf = new VideoConf(udp,hostIP);
+   
+            MainWindow.Threads.rtpReceving.Start();
+
             window.videoConf.Show();
             window.videoConf.statusLabel.Content = "Connected to Host ...";
             window.videoConf.AddUser(hostIP);
