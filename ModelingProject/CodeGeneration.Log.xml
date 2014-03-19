@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///H:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="High" Text="Code generation or text transformation started." />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="Name = ClassTemplate" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TemplateFilePath = H:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="ResolvedTemplateFilePath = H:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Medium" Text="ModelingProject's Text Template Binding: 'ClassTemplate' will apply ClassTemplate.t4 to: 'ModelingProject::OnLanChat::MainForm' -  (Class), 'ModelingProject::OnLanChat::IThreads' -  (Class), 'ModelingProject::OnLanChat::UserList' -  (Class) " />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Medium" Text="'ModelingProject::OnLanChat::MainForm' -  (Class) : success (file replaced) - c:\users\anujkosambi\documents\visual studio 2013\Projects\SEN_project_v2\ModelingProjectLib\GeneratedCode\OnLanChat\MainForm.cs" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Medium" Text="'ModelingProject::OnLanChat::IThreads' -  (Class) : success (file replaced) - c:\users\anujkosambi\documents\visual studio 2013\Projects\SEN_project_v2\ModelingProjectLib\GeneratedCode\OnLanChat\IThreads.cs" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Medium" Text="'ModelingProject::OnLanChat::UserList' -  (Class) : success (file replaced) - c:\users\anujkosambi\documents\visual studio 2013\Projects\SEN_project_v2\ModelingProjectLib\GeneratedCode\OnLanChat\UserList.cs" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="Name = StructTemplate" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="TemplateFilePath = H:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="ResolvedTemplateFilePath = H:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Medium" Text="ModelingProject's Text Template Binding: 'StructTemplate' will apply StructTemplate.t4 to: 'ModelingProject::OnLanChat::MainForm' -  (Class), 'ModelingProject::OnLanChat::IThreads' -  (Class), 'ModelingProject::OnLanChat::UserList' -  (Class) " />
+  <Message Timestamp="2014-03-16T19:35:01" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::MainForm' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::IThreads' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::UserList' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="Name = Using" />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStrcture}" />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="TemplateFilePath = " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="ResolvedTemplateFilePath = " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Medium" Text="ModelingProject's Text Template Binding: 'Using' will apply  to: 'ModelingProject::OnLanChat' -  (Package), 'ModelingProject::OnLanChat::MainForm' -  (Class), 'ModelingProject::OnLanChat::IThreads' -  (Class), 'ModelingProject::OnLanChat::UserList' -  (Class) " />
+  <Error Timestamp="2014-03-16T19:35:02" Importance="High" Text="The following Template File Path property for 'ModelingProject::OnLanChat' -  (Package) does not exist: " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat' -  (Package): no file generated because the 'AppliesToElement' method of the template '' evaluated to false." />
+  <Error Timestamp="2014-03-16T19:35:02" Importance="High" Text="The following Template File Path property for 'ModelingProject::OnLanChat::MainForm' -  (Class) does not exist: " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::MainForm' -  (Class): no file generated because the 'AppliesToElement' method of the template '' evaluated to false." />
+  <Error Timestamp="2014-03-16T19:35:02" Importance="High" Text="The following Template File Path property for 'ModelingProject::OnLanChat::IThreads' -  (Class) does not exist: " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::IThreads' -  (Class): no file generated because the 'AppliesToElement' method of the template '' evaluated to false." />
+  <Error Timestamp="2014-03-16T19:35:02" Importance="High" Text="The following Template File Path property for 'ModelingProject::OnLanChat::UserList' -  (Class) does not exist: " />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="Diagnostic" Text="'ModelingProject::OnLanChat::UserList' -  (Class): no file generated because the 'AppliesToElement' method of the template '' evaluated to false." />
+  <Message Timestamp="2014-03-16T19:35:02" Importance="High" Text="Code generation complete. Errors: 4. Warnings: 0." />
+</Log>

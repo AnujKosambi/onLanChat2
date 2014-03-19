@@ -1,0 +1,52 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SEN_project_v2" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" xmlns:Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit" x:Class="SEN_project_v2.MainWindow"
+        Title="MainWindow" Height="385.141" Width="525" WindowStyle="None" AllowsTransparency="True" BorderThickness="50" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" Background="Black" WindowStartupLocation="CenterScreen">
+
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="50" ShadowDepth="25" />
+
+    </Window.Effect>
+    <Window.Resources>
+
+        <Style x:Key="header" TargetType="{x:Type GridViewColumnHeader}"   >
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </Window.Resources>
+    <Window.BindingGroup>
+        <BindingGroup/>
+    </Window.BindingGroup>
+    <Window.BorderBrush>
+        <ImageBrush Stretch="Uniform"/>
+    </Window.BorderBrush>
+    <Grid>
+        <Grid.ColumnDefinitions>
+
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="OnLanChat" Foreground="White" FontWeight="Bold" Margin="20,5,198.193,262" Name="status">
+            <TextBlock.Effect>
+                <DropShadowEffect Opacity="0.3" Color="White" Direction="20"/>
+            </TextBlock.Effect>
+        </TextBlock>
+
+        <Button Content=" x " HorizontalAlignment="Right"  FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,0,7,0" Click="Button_Click" VerticalAlignment="Top"/>
+        <ListView x:Name="_listView" Margin="5,23,5,46"   RenderTransformOrigin="-3.353,-1.007" BorderThickness="1" BorderBrush="#FF162C55" Background="#FFC7F6FD" HorizontalAlignment="Left" Width="410" >
+
+            <ListView.View >
+                <GridView ColumnHeaderContainerStyle="{StaticResource header}" >
+                    <GridViewColumn Width="1000">
+
+
+
+                    </GridViewColumn>
+
+                </GridView >
+            </ListView.View>
+
+        </ListView>
+        <Button x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" Margin="151.104,0,162.349,10" Click="VideoConfB_Click" />
+
+    </Grid>
+
+</Window>
