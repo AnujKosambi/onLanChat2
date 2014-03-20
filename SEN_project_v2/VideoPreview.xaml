@@ -3,12 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignWidth="208" Height="192" Width="208" Margin="5,5,5,5" VerticalAlignment="Center">
-    <Grid Background="Green">
+             mc:Ignorable="d" d:DesignWidth="208" Height="192" Width="208" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Center" BorderThickness="0,0,0,0" BorderBrush="{x:Null}">
+    <UserControl.Effect>
+        <DropShadowEffect BlurRadius="3" Opacity="0.7" ShadowDepth="3"/>
+    </UserControl.Effect>
+    <UserControl.Background>
+        <ImageBrush ImageSource="Images/user-frame.png">
+            <ImageBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ImageBrush.RelativeTransform>
+        </ImageBrush>
+    </UserControl.Background>
+    <Grid Margin="0,0,0,0" >
+     
 
-        <Image  Name="prev" Height="150" Margin="5,10,5,10" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+        <Image  Name="prev" Height="150" Margin="5,10,5,10" VerticalAlignment="Top" HorizontalAlignment="Stretch" Source="Images/user-icon.png" />
+   
+
+
         <Label  Name="_Nick" Content="Nick" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="14"/>
-        <Label Name="time_left" Content="20" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50" FontWeight="Bold"/>
+        <Label Name="time_left" Foreground="White" Content="20" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50" FontWeight="Bold"/>
         <Button Name="accept" Content="Accept" HorizontalAlignment="Left" Margin="10,0,0,29" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Click="accept_Click" Width="93" Height="28.5"/>
         <Button Name="decline" Content="Decline" HorizontalAlignment="Right" Margin="0,0,10,29" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Width="90" Height="28.5" Click="decline_Click"/>
 

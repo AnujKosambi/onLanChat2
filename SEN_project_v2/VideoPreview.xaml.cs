@@ -65,13 +65,17 @@ namespace SEN_project_v2
         {
             HideVisibility();
             if (mode == Mode.Watting)
+            {
                 time_left.Visibility = Visibility.Visible;
-            if (mode == Mode.InCall)
+            }
+            else  if (mode == Mode.InCall)
                 prev.Visibility = Visibility.Visible;
-            if (mode == Mode.Request)
+            else if (mode == Mode.Request)
             {
                 accept.Visibility = Visibility.Visible;
                 decline.Visibility = Visibility.Visible;
+                prev.Visibility = Visibility.Visible; 
+              
             }
         }
         public void StartWaiting()
@@ -99,15 +103,18 @@ namespace SEN_project_v2
         {
             _Mode = Mode.InCall;
             udp.SendMessageTo(UDP.RVideocall, hostIP);
+           window.Dispatcher.Invoke((Action)(() => {      
             window.videoConf = new VideoConf(udp,hostIP);
-   
-            MainWindow.Threads.rtpReceving.Start();
-
+       
+            
             window.videoConf.Show();
             window.videoConf.statusLabel.Content = "Connected to Host ...";
             window.videoConf.AddUser(hostIP);
             window.videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+            window.rtpClient.SetConfWind(window.videoConf);
+            window.rtpClient.Start();
             window.waiting.Close();
+         }));
         }
 
         private void decline_Click(object sender, RoutedEventArgs e)

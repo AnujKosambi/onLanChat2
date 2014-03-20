@@ -6,8 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Media;
-using RTPLib;
 using System.Runtime.InteropServices;
+using System.Windows.Media.Imaging;
 namespace SEN_project_v2
 {
     public class UDP
@@ -52,13 +52,6 @@ namespace SEN_project_v2
             sendingClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 
-        }
-        public void SendRTPMessageTo(string value, IPAddress ip)
-        {
-              rtpSendClient.Connect(new IPEndPoint(ip, (int)MainWindow.Ports.RTP));
-              rtpSendClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
-              System.Diagnostics.Debug.WriteLine("RTP:||-----Sending:" + value + " to " + ip.ToString() + "------");
-            
         }
 
         public void recevingThread()
@@ -178,7 +171,15 @@ namespace SEN_project_v2
                             window.videoConf.statusLabel.Content = "Room Created Successfully...";
 
                     }));
-                    
+                    System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap("anuj.jpg");
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    foreach (IPAddress ip in window.videoConf.Users)
+                    {  window.Dispatcher.Invoke((Action)(() =>
+                    {
+                       window.rtpClient.SendRTPMessageTo(ms.GetBuffer(), ip);
+                    }));
+                    }
                 }
                 else if (stringData.StartsWith(AddMember))
                 {
@@ -216,17 +217,6 @@ namespace SEN_project_v2
         {
             this.window = window;
         }
-        public void RTPPacket_thread()
-        {
-            rtpReceClient.Client.ReceiveBufferSize = 1024 * 1024;
-            while (true)
-            {
-                byte[] data;
-                IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
-                data = rtpReceClient.Receive(ref recevied);
-                string stringData = Encoding.ASCII.GetString(data);
-                System.Diagnostics.Debug.WriteLine("RTP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
-            }
-        }
+  
     }
 }

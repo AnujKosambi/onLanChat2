@@ -16,6 +16,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
+//using WPF.Themes;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -25,21 +26,19 @@ namespace SEN_project_v2
     {
 
         static UDP udp;
-        public static UDP rtpUDP;
         Threads threads;
         Dictionary<IPAddress, int> indexer;
-        private RTPClient rtpClient;
+        public RTPClient rtpClient;
         public VideoConf videoConf;
         public static List<IPAddress> hostIPS;
         public MainWindow()
         {
             InitializeComponent();
-
+         //   Application.Current.ApplyTheme("BureauBlue");
             udp = new UDP((int)Ports.UDP);
-            rtpUDP = new UDP((int)MainWindow.Ports.RTP);
-            rtpUDP.SetWindow(this);
             udp.SetWindow(this);
-            threads = new Threads();
+            rtpClient = new RTPClient();
+            threads = new Threads(this);
             indexer = new Dictionary<IPAddress, int>();
             #region hostIP init
             hostIPS = new List<IPAddress>();
@@ -95,12 +94,14 @@ namespace SEN_project_v2
             public static Thread fileSending;
             public static Thread fileReceving;
             public static Thread rtpReceving;
-            public Threads()
+            public static MainWindow w;
+            public Threads(MainWindow window)
             {
+                w = window;
                 broadcast = new Thread(new ThreadStart(broadcast_proc));
                 udpReceving = new Thread(new ThreadStart(udp.recevingThread));
                 udpReceving.SetApartmentState(ApartmentState.STA);
-                rtpReceving = new Thread(new ThreadStart(rtpUDP.RTPPacket_thread));
+                rtpReceving = window.rtpClient.listen_thread;
                 udpReceving.SetApartmentState(ApartmentState.STA);
             }
 
@@ -124,7 +125,7 @@ namespace SEN_project_v2
             {
                 StopThread(broadcast);
                 udp.SendMessageTo(UDP.Disconnect, BroadCasting.SEND.Address);
-
+                w.rtpClient.Stop();
                 StopThread(udpReceving);
                 StopThread(tcpReceving);
                 StopThread(fileSending);
@@ -186,7 +187,7 @@ namespace SEN_project_v2
             vp.window = this;
             waiting.Content = vp;
             waiting.SizeToContent =SizeToContent.WidthAndHeight;
-            waiting.WindowStyle = WindowStyle.ToolWindow;
+            waiting.WindowStyle = WindowStyle.None;
             vp.udp = udp;
             waiting.Show();
 
