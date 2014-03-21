@@ -42,7 +42,7 @@ namespace SEN_project_v2
              mParent.rtpClient = this.rtpClient;
             requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
             InitializeComponent();
-            rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.168.152.10"), (int)MainWindow.Ports.RTP), vp, MainWindow.hostIP.ToString(), "192.168.152.10");
+            rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), (int)MainWindow.Ports.RTP), vp, MainWindow.hostIP.ToString(), "224.0.0.2");
             rtpClient.vcWind = this;
             timer = new Timer();
             timer.Tick += timer_Tick;
