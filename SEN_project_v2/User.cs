@@ -14,7 +14,7 @@ namespace SEN_project_v2
         public IPAddress ip;
         public string nick;
         public string groupName;
-
+        public IPAddress hostIP;
          public UserView userView;
         public User(IPAddress _ip, string _nick)
         {

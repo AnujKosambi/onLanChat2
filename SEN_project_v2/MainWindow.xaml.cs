@@ -25,27 +25,30 @@ namespace SEN_project_v2
     public partial class MainWindow : Window
     {
 
-        static UDP udp;
+        public static UDP udp;
         Threads threads;
         Dictionary<IPAddress, int> indexer;
         public RTPClient rtpClient;
         public VideoConf videoConf;
         public static List<IPAddress> hostIPS;
+        public static IPAddress hostIP;
         public MainWindow()
         {
             InitializeComponent();
-         //   Application.Current.ApplyTheme("BureauBlue");
+        //    Application.Current.ApplyTheme("BureauBlue");
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
-            rtpClient = new RTPClient();
+            
             threads = new Threads(this);
             indexer = new Dictionary<IPAddress, int>();
             #region hostIP init
             hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
+            //    if(ni.NetworkInterfaceType==System.Net.NetworkInformation.NetworkInterfaceType.Ethernet)
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
                 {
+                    
                     if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         hostIPS.Add(x.Address);
 
@@ -101,7 +104,7 @@ namespace SEN_project_v2
                 broadcast = new Thread(new ThreadStart(broadcast_proc));
                 udpReceving = new Thread(new ThreadStart(udp.recevingThread));
                 udpReceving.SetApartmentState(ApartmentState.STA);
-                rtpReceving = window.rtpClient.listen_thread;
+    //            rtpReceving = window.rtpClient.listen_thread;
                 udpReceving.SetApartmentState(ApartmentState.STA);
             }
 
@@ -111,8 +114,7 @@ namespace SEN_project_v2
                 {
                     udp.SendMessageTo(UDP.Connect + Environment.MachineName, BroadCasting.SEND.Address);
                     Thread.Sleep(5000);
-                    String list = string.Join(" ", UserList.Selected.Select(x => x.ToString()).ToArray());
-                    System.Diagnostics.Debug.WriteLine(list);
+                  
                 }
             }
             public void StartAll()
@@ -125,7 +127,8 @@ namespace SEN_project_v2
             {
                 StopThread(broadcast);
                 udp.SendMessageTo(UDP.Disconnect, BroadCasting.SEND.Address);
-                w.rtpClient.Stop();
+                if(w.rtpClient!=null)
+                w.rtpClient.Dispose();
                 StopThread(udpReceving);
                 StopThread(tcpReceving);
                 StopThread(fileSending);
@@ -149,7 +152,7 @@ namespace SEN_project_v2
         {
             UDP = 1716,
             TCP = 12316,
-            RTP = 5555,
+            RTP = 56789,
 
         }
 
@@ -164,14 +167,16 @@ namespace SEN_project_v2
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
 
-            videoConf = new VideoConf(udp, null);
+            videoConf = new VideoConf(this,hostIP);
 
             videoConf.Show();//  CreateVideoConf(null);
             videoConf.statusLabel.Content = "Waiting For Users's Responses...";
             foreach (IPAddress ip in videoConf.requestedUsers)
             {
-                videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
-                videoConf._stack.Children.Add(videoConf.vp[ip]);
+            //    videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
+              //  videoConf._stack.Children.Add(videoConf.vp[ip]);
+                videoConf.MakeUserPreview(ip, VideoPreview.Mode.Watting);
+
             }
             videoConf.Start();
         }
@@ -182,6 +187,12 @@ namespace SEN_project_v2
 //            videoConf.Show();
 
             waiting = new Window();
+            waiting.BorderThickness = new Thickness(0, 0, 0, 0);
+            waiting.AllowsTransparency = true;
+            waiting.Topmost = true;
+            waiting.HorizontalAlignment = HorizontalAlignment.Center;
+            waiting.VerticalAlignment = VerticalAlignment.Center;
+  
             VideoPreview vp = new VideoPreview(VideoPreview.Mode.Request,host);
             vp.Nick = UserList.Get(host).nick;
             vp.window = this;

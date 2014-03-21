@@ -1,27 +1,50 @@
 ﻿<Window x:Class="SEN_project_v2.VideoConf"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="VideoConf" Height="500" Width="640">
+        Title="VideoConf" Height="500" Width="640" >
     <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF4F4646" Offset="0"/>
-            <GradientStop Color="White" Offset="1"/>
-        </LinearGradientBrush>
+        <RadialGradientBrush RadiusX="1" RadiusY="0.75">
+            <GradientStop Color="#FF4F4646" Offset="1"/>
+            <GradientStop Color="White"/>
+        </RadialGradientBrush>
     </Window.Background>
     <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="185*"/>
-            <RowDefinition Height="284*"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="284*" />
         </Grid.RowDefinitions>
-        <Grid Margin="10,10,400,10"  Width="200" HorizontalAlignment="Stretch">
+        <Grid Margin="10,10,400,10"  Width="200"  VerticalAlignment="Stretch" SizeChanged="Grid_SizeChanged">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
             <Grid.Background>
                 <ImageBrush ImageSource="Images/user-frame.png"/>
             </Grid.Background>
-            <Image Name="server_img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,26.418"  />
+            <Image Name="server_img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,21.94" Stretch="Fill"  />
         </Grid>
-        <StackPanel x:Name="_stack"  Orientation="Horizontal"   Margin="10,10,10,10" Grid.Row="1"   VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Transparent"  />
+        <ScrollViewer HorizontalAlignment="Stretch"   Grid.Row="2" Width="Auto" Grid.RowSpan="3" VerticalAlignment="Stretch" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
+            <Grid>
+            <StackPanel   x:Name="_stack" Orientation="Horizontal"   Margin="10,10,10,10"   VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled"  />
+            </Grid>
+        </ScrollViewer>
+
+      
         <Label Content=": Status" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top"/>
         <Label Name="statusLabel" Content="Creating..." HorizontalAlignment="Right" Margin="0,30,10,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"  Height="7
+                      " VerticalAlignment="Stretch">
+            <GridSplitter.Background>
+                <RadialGradientBrush Opacity="0.75">
+                    <GradientStop Color="#00000000" Offset="1"/>
+                    <GradientStop Color="#FF1F1C1C"/>
+                </RadialGradientBrush>
+            </GridSplitter.Background>
+        </GridSplitter>
+
+
+
 
 
 

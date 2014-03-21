@@ -46,6 +46,10 @@ namespace SEN_project_v2
             {
                 _Nick.Content = value;
             }
+            get
+            {
+                return _Nick.Content.ToString();
+            }
         }
         public System.Net.IPAddress ip;
         public UDP udp;
@@ -103,17 +107,15 @@ namespace SEN_project_v2
         {
             _Mode = Mode.InCall;
             udp.SendMessageTo(UDP.RVideocall, hostIP);
-           window.Dispatcher.Invoke((Action)(() => {      
-            window.videoConf = new VideoConf(udp,hostIP);
-       
-            
-            window.videoConf.Show();
-            window.videoConf.statusLabel.Content = "Connected to Host ...";
-            window.videoConf.AddUser(hostIP);
-            window.videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
-            window.rtpClient.SetConfWind(window.videoConf);
-            window.rtpClient.Start();
-            window.waiting.Close();
+            VideoConf videoConf = new VideoConf(window, hostIP);
+            window.videoConf = videoConf;
+            videoConf.Show();
+            videoConf.statusLabel.Content = "Connected to Host ...";
+            videoConf.AddUser(hostIP);
+            videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+            window.Dispatcher.Invoke((Action)(() => {
+
+           window.waiting.Close();
          }));
         }
 
@@ -121,7 +123,7 @@ namespace SEN_project_v2
         {
             _Mode = Mode.InCall;
             udp.SendMessageTo(UDP.RemoveMember, hostIP);
-               
+            window.waiting.Close();
         }
     }
 }

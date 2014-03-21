@@ -1,4 +1,9 @@
-﻿using System;
+﻿#define NUDP
+#if UDP
+#define UDPConnection
+#endif
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +13,7 @@ using System.Threading;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
+
 namespace SEN_project_v2
 {
     public class UDP
@@ -50,8 +56,9 @@ namespace SEN_project_v2
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
             sendingClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
+#if UDP
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
-
+#endif
         }
 
         public void recevingThread()
@@ -67,7 +74,9 @@ namespace SEN_project_v2
                 data = recevingClient.Receive(ref recevied);
 
                 string stringData = Encoding.ASCII.GetString(data);
+#if UDPConnection
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
+#endif
                 #region
                 // window.Dispatcher.Invoke((Action)(() =>
                 // {
@@ -91,20 +100,29 @@ namespace SEN_project_v2
 
                 // }
                 #endregion
-
+                  
                 #region Connection
                 if (stringData.StartsWith(Connect))
+                    
                 {
+                    if(MainWindow.hostIPS.Contains(recevied.Address))
+                    {
+                        MainWindow.hostIP = recevied.Address;
+                    }
+                    
                     string[] splits = stringData.Split(new String[] { Connect }, StringSplitOptions.RemoveEmptyEntries);
                     if (splits.Length == 0)
                     {
+#if UDPConnection
                         System.Diagnostics.Debug.WriteLine("-----" + recevied.Address + "Does  not Contain PC/Nick Name----");
+#endif
                         continue;
                     }
 
                     SendMessageTo(RConnect + Environment.MachineName, recevied.Address);
+ #if UDPConnection
                     System.Diagnostics.Debug.WriteLine("-----Sending:" + RConnect + "------");
-
+#endif
                     User user = new User(recevied.Address, splits[0]);
                     if (UserList.Add(user))
                         window.Dispatcher.Invoke((Action)(() =>
@@ -117,6 +135,7 @@ namespace SEN_project_v2
                 {
                     string[] splits = stringData.Split(new String[] { RConnect }, StringSplitOptions.RemoveEmptyEntries);
                     User user = new User(recevied.Address, splits[0]);
+         
                     if (UserList.Add(user))
                         window.Dispatcher.Invoke((Action)(() =>
                         {
@@ -140,7 +159,7 @@ namespace SEN_project_v2
 
                 else if (stringData.StartsWith(Videocall))
                 {
-
+                  
 
                     window.Dispatcher.Invoke((Action)(() =>
                     { window.CreateVideoConf(recevied.Address); }));
@@ -171,23 +190,34 @@ namespace SEN_project_v2
                             window.videoConf.statusLabel.Content = "Room Created Successfully...";
 
                     }));
-                    System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap("anuj.jpg");
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                    bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    foreach (IPAddress ip in window.videoConf.Users)
-                    {  window.Dispatcher.Invoke((Action)(() =>
-                    {
-                       window.rtpClient.SendRTPMessageTo(ms.GetBuffer(), ip);
-                    }));
-                    }
+                    //System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap("temp.jpg");
+                    //System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    //bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    //foreach (IPAddress ip in window.videoConf.Users)
+                    //{
+                    //    window.Dispatcher.Invoke((Action)(() =>
+                    //        {
+                    //            window.rtpClient.rtpSender.Send(ms.GetBuffer());
+
+                               
+                    //        }));
+                    //}
+                    
                 }
                 else if (stringData.StartsWith(AddMember))
                 {
                     string[] splits = stringData.Split(new String[] { AddMember }, StringSplitOptions.RemoveEmptyEntries);
                     if (splits.Length > 0)
                     {
+                        window.Dispatcher.Invoke((Action)(() =>
+                        {
+                           
+                 //       if (window.videoConf == null)
+                 //           window.CreateVideoConf(recevied.Address);
+                        }));
                         window.videoConf.Dispatcher.Invoke((Action)(() =>
                         {
+                           
                             window.videoConf.AddUser(IPAddress.Parse(splits[0]));
                             window.videoConf.MakeUserPreview(IPAddress.Parse(splits[0]), VideoPreview.Mode.InCall);
                         }));

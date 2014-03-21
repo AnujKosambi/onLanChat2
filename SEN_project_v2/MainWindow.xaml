@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SEN_project_v2" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" xmlns:Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit" x:Class="SEN_project_v2.MainWindow"
-        Title="OnLanChat" Height="385.141" Width="525"  WindowStyle="ThreeDBorderWindow" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen"  Background="#7FAABDC1" ResizeMode="NoResize">
+        Title="OnLanChat" Height="385.141" Width="525"  WindowStyle="None" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" BorderThickness="25" AllowsTransparency="True">
 
 
     <Window.Resources>
@@ -11,6 +11,21 @@
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
     </Window.Resources>
+    <Window.BorderBrush>
+        <RadialGradientBrush>
+            <GradientStop Color="White"/>
+            <GradientStop Offset="1"/>
+        </RadialGradientBrush>
+    </Window.BorderBrush>
+    <Window.Background>
+        <RadialGradientBrush RadiusY="0.75" Center="0.5,0">
+            <GradientStop Color="#BF5D5D5D" Offset="1"/>
+            <GradientStop Color="#BFFFFFFF"/>
+        </RadialGradientBrush>
+    </Window.Background>
+    <Window.Effect>
+        <DropShadowEffect ShadowDepth="25" BlurRadius="25"/>
+    </Window.Effect>
 
 
     <Window.BindingGroup>
@@ -21,10 +36,24 @@
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
- 
 
-        <Button Content=" x " HorizontalAlignment="Right" Visibility="Hidden" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,0,7,0" Click="Button_Click" VerticalAlignment="Top"/>
-        <ListView x:Name="_listView" Margin="5,30,5,46"   RenderTransformOrigin="-3.353,-1.007" BorderThickness="1" BorderBrush="#FF162C55" Background="#FFE4E2E2" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+
+        <Button Content=" x " HorizontalAlignment="Right" Visibility="Visible" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,0,7,0" Click="Button_Click" VerticalAlignment="Top" Foreground="White">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF372E3A" Offset="1"/>
+                    <GradientStop Color="#FF6E6363"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <ListView x:Name="_listView" Margin="5,30,5,46"   RenderTransformOrigin="-3.353,-1.007" BorderThickness="1" BorderBrush="#FF162C55" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+            <ListView.Background>
+                <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
+                    <GradientStop Color="#7F4F4646" Offset="0.987"/>
+                    <GradientStop Color="#7FFFFFFF"/>
+                    <GradientStop Color="#7F888282" Offset="0.665"/>
+                </RadialGradientBrush>
+            </ListView.Background>
 
             <ListView.View >
                 <GridView ColumnHeaderContainerStyle="{StaticResource header}" >
