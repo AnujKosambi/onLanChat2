@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
         xmlns:local="clr-namespace:SEN_project_v2" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" xmlns:Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit" x:Class="SEN_project_v2.MainWindow"
-        Title="OnLanChat" Height="385.141" Width="525"  WindowStyle="None" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" BorderThickness="25" AllowsTransparency="True">
+        Title="OnLanChat" Height="522.141" Width="522" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" BorderThickness="25" Icon="OnLanChat.ico" WindowStyle="None" AllowsTransparency="True" AllowDrop="True">
 
     <Window.Resources>
 
@@ -11,23 +11,15 @@
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
     </Window.Resources>
-    <Window.BorderBrush>
-        <RadialGradientBrush>
-            <GradientStop Color="White"/>
-            <GradientStop Offset="1"/>
-        </RadialGradientBrush>
-    </Window.BorderBrush>
     <Window.Background>
         <RadialGradientBrush RadiusY="0.75" Center="0.5,0">
-            <GradientStop Color="#BF5D5D5D" Offset="1"/>
+            <GradientStop Color="#BF919191" Offset="1"/>
             <GradientStop Color="#BFFFFFFF"/>
         </RadialGradientBrush>
     </Window.Background>
     <Window.Effect>
-        <DropShadowEffect ShadowDepth="25" BlurRadius="25"/>
+        <DropShadowEffect BlurRadius="25" Direction="310" ShadowDepth="20"/>
     </Window.Effect>
-
-
     <Window.BindingGroup>
         <BindingGroup/>
     </Window.BindingGroup>
@@ -38,14 +30,8 @@
         </Grid.ColumnDefinitions>
 
 
-        <Button Content=" x " HorizontalAlignment="Right" Visibility="Visible" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,0,7,0" Click="Button_Click" VerticalAlignment="Top" Foreground="White">
-            <Button.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FF372E3A" Offset="1"/>
-                    <GradientStop Color="#FF6E6363"/>
-                </RadialGradientBrush>
-            </Button.Background>
-        </Button>
+        <Button Content=" x " HorizontalAlignment="Right" Visibility="Visible" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,2,7,0" Click="Button_Click" VerticalAlignment="Top" Foreground="White" Background="#FFE82B2B"/>
+        <!--
         <ListView x:Name="_listView" Margin="5,30,5,46"   RenderTransformOrigin="-3.353,-1.007" BorderThickness="1" BorderBrush="#FF162C55" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
             <ListView.Background>
                 <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
@@ -66,9 +52,68 @@
                 </GridView >
             </ListView.View>
 
-        </ListView>
-        <Button x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" Margin="151.104,0,162.349,10" Click="VideoConfB_Click" />
+        </ListView>-->
+        <Label Content="On-Lan Chat" Margin="0,0,0,0"
+               VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16" FontFamily="Segoe UI Semibold">
+            <Label.Effect>
+                <DropShadowEffect Direction="0" Color="#FF898989" ShadowDepth="2"/>
+            </Label.Effect>
+        </Label>
+        <Grid Margin="5,30,5,46" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="283*"/>
+                <RowDefinition  Height="3" />
+                <RowDefinition Height="74*"/>
+                <RowDefinition Height="36"/>
 
+            </Grid.RowDefinitions>
+            <TreeView Name="Groups" Grid.Row="0"  RenderTransformOrigin="-3.353,-1.007"
+                      BorderThickness="1" BorderBrush="#FF162C55" 
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True"  >
+                <TreeView.Effect>
+                    <DropShadowEffect Color="#FF7A7A7A"/>
+                </TreeView.Effect>
+                <TreeView.Background>
+                    <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
+                        <GradientStop Color="#7F4F4646" Offset="0.987"/>
+                        <GradientStop Color="#7FFFFFFF"/>
+                        <GradientStop Color="#7F888282" Offset="0.665"/>
+                    </RadialGradientBrush>
+                </TreeView.Background>
+
+            </TreeView>
+            <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
+                <GridSplitter.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="Black"/>
+                        <GradientStop Offset="1"/>
+                    </RadialGradientBrush>
+                </GridSplitter.Background>
+            </GridSplitter>
+
+            <RichTextBox
+                
+                Name="sendBox" Grid.Row="2"  HorizontalAlignment="Stretch" Width="Auto"
+                      VerticalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold" AcceptsTab="True" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" 
+                    AllowDrop="True"  >
+                <RichTextBox.Background>
+                    <RadialGradientBrush RadiusY="1">
+                        <GradientStop Color="#4C642E2E" Offset="1"/>
+                        <GradientStop Color="#4CFFFFFF"/>
+                    </RadialGradientBrush>
+                </RichTextBox.Background>
+            </RichTextBox>
+            <Grid Grid.Row="3" >
+                <Button Name="filesButton" Content="&lt;&lt; Drag Files Here &gt;&gt;" DragEnter="filesButton_DragEnter" Drop="filesButton_Drop" Click="filesButton_Click" FontFamily="Segoe UI Semibold" />
+
+            </Grid>
+        </Grid>
+        <Button  x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="0,0,0,10"  Width="135"/>
+        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,45.349,10" Width="112" Click="Button_Click_1" FontFamily="Segoe UI Semibold"/>
+        
     </Grid>
 
 </Window>

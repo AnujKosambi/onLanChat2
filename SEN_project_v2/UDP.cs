@@ -1,7 +1,13 @@
-﻿#define NUDP
+﻿#define UDP
 #if UDP
 #define UDPConnection
 #endif
+
+///<Debug>
+///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
+///(2) For UDP sending/reciving data verbose ... Define VideoCall
+///(3) For Testing As a Fake User ...Define Fake
+///</Debug>
 
 using System;
 using System.Collections.Generic;
@@ -28,8 +34,10 @@ namespace SEN_project_v2
         public const string Message = "<#Message#>";
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
-        public const string AddMember = "<#Add#>";
+        public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
+        public const string Breaker = "<#>";
         public const string RemoveMember = "<#Remove#>";
+        
         private int port;
         private MainWindow window;
 
@@ -51,7 +59,6 @@ namespace SEN_project_v2
 
 
         }
-
         public void SendMessageTo(string value, IPAddress ip)
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
@@ -64,33 +71,31 @@ namespace SEN_project_v2
         public void recevingThread()
         {
             recevingClient.Client.ReceiveBufferSize = 1024 * 1024;
-
+            
             while (true)
             {
 
 
                 byte[] data;
                 IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
+       
                 data = recevingClient.Receive(ref recevied);
 
                 string stringData = Encoding.ASCII.GetString(data);
 #if UDPConnection
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
 #endif
- 
-                  
+
+
                 #region Connection
                 if (stringData.StartsWith(Connect))
                     
                 {
                     if(MainWindow.hostIPS.Contains(recevied.Address))
-                    {
                         MainWindow.hostIP = recevied.Address;
-                        
-                    }
                     
-                    string[] splits = stringData.Split(new String[] { Connect }, StringSplitOptions.RemoveEmptyEntries);
-                    if (splits.Length == 0)
+                    string[] splits = stringData.Split(new String[] { Connect,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length !=2)
                     {
 #if UDPConnection
                         System.Diagnostics.Debug.WriteLine("-----" + recevied.Address + "Does  not Contain PC/Nick Name----");
@@ -98,58 +103,76 @@ namespace SEN_project_v2
                         continue;
                     }
 
-                    SendMessageTo(RConnect + Environment.MachineName, recevied.Address);
+                    SendMessageTo(RConnect + Environment.MachineName + Breaker + "Others", recevied.Address);
  #if UDPConnection
                     System.Diagnostics.Debug.WriteLine("-----Sending:" + RConnect + "------");
 #endif
+
+#if !Fake
                     User user = new User(recevied.Address, splits[0]);
-                    if (UserList.Add(user))
-                        window.Dispatcher.Invoke((Action)(() =>
-                        {
-                            this.window.AddToUserList(user.CreateView());
-                        }));
+#endif
+#if Fake
+                    User[] list=new User[25];
+
+                    for (int i = 0; i < 25;i++ )
+                    {
+
+                        list[i] = new User(IPAddress.Parse("127.0.0." + i), "FakeUser" + i,"FakeGroup"+i/5);
+                        User user = list[i];
+ #endif
+                        if (UserList.Add(user))
+                            window.Dispatcher.Invoke((Action)(() =>
+                            {
+                                //this.window.AddToUserList(user.CreateView(),splits[1]);
+                                window.AddUserToTree(user);
+                            }));
+#if Fake
+                    }
+#endif
+
+
 
                 }
                 else if (stringData.StartsWith(RConnect))
                 {
-                    string[] splits = stringData.Split(new String[] { RConnect }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] splits = stringData.Split(new String[] { RConnect,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length != 2)
+                    {
+#if UDPConnection
+                        System.Diagnostics.Debug.WriteLine("-----" + recevied.Address + "Does  not Contain PC/Nick Name/Group Name----");
+#endif
+                        continue;
+                    }
                     User user = new User(recevied.Address, splits[0]);
-         
+
                     if (UserList.Add(user))
                         window.Dispatcher.Invoke((Action)(() =>
                         {
-                            this.window.AddToUserList(user.CreateView());
+                            //this.window.AddToUserList(user.CreateView(),splits[1]);
+                            window.AddUserToTree(user);
                         }));
 
                 }
 
                 else if (stringData.StartsWith(Disconnect))
                 {
-                    User user = new User(recevied.Address, "Disconnecting..");
+                    User user = new User(recevied.Address, "Disconnecting");
                     UserList.Add(user);
                     UserList.Remove(recevied.Address);
                     window.Dispatcher.Invoke((Action)(() =>
                     {
-                        this.window.RemoverFromUserList(recevied.Address);
+                        window.RemoveUserFromTree(user);
+          //              this.window.rem(recevied.Address);
                     }));
                 }
                 #endregion
+                    
                 #region VideoCall Connection
 
                 else if (stringData.StartsWith(Videocall))
                 {
-                  
-
-                    window.Dispatcher.Invoke((Action)(() =>
-                    { window.CreateVideoConf(recevied.Address); }));
-                    //window.videoConf.Dispatcher.Invoke((Action)(() =>
-                    //{
-                    //    window.videoConf.statusLabel.Content = "Connected to Host ...";
-                    //    window.videoConf.AddUser(recevied.Address);
-                    //    window.videoConf.MakeUserPreview(recevied.Address, VideoPreview.Mode.Request);
-
-                    //}));
-
+                    window.Dispatcher.Invoke((Action)(() =>{ window.CreateVideoConf(recevied.Address); }));
+                    
                 }
                 else if (stringData.StartsWith(RVideocall))
                 {
@@ -169,34 +192,15 @@ namespace SEN_project_v2
                             window.videoConf.statusLabel.Content = "Room Created Successfully...";
 
                     }));
-                    //System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap("temp.jpg");
-                    //System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                    //bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    //foreach (IPAddress ip in window.videoConf.Users)
-                    //{
-                    //    window.Dispatcher.Invoke((Action)(() =>
-                    //        {
-                    //            window.rtpClient.rtpSender.Send(ms.GetBuffer());
-
-                               
-                    //        }));
-                    //}
-                    
+                          
                 }
                 else if (stringData.StartsWith(AddMember))
                 {
                     string[] splits = stringData.Split(new String[] { AddMember }, StringSplitOptions.RemoveEmptyEntries);
                     if (splits.Length > 0)
                     {
-                        window.Dispatcher.Invoke((Action)(() =>
-                        {
-                           
-                 //       if (window.videoConf == null)
-                 //           window.CreateVideoConf(recevied.Address);
-                        }));
                         window.videoConf.Dispatcher.Invoke((Action)(() =>
-                        {
-                           
+                        {                   
                             window.videoConf.AddUser(IPAddress.Parse(splits[0]));
                             window.videoConf.MakeUserPreview(IPAddress.Parse(splits[0]), VideoPreview.Mode.InCall);
                         }));
@@ -218,6 +222,18 @@ namespace SEN_project_v2
                 }
 
                 #endregion
+
+                #region Message
+                else if (stringData.StartsWith(Message) && stringData.EndsWith(Message))
+                {
+                    string[] splits = stringData.Split(new String[] { Message }, StringSplitOptions.RemoveEmptyEntries);
+                    if(splits.Length>0)
+                    {
+
+                    }
+                }
+
+#endregion
 
             }
 

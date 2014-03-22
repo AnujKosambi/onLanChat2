@@ -101,8 +101,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Conversation.xaml.cs">
+      <DependentUpon>Conversation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RTPClient.cs" />
     <Compile Include="ScreenCapture.cs" />
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UDP.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserList.cs" />
@@ -115,6 +121,10 @@
     <Compile Include="VideoPreview.xaml.cs">
       <DependentUpon>VideoPreview.xaml</DependentUpon>
     </Compile>
+    <Page Include="Conversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,6 +137,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +219,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="OnLanChat.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rectangle_darkwhite_96x30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

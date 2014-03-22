@@ -65,7 +65,12 @@ namespace SEN_project_v2
         {
             InitializeComponent();
             ul_check.Click += ul_check_Checked;
+            this.MouseRightButtonDown += UserView_MouseRightButtonDown;
+        }
 
+        void UserView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+     
         }
 
         void ul_check_Checked(object sender, RoutedEventArgs e)
@@ -76,5 +81,7 @@ namespace SEN_project_v2
             else
                 UserList.SelectedUsers.Remove(u_ip);
         }
+
+   
     }
 }

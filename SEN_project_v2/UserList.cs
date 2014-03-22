@@ -10,15 +10,18 @@ namespace SEN_project_v2
         static List<User> Users=new List<User>();
         public static Dictionary<System.Net.IPAddress, bool> SelectedUsers = new Dictionary<System.Net.IPAddress, bool>();
         static Dictionary<System.Net.IPAddress,int> indexOf=new Dictionary<System.Net.IPAddress,int>();
-      
+        static Dictionary<System.Net.IPAddress, string> GroupList = new Dictionary<System.Net.IPAddress, string>();
+        
         public static bool Add(User user)
         {
 
 
             if (Users.Where(x => x.ip.Equals(user.ip)).ToList().Count == 0)
             {
+
                 Users.Add(user);
                 indexOf.Add(user.ip, Users.IndexOf(user));
+                GroupList.Add(user.ip, user.groupName);
                 return true;
             }
             return false;
@@ -47,6 +50,7 @@ namespace SEN_project_v2
                 Users.RemoveAt(indexOf[ip]);
                 SelectedUsers.Remove(ip);
                 indexOf.Remove(ip);
+                GroupList.Remove(ip);
             }
             catch { }            
         }

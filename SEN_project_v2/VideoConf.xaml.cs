@@ -205,6 +205,12 @@ namespace SEN_project_v2
             
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            videoDevice.Stop();
+            rtpClient.Dispose();
+        }
+
 
     }
 

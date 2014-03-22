@@ -27,21 +27,30 @@ namespace SEN_project_v2
 
         public static UDP udp;
         Threads threads;
-        Dictionary<IPAddress, int> indexer;
+        
         public RTPClient rtpClient;
         public VideoConf videoConf;
+        private List<string> selectedFiles;
         public static List<IPAddress> hostIPS;
+
         public static IPAddress hostIP;
+        public Window waiting;
+
         public MainWindow()
         {
             InitializeComponent();
-            
-        
+         //   ThemeManager.ApplyTheme(this, "BureauBlack");
+
+
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
             
             threads = new Threads(this);
             indexer = new Dictionary<IPAddress, int>();
+            groupLists = new Dictionary<string, TreeViewItem>();
+            listView = new Dictionary<string, ListView>();
+            _index = new Dictionary<string, Dictionary<System.Net.IPAddress,int>> ();
+            selectedFiles = new List<string>();
             #region hostIP init
             hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
@@ -50,35 +59,86 @@ namespace SEN_project_v2
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
                 {
 
-                    System.Diagnostics.Debug.WriteLine(ni.NetworkInterfaceType + "" + x.Address);
-                    if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         hostIPS.Add(x.Address);
 
                 }
             }
             #endregion
         }
-        public void AddToUserList(UserView uv)
-        {
-            indexer.Add(uv.u_ip, _listView.Items.Count);
-            _listView.Items.Insert(indexer[uv.u_ip], uv);
 
+        #region UI Stuffs
+        private Dictionary<IPAddress, int> indexer;
+        private Dictionary<string, TreeViewItem> groupLists;
+        private Dictionary<string, ListView> listView;
+        private Dictionary<string, Dictionary<System.Net.IPAddress,int>> _index;
+        private TreeViewItem CreateNewGroup(string groupName)
+        {
+            TreeViewItem node = new TreeViewItem();
+            
+            node.Background = System.Windows.Media.Brushes.Transparent;
+            node.FontSize = 16;
+            node.FontWeight = FontWeights.SemiBold;
+            Style focus = new Style(typeof(TreeViewItem));
+            focus.Setters.Add(new Setter(ForegroundProperty, System.Windows.Media.Brushes.DarkBlue));
+
+            node.FocusVisualStyle = focus;
+            node.Header = groupName;
+            ListView userOfGroup = new ListView();
+ 
+            Style itemStyle = new Style(typeof(ListViewItem));
+            itemStyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_darkwhite_96x30.png", UriKind.Relative))) { Opacity=20}));
+            itemStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+
+            userOfGroup.ItemContainerStyle = itemStyle;
+           
+            GridView grid = new GridView();
+            
+            Style style = new Style(typeof(GridViewColumnHeader));
+            style.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
+            style.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+            grid.ColumnHeaderContainerStyle = style;
+            
+            grid.Columns.Add(new GridViewColumn() {Width=Groups.RenderSize.Width-40});
+            userOfGroup.HorizontalAlignment = HorizontalAlignment.Stretch;
+            userOfGroup.View = grid;
+            userOfGroup.BorderThickness = new Thickness(0);
+            userOfGroup.Background = System.Windows.Media.Brushes.Transparent;
+
+            listView.Add(groupName, userOfGroup);
+            node.Items.Add(userOfGroup);
+            Groups.Items.Add(node);
+            _index.Add(groupName, new Dictionary<IPAddress, int>());
+         
+       
+            return node;
+        }
+        public void AddUserToTree(User user)
+        {
+            if (!groupLists.ContainsKey(user.groupName))
+                groupLists.Add(user.groupName, CreateNewGroup(user.groupName));
+            _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
+            listView[user.groupName].Items.Insert(_index[user.groupName][user.ip], user.CreateView());
+       
         }
 
-        public void RemoverFromUserList(IPAddress ip)
+     
+        public void RemoveUserFromTree(User user)
         {
             try
             {
-                _listView.Items.RemoveAt(indexer[ip]);
-                indexer.Remove(ip);
+
+                listView[user.groupName].Items.RemoveAt(_index[user.groupName][user.ip]);
+                _index[user.groupName].Remove(user.ip);
             }
-            catch (Exception e)
+            catch
             {
-            };
-
-
+                 AddUserToTree(user);
+                 RemoveUserFromTree(user);
+            }
         }
-
+      
+        #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -90,7 +150,6 @@ namespace SEN_project_v2
         {
             this.Close();
         }
-
         public class Threads
         {
             public static Thread broadcast;
@@ -114,7 +173,7 @@ namespace SEN_project_v2
             {
                 while (true)
                 {
-                    udp.SendMessageTo(UDP.Connect + Environment.MachineName, BroadCasting.SEND.Address);
+                    udp.SendMessageTo(UDP.Connect + Environment.MachineName+UDP.Breaker+"Group", BroadCasting.SEND.Address);
                     Thread.Sleep(5000);
                   
                 }
@@ -157,7 +216,6 @@ namespace SEN_project_v2
             RTP = 56789,
 
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
@@ -165,7 +223,6 @@ namespace SEN_project_v2
 
             udp.recevingClient.Close();
         }
-
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
 
@@ -207,7 +264,65 @@ namespace SEN_project_v2
             waiting.Show();
 
         }
-        public Window waiting;
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Settings setting = new Settings();
+            setting.Show();
+        }
+
+        #region FileSending
+        private void filesButton_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false))
+                e.Effects = DragDropEffects.All;
+        }
+
+        private void filesButton_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                selectedFiles = files.ToList();
+                if (files.Length == 1)
+                    (sender as Button).Content = files[0];
+                else
+                    (sender as Button).Content = "(" + files.Length + ") Files Added...! Click For Clear";
+
+            }
+        }
+        #endregion
+
+        private void filesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedFiles.Count == 0)
+            {
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.Title = "Select Any Files";
+
+                dlg.Multiselect = true;
+                Nullable<bool> result = dlg.ShowDialog();
+
+                if (result == true)
+                {
+
+                    string[] files = (string[])dlg.FileNames;
+                    selectedFiles = files.ToList();
+                    if (files.Length == 1)
+                        (sender as Button).Content = files[0];
+                    else
+                        (sender as Button).Content = "(" + files.Length + ") Files Added...! Click Again For Clear";
+
+                }
+            }
+            else
+            {
+                (sender as Button).Content = "<< Drag Files Here >>";
+                selectedFiles.Clear();
+            }
+        }
+
+
 
 
 
