@@ -77,29 +77,7 @@ namespace SEN_project_v2
 #if UDPConnection
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
 #endif
-                #region
-                // window.Dispatcher.Invoke((Action)(() =>
-                // {
-                //     this.window.status.Text = "-----Received:" + stringData.Length+ "------";
-                // }));
-                //System.Diagnostics.Debug.WriteLine("-----Received:" + stringData.Length +" " +string.Join(" ", data.Skip(0).Select(x => Convert.ToString(x, 16).PadLeft(2,'0')).ToArray()) + "------");
-                // if (true)
-                // {
-                //     int version = RTPClient.GetRTPHeaderValue(data, 0, 1);
-                //     int padding = RTPClient.GetRTPHeaderValue(data, 2, 2);
-                //     int extension = RTPClient.GetRTPHeaderValue(data, 3, 3);
-                //     int csrcCount = RTPClient.GetRTPHeaderValue(data, 4, 7);
-                //     int marker = RTPClient.GetRTPHeaderValue(data, 8, 8);
-                //     int payloadType = RTPClient.GetRTPHeaderValue(data, 9, 15);
-                //     int sequenceNum = RTPClient.GetRTPHeaderValue(data, 16, 31);
-                //     int timestamp = RTPClient.GetRTPHeaderValue(data, 32, 63);
-                //     int ssrcId = RTPClient.GetRTPHeaderValue(data, 64, 95);
-                //     //System.Diagnostics.Debug.Print("\n{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                //     //    version, padding, extension, csrcCount, marker, payloadType,
-                //     //    sequenceNum, timestamp, ssrcId);
-
-                // }
-                #endregion
+ 
                   
                 #region Connection
                 if (stringData.StartsWith(Connect))
@@ -108,6 +86,7 @@ namespace SEN_project_v2
                     if(MainWindow.hostIPS.Contains(recevied.Address))
                     {
                         MainWindow.hostIP = recevied.Address;
+                        
                     }
                     
                     string[] splits = stringData.Split(new String[] { Connect }, StringSplitOptions.RemoveEmptyEntries);
@@ -231,8 +210,9 @@ namespace SEN_project_v2
                     {
                         window.videoConf.requestedUsers.Remove(recevied.Address);
                         window.videoConf._stack.Children.Remove(window.videoConf.vp[recevied.Address]);
+                        window.videoConf.statusLabel.Content = UserList.Get(recevied.Address).nick + " can't Join :(";
                         if (window.videoConf.Users.Count == window.videoConf.requestedUsers.Count)
-                            window.videoConf.statusLabel.Content = "Room Created Successfully...";
+                            window.videoConf.statusLabel.Content = "Room Created Successfully With ("+window.videoConf.requestedUsers.Count+")Members ...:D";
 
                     }));
                 }

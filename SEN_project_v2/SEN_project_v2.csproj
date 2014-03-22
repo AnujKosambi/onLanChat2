@@ -53,7 +53,16 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>OnLanChat.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\..\..\..\Downloads\AForge.NET Framework-2.2.5-(libs only)\Release\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\..\..\..\Downloads\AForge.NET Framework-2.2.5-(libs only)\Release\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
     <Reference Include="LSTCommon">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\LSTCommon.dll</HintPath>
     </Reference>
@@ -193,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\user-frame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="OnLanChat.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

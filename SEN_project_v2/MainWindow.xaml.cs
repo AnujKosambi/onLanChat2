@@ -35,7 +35,8 @@ namespace SEN_project_v2
         public MainWindow()
         {
             InitializeComponent();
-        //    Application.Current.ApplyTheme("BureauBlue");
+            
+        
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
             
@@ -45,10 +46,11 @@ namespace SEN_project_v2
             hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
-            //    if(ni.NetworkInterfaceType==System.Net.NetworkInformation.NetworkInterfaceType.Ethernet)
+               
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
                 {
-                    
+
+                    System.Diagnostics.Debug.WriteLine(ni.NetworkInterfaceType + "" + x.Address);
                     if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         hostIPS.Add(x.Address);
 
@@ -168,17 +170,19 @@ namespace SEN_project_v2
         {
 
             videoConf = new VideoConf(this,hostIP);
-
-            videoConf.Show();//  CreateVideoConf(null);
-            videoConf.statusLabel.Content = "Waiting For Users's Responses...";
-            foreach (IPAddress ip in videoConf.requestedUsers)
+            if (videoConf.SetVideoSources())
             {
-            //    videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
-              //  videoConf._stack.Children.Add(videoConf.vp[ip]);
-                videoConf.MakeUserPreview(ip, VideoPreview.Mode.Watting);
+                videoConf.Show();//  CreateVideoConf(null);
+                videoConf.statusLabel.Content = "Waiting For Users's Responses...";
+                foreach (IPAddress ip in videoConf.requestedUsers)
+                {
+                    //    videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
+                    //  videoConf._stack.Children.Add(videoConf.vp[ip]);
+                    videoConf.MakeUserPreview(ip, VideoPreview.Mode.Watting);
 
+                }
+                videoConf.Start();
             }
-            videoConf.Start();
         }
         public void CreateVideoConf(IPAddress host)
         {

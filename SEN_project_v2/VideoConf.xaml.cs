@@ -14,7 +14,11 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Threading;
+using System.Threading;
 using System.Windows.Forms;
+using AForge.Video.DirectShow;
+using AForge.Video;
+using System.Runtime.InteropServices;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -28,33 +32,65 @@ namespace SEN_project_v2
         public Dictionary<IPAddress,VideoPreview> vp;
         public IPAddress host;
         public MainWindow mParent;
-        public Timer timer;
+        public System.Windows.Forms.Timer timer;
         private ScreenCapture sc = new ScreenCapture();
         public RTPClient rtpClient;
-        public VideoConf(MainWindow parent,IPAddress host)
+        /// <summary>
+        /// Video Devices
+        /// </summary>
+        private VideoCaptureDevice videoDevice;
+        private FilterInfoCollection infos;
+
+        BitmapImage bi = new BitmapImage();
+        public VideoConf(MainWindow parent, IPAddress host)
         {
             this.host = host;
             this.udp = MainWindow.udp;
             mParent = parent;
             Users = new List<IPAddress>();
             vp = new Dictionary<IPAddress, VideoPreview>();
-          
-             mParent.rtpClient = this.rtpClient;
+
+            mParent.rtpClient = this.rtpClient;
             requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
             InitializeComponent();
             rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), (int)MainWindow.Ports.RTP), vp, MainWindow.hostIP.ToString(), "224.0.0.2");
             rtpClient.vcWind = this;
-            timer = new Timer();
+            videoDevice = new VideoCaptureDevice();
+
+        }
+     
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            timer = new System.Windows.Forms.Timer();
             timer.Tick += timer_Tick;
             timer.Interval = 500;
-            timer.Start();
+           // timer.Start();
+        
         }
+        public bool SetVideoSources()
+        {
+            infos = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo info in infos)
+            {
+                VideoSources.Items.Add(info.Name);
 
+            }
+            if (VideoSources.Items.Count > 0)
+            {
+                VideoSources.SelectedIndex = 0;
+                return true;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("You can not initiate Video Call/Conference due to :" + "-- No Resoure Available");
+                return false;
+            }
+
+        }
         private void timer_Tick(object sender, EventArgs e)
         {
-            Byte[] b=sc.GetDesktopBitmapBytes();
-            rtpClient.rtpSender.Send(b);
-            server_img.Source=rtpClient.GetImage(b).Source;
+          
         }
 
         public void AddUser(IPAddress ip)
@@ -116,9 +152,60 @@ namespace SEN_project_v2
            
         }
 
-   
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {    
+           System.Windows.Controls.Button b_start=((System.Windows.Controls.Button)sender);
+            if (videoDevice.IsRunning == true)
+            {
+                b_start.Content = "Start";
+                videoDevice.Stop();
+              
+            }
+            else
+            {
+
+                videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString);
+                videoDevice.DesiredFrameRate = 10;
+              
+                 videoDevice.NewFrame += capture_NewFrame;
+                
+                videoDevice.Start();
+                b_start.Content = "Stop";
+            }
+        }
+
+
+
+        void capture_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            System.IO.MemoryStream ms=new System.IO.MemoryStream();
+            
+            eventArgs.Frame.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            Byte[] b = ms.GetBuffer();
+            rtpClient.rtpSender.Send(b);
+
+            System.IO.MemoryStream ms2 = new System.IO.MemoryStream();
+            eventArgs.Frame.Save(ms2, System.Drawing.Imaging.ImageFormat.Jpeg);
+            ms2.Seek(0, System.IO.SeekOrigin.Begin);
+       
+            bi.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                bi = new BitmapImage();
+                bi.BeginInit();   
+                bi.StreamSource = ms2;
+                bi.EndInit();
+                server_img.Dispatcher.BeginInvoke((Action)(() =>
+           {
+               server_img.Source = bi;
+           }));
+           }));
+            bi = null;
+            
+            
+            
+        }
 
 
     }
+
 }

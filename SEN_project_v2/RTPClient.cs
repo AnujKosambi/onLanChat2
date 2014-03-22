@@ -40,10 +40,12 @@ namespace SEN_project_v2
             UnhandledExceptionHandler.Register();
             this.ipe = multiCastIP;
             this.vpList = vpList;
+            
             rtpSession = new RtpSession(ipe, new RtpParticipant(cname,name ), true, true);
             
+            System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
             rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.JPEG, null, 0, 1);
-            
+
             EvetnBinding();
             //stream = new MemoryStream();
             //sBuffer = new Dictionary<IPAddress, System.IO.MemoryStream>();

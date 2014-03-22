@@ -109,14 +109,24 @@ namespace SEN_project_v2
             udp.SendMessageTo(UDP.RVideocall, hostIP);
             VideoConf videoConf = new VideoConf(window, hostIP);
             window.videoConf = videoConf;
-            videoConf.Show();
-            videoConf.statusLabel.Content = "Connected to Host ...";
-            videoConf.AddUser(hostIP);
-            videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
-            window.Dispatcher.Invoke((Action)(() => {
+            if (videoConf.SetVideoSources())
+            {
+                videoConf.Show();
+                videoConf.statusLabel.Content = "Connected to Host ...";
+                videoConf.AddUser(hostIP);
+                videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+              
+            }
+            else
+            {
+                _Mode = Mode.InCall;
+                udp.SendMessageTo(UDP.RemoveMember, hostIP);
+            }
+            window.Dispatcher.Invoke((Action)(() =>
+            {
 
-           window.waiting.Close();
-         }));
+                window.waiting.Close();
+            }));
         }
 
         private void decline_Click(object sender, RoutedEventArgs e)
