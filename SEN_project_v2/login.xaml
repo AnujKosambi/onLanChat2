@@ -1,0 +1,11 @@
+﻿<Window x:Class="SEN_project_v2.login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="login" Height="120.482" Width="274.699">
+    <Grid>
+        <Button Content="Login" HorizontalAlignment="Center" Margin="00.0,0,0,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="96,0,0,43" VerticalAlignment="Bottom" Width="161" Name="PasswordBox"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="28,20,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

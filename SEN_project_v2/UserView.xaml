@@ -12,11 +12,20 @@
         </Grid.ColumnDefinitions>
 
         <WrapPanel Height="31" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,0,0,-6" Grid.ColumnSpan="2"   >
+            <Button Name="openChat" Height="20" Width="20" VerticalAlignment="Center" Margin="5,0,5,0" BorderBrush="{x:Null}" Click="openChat_Click">
+                <Button.Background>
+                    <RadialGradientBrush RadiusX="0.75" RadiusY="0.75">
+                        <GradientStop Color="#BF58AC39" Offset="0.009"/>
+                        <GradientStop Color="#BF1C211A" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+            </Button>
             <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ul_check" />
             <Label Content="Nick" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ul_Nick" Height="31" FontWeight="SemiBold"/>
             <Label Content="IPAddress" HorizontalAlignment="Right" VerticalAlignment="Bottom"  x:Name="ul_ip"/>
 
+
         </WrapPanel>
-        
+
     </Grid>
 </UserControl>

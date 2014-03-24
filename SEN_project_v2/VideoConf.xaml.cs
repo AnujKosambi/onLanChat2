@@ -164,9 +164,9 @@ namespace SEN_project_v2
             else
             {
 
-                videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString);
-                videoDevice.DesiredFrameRate = 10;
-              
+                videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString) { DesiredFrameRate = 20 };
+                
+
                  videoDevice.NewFrame += capture_NewFrame;
                 
                 videoDevice.Start();

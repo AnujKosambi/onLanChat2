@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="2186ecc3-1691-49f1-95b3-db5213a8d48f"
+  name="Rtp"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="ed14139a-e6b1-4d6e-9fc0-9b921d4e0cc1"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMSR.LST.Net.Rtp"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="6a929c1d-77b9-4e55-a6cc-a086c62bb748"
+        name="RtpStreamEventArgs"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="f2e33fad-0098-4a10-9de8-1f802af71eaf"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DRtpStreamEventArgs ParentType%3DRtpEvents)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e41331ae-6774-4329-86f1-2071071e2073"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="21a46533-fa34-4921-ac6c-073d0f2acac8">
+                <propertyInstance
+                  Id="5924a67b-6817-448c-9725-b8dd76999ae5"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d4eb9df8-13bd-4fef-8952-b1363627e85f">
+                <propertyInstance
+                  Id="0e188f62-bd10-4c15-91eb-c165d15383c7"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="087bc043-063f-4887-925a-f33545d2883a">
+                <propertyInstance
+                  Id="a6359bde-af7c-4868-a61c-ea95726822d8"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="dca90f44-7f00-49ff-a110-0e530ff6778d">
+                <propertyInstance
+                  Id="936a06ee-6f63-4ba1-af54-f6350b8925a7"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="46748698-c86e-412c-a8bd-4aa0a1584175">
+                <propertyInstance
+                  Id="9fb4175a-da98-413b-8f30-e624ad666a5e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="11affac7-d872-4526-b2f0-237f5cc4f7c3"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
+              LastKnownName="EventArgs"
+              LastKnownLocation="Package1_1941.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="edcdcf36-e626-4e6c-974a-d1f352b12082"
+        name="FrameReceivedEventArgs"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="3eda417f-895f-4514-aed3-ae1e3691ff9e"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DFrameReceivedEventArgs ParentType%3DRtpStream)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e86ae922-eb4b-4526-bf50-3a61e0fae3ba"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="088c18d5-6cb4-4815-aee9-2a7caa53a07b">
+                <propertyInstance
+                  Id="a151259c-8270-4b23-9a39-1db1aa52868c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d84875d6-aab4-428b-ba1f-122ff87697e9">
+                <propertyInstance
+                  Id="0b187715-875f-4ef7-ae1b-7e4f4700271b"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="32505e33-3901-4fe6-aa5c-1cb6272d1c19">
+                <propertyInstance
+                  Id="2f370a4e-2383-4dfb-b045-04ed023ece34"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cc071e16-7c8b-4b57-a503-9e16abef4e31">
+                <propertyInstance
+                  Id="0ea11cf4-ded5-4ca7-aa38-6e6f01c5aad4"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e4c58cee-ab8b-4d67-9fb2-6553484272ff">
+                <propertyInstance
+                  Id="226a689f-9c53-48d9-b052-e3f7bd79931e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="c033e313-2395-400c-bb4e-0ab23edc45f0"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
+              LastKnownName="EventArgs"
+              LastKnownLocation="Package1_1941.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="960f087a-f9aa-4383-ad17-87f92e7640bb"
+        name="RtpParticipantEventArgs"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="a7187ad0-4ec6-4c3b-9b21-f220fc7dd6c6"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DRtpParticipantEventArgs ParentType%3DRtpEvents)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="3660218c-22b1-4077-9579-37724b119da4"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cfadf603-1473-4ba7-85fd-d01fa098151e">
+                <propertyInstance
+                  Id="59a06448-5f04-4603-ab28-a2e043c1d756"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="66645a12-cc6e-4b34-905b-afca9e523219">
+                <propertyInstance
+                  Id="ef9576f8-6528-47b2-8629-74b07f79c430"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="34d9662e-9de4-4c54-8b69-7694c3d025c0">
+                <propertyInstance
+                  Id="263e2543-1587-4544-9dc3-92ffafb37686"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f2e57ed4-024d-4e71-a53a-32f92ea8ac05">
+                <propertyInstance
+                  Id="7911b65e-bd97-4b21-b4e9-f9d3d677a84a"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5739ba65-3cb9-4a6e-bafa-8274c620dfa5">
+                <propertyInstance
+                  Id="f33b3f86-3b4e-4bbb-b17a-74b5805dc835"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="1325547f-4572-4898-94f6-3a9b79d92d24"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
+              LastKnownName="EventArgs"
+              LastKnownLocation="Package1_1941.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="518a0280-e2b8-472d-9620-388d611ce703"
+        name="RtpSession"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="dcf8926d-3284-4837-8c66-244ea9e3dd64"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3DRtpSession"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="779e1de2-abe2-4dd6-ba12-30cb573f87d2"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6a14c737-dfaf-46c9-b442-1e17fb8d1256">
+                <propertyInstance
+                  Id="dc14edbd-eea4-4788-8d36-5a270a48bc63"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3f6793d4-be28-4fed-92dd-f532142fe528">
+                <propertyInstance
+                  Id="2076f624-18c8-4349-a733-5214ee0fbae7"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f5953d49-cf7d-47a4-8861-553a0b6322e2">
+                <propertyInstance
+                  Id="42a05b84-2b7a-43cd-a50c-5ff858d708a3"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8d455d3d-9c55-418c-b0f2-7d6ddb80de68">
+                <propertyInstance
+                  Id="8ff7fc4b-f951-4cac-bee4-d3666b035c16"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5f0efa73-1b13-4235-b941-5169a4103ce1">
+                <propertyInstance
+                  Id="4372b5d1-5562-4df1-b6a5-37de8a3e9908"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1f2f30bb-deaa-45c6-89b6-ddb7c1ccb553"
+        name="RtpSender"
+        visibility="Private"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="0478c66f-f7b0-46de-bf5e-59b75b3152bc"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3DRtpSender"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="78042ee5-64f3-421a-a189-8622dc1fbf72"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="46c6871b-396e-43ee-885b-0219cd5ab3f2">
+                <propertyInstance
+                  Id="d22a480c-abbe-4f86-953e-c1253fe88e17"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e72cf540-c867-4e74-b87e-d661777d91b4">
+                <propertyInstance
+                  Id="aefd9483-4757-4740-92d3-a11c6b5ab8e7"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="503bea2e-5c2c-49f0-ad47-cd5c738388ca">
+                <propertyInstance
+                  Id="22d3929f-c3d2-4cbc-b625-a7c289c3a196"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="774e93f1-08db-4976-aa7a-395793ffe8bb">
+                <propertyInstance
+                  Id="f4e777e5-b3c5-48f2-89fb-b95605142162"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="29abe663-8520-4082-b67e-571b3a8f8064">
+                <propertyInstance
+                  Id="17bfaa52-6eb5-4239-a19a-73e0725f7eb9"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

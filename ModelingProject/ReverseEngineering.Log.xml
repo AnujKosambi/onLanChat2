@@ -6,148 +6,41 @@
   <MessageClass Name="Error" Label="Error" Option="Show errors" />
   <MessageClass Name="Property" Label="Property" Option="Show metadata" />
   <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
-  <Message Timestamp="2014-03-17T15:45:55" Importance="High" Text="Reverse Engineering Started." />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '46674e55-0a7c-4a45-b308-89b558b1a1ad' -  (ClassifierTemplateParameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '65678858-5f0d-4de5-a537-2cc1ca52bc1c' -  (ClassifierTemplateParameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Boolean' -  (PrimitiveType)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'cb7281b7-8eb9-4dd0-adf6-708af091021c' -  (ClassifierTemplateParameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::App' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::App::App' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::App::InitializeComponent' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::App::Main' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::BroadCasting' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::BroadCasting::BroadCasting' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::BroadCasting::RECEIVE' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::BroadCasting::SEND' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::_contentLoaded' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::_listView' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::AddToUserList' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::AddToUserList::uv' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Button_Click' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Button_Click::e' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Button_Click::sender' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::indexer' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::InitializeComponent' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::MainWindow' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::RemoverFromUserList' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::RemoverFromUserList::ip' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::status' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect::connectionId' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect::target' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::threads' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::udp' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Closing' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Closing::e' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Closing::sender' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Loaded' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Loaded::e' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow::Window_Loaded::sender' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Ports' -  (Enumeration)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Ports::RTP' -  (EnumerationLiteral)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Ports::TCP' -  (EnumerationLiteral)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Ports::UDP' -  (EnumerationLiteral)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::broadcast' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::broadcast_proc' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::fileReceving' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::fileSending' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::StartAll' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::StopAll' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::StopThread' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::StopThread::thread' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::tcpReceving' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::Threads' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::Threads::udpReceving' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Connect' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Disconnect' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Message' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::port' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::RConnect' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::recevingClient' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::recevingThread' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::sendingClient' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo::ip' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo::value' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SetWindow' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SetWindow::window' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::UDP' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::UDP::port' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::window' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::CreateView' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::groupName' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::ip' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::nick' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::User' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::User::_ip' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::User::_nick' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::User::userView' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Add' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Add::user' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::indexOf' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Referese' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Remove' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Remove::ip' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::SelectedUsers' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserList::Users' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView' -  (Class)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::_contentLoaded' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::InitializeComponent' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect::connectionId' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::System‎.Windows‎.Markup‎.IComponentConnector‎.Connect::target' -  (Parameter)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::u_check' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::u_ip' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::u_ips' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::u_nick' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::ul_check' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::ul_ip' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::ul_Nick' -  (Property)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UserView::UserView' -  (Operation)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::Dictionary' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::Dictionary&lt;IPAddress‎, Int32‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::List' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::List&lt;User‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::ComponentModel' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::ComponentModel::CancelEventArgs' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::IPAddress' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::IPEndPoint' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::Sockets' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::Sockets::UdpClient' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Object' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Threading' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Threading::Thread' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Application' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls::CheckBox' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls::Label' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls::ListView' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls::TextBlock' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Controls::UserControl' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Markup' -  (Package)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Markup::IComponentConnector' -  (Interface)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::RoutedEventArgs' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Windows::Window' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::App to ModelingProject::System::Windows::Application (Generalization)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::MainWindow to ModelingProject::System::Windows::Markup::IComponentConnector (InterfaceRealization)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::MainWindow to ModelingProject::System::Windows::Window (Generalization)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::UserView to ModelingProject::System::Net::IPAddress (Association)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::UserView to ModelingProject::System::Windows::Markup::IComponentConnector (InterfaceRealization)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::SEN_project_v2::UserView to ModelingProject::System::Windows::Controls::UserControl (Generalization)" />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="High" Text="(9) type(s) fully reverse engineered." />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="High" Text="(19) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
-  <Message Timestamp="2014-03-17T15:45:59" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+  <Message Timestamp="2014-03-23T21:15:29" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2' -  (Package)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::MainWindow' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP' -  (Class)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::AddMember' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Breaker' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Connect' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Disconnect' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Message' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::port' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::RConnect' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::recevingClient' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::recevingThread' -  (Operation)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::RemoveMember' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::rtpReceClient' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::rtpSendClient' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::RVideocall' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::sendingClient' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo' -  (Operation)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo::ip' -  (Parameter)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SendMessageTo::value' -  (Parameter)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SetWindow' -  (Operation)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::SetWindow::window' -  (Parameter)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::UDP' -  (Operation)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::UDP::port' -  (Parameter)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::Videocall' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::SEN_project_v2::UDP::window' -  (Property)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System' -  (Package)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net' -  (Package)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::IPAddress' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::Sockets' -  (Package)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Net::Sockets::UdpClient' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="High" Text="(3) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-03-23T21:15:30" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
 </Log>

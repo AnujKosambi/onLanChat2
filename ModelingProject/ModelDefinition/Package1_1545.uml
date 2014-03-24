@@ -15,8 +15,9 @@
       <class
         Id="0bce1ded-e7c2-4121-a54d-e07de9637d93"
         name="Thread"
+        visibility="Private"
         isAbstract="false"
-        isLeaf="true"
+        isLeaf="false"
         isActiveClass="false">
         <referencesInternal>
           <reference

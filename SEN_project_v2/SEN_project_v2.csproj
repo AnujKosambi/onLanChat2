@@ -104,8 +104,17 @@
     <Compile Include="Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="login.xaml.cs">
+      <DependentUpon>login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReceMessage.xaml.cs">
+      <DependentUpon>ReceMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RTPClient.cs" />
     <Compile Include="ScreenCapture.cs" />
+    <Compile Include="SentMessage.xaml.cs">
+      <DependentUpon>SentMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -121,7 +130,12 @@
     <Compile Include="VideoPreview.xaml.cs">
       <DependentUpon>VideoPreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XMLClient.cs" />
     <Page Include="Conversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,6 +151,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReceMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SentMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,16 +194,52 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="MainWindow_VideoConfB_Click.sequencediagram.layout">
+      <DependentUpon>MainWindow_VideoConfB_Click.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow_VideoConfB_Click_1.sequencediagram.layout">
+      <DependentUpon>MainWindow_VideoConfB_Click_1.sequencediagram</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UDP_receviedConnect.sequencediagram.layout">
+      <DependentUpon>UDP_receviedConnect.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UDP_receviedDisconnect.sequencediagram.layout">
+      <DependentUpon>UDP_receviedDisconnect.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UDP_receviedMessage.sequencediagram.layout">
+      <DependentUpon>UDP_receviedMessage.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UDP_receviedRConnect.sequencediagram.layout">
+      <DependentUpon>UDP_receviedRConnect.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UDP_receviedRVoiceCall_2.sequencediagram.layout">
+      <DependentUpon>UDP_receviedRVoiceCall_2.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UDP_recevingThread_3.sequencediagram.layout">
+      <DependentUpon>UDP_recevingThread_3.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoPreview_accept_Click_1.sequencediagram.layout">
+      <DependentUpon>VideoPreview_accept_Click_1.sequencediagram</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="MainWindow_VideoConfB_Click.sequencediagram" />
+    <None Include="MainWindow_VideoConfB_Click_1.sequencediagram" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="UDP_receviedConnect.sequencediagram" />
+    <None Include="UDP_receviedDisconnect.sequencediagram" />
+    <None Include="UDP_receviedMessage.sequencediagram" />
+    <None Include="UDP_receviedRConnect.sequencediagram" />
+    <None Include="UDP_receviedRVoiceCall_2.sequencediagram" />
+    <None Include="UDP_recevingThread_3.sequencediagram" />
+    <None Include="VideoPreview_accept_Click_1.sequencediagram" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -212,9 +270,6 @@
     <Resource Include="background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\user-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\user-frame.png" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +279,15 @@
     <Resource Include="Images\rectangle_darkwhite_96x30.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conv-rece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conv-sender.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\user-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

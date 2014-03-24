@@ -3,6 +3,12 @@
   dslVersion="1.0.0.0"
   Id="78e88b66-de48-4a02-9a71-3b93ac5d6680"
   name="ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="73c76661-6a1e-4909-b85c-fc7dc98d6823"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3D::"
+      tag="ViewCode" />
+  </referencesInternal>
   <appliedStereotypesInternal>
     <stereotypeInstance
       Id="af8a057e-5b5c-47ee-8ddd-ed1d72396d24"
@@ -137,6 +143,76 @@
         Id="2d674c83-4876-48ce-bd17-7b82b2d4d508"
         LastKnownName="System"
         LastKnownLocation="Package1_1941.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="7d7e96b8-0208-4182-abc6-580e76256466"
+        LastKnownName="MSR"
+        LastKnownLocation="Package_2107.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="408e6ef4-af7f-42c8-be56-53024c9ba2c9"
+        LastKnownName="AForge"
+        LastKnownLocation="Package5_2107.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="16a31fad-3c16-4f88-a410-17fb1e3ca082"
+        name="ScreenCapture"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="2a4c75ea-e603-4d2e-abe7-d6f870d7a7a9"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_project_v2%2FSEN_project_v2%2Fbin%2Fx86%2FDebug%2FSEN_project_v2.exe&quot; Type%3DScreenCapture"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="26689433-de79-4316-8d17-7fe70888a357"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ae283f96-7dbe-460d-bf6b-efe22912e051">
+                <propertyInstance
+                  Id="ae372b54-a3a5-4d06-ae8e-838afa711a89"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5e8f8deb-442e-4fd9-b4eb-ade365d33eae">
+                <propertyInstance
+                  Id="79c3e11a-a3f1-4604-b0ed-e5b7b8b8dd71"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f8e8cf83-9eae-4835-86dc-201c9fcb053c">
+                <propertyInstance
+                  Id="fd552753-24f7-4d7d-a81a-8475c336b64e"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="55f678c1-98b8-4b97-a332-d20f5eb8eef9">
+                <propertyInstance
+                  Id="cacf42b3-7a57-41f8-802d-1ecceaaef9d8"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="76632629-2842-405c-8334-be911deb51fb">
+                <propertyInstance
+                  Id="f29a1e62-2167-4af0-a19c-099caf28b044"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

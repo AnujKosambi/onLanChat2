@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="9c5cb25f-0b8a-41af-abef-ac2ba8c5874c"
+  name="Video"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="a6a265dc-2a9c-4c22-857c-0bc516f3f533"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DAForge.Video"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="d0a8f3c5-291a-465d-ae99-978c40780198"
+        name="NewFrameEventArgs"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="eebdb425-4ca5-40f6-9a20-a670f6d64559"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FAForge.NET Framework-2.2.5-(libs only)%2FRelease%2FAForge.Video.dll&quot; Namespace%3DAForge.Video Type%3DNewFrameEventArgs"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="71f25a05-2977-4669-99c4-c094a8b7a932"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c0b71f24-391c-4524-ac0a-ddf3094fab95">
+                <propertyInstance
+                  Id="653f6969-efd2-4007-ade2-cd8d6977f6bc"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8e185476-3883-4d81-a75c-d1211c204262">
+                <propertyInstance
+                  Id="defe5476-07ae-4992-8794-21d562b7aaeb"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="62d58f5d-4a96-4b4a-bba6-7691e8ae2fdb">
+                <propertyInstance
+                  Id="068eb569-7946-4db2-a7ba-e9f0014150ad"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="149f6b1f-afc7-4f8d-91cb-84f051e6992e">
+                <propertyInstance
+                  Id="e9978ab7-55e8-4674-9f0c-82e686375979"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d6452633-dac5-416f-ac15-30d555c89f98">
+                <propertyInstance
+                  Id="3ee5d6ff-606e-4db0-9b63-df5c283ee2b2"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="09f2d9b1-4009-4cb3-b645-d4a4ca49b754"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
+              LastKnownName="EventArgs"
+              LastKnownLocation="Package1_1941.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="b793321b-7db0-495f-91ed-cc08832b8c02"
+        LastKnownName="DirectShow"
+        LastKnownLocation="Package8_2107.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

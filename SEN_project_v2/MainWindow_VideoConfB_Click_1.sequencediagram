@@ -1,0 +1,874 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="f130ff80-768c-4386-8c96-c29237ff7e94" name="MainWindow_VideoConfB_Click" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+  <packagedElements>
+    <packageHasNamedElement>
+      <interaction Id="1865e194-b421-40bb-bf90-94af4586361c" name="MainWindow_VideoConfB_Click" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+        <fragments>
+          <behaviorExecutionSpecification Id="d3860849-7488-4563-9b5c-d17deee5563b" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="a6662668-c948-42d9-8db6-f18b5b3f4a4e" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="10987423-cd42-42b6-9099-218ee6e19213" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="dff29758-0af1-4da1-b444-981f6c05b03c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="de915464-7a2d-4bbc-83b3-c47ea7b255f2" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="72ba4be7-757f-4eef-b9ec-feba635089bc" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2323a9af-3bf5-4ac1-bad7-f47bfc45ac6c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="6c601260-4b16-43d2-91e2-939c3f94c8f9" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="fcce6e40-e8a7-4158-8396-80ef6c7b26f4" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="78e39e77-f6b0-4bbd-bce6-470e223ae5bf" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="083c9f81-f8db-4264-9921-250df8abc39d" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="1f1359f7-0827-40d4-84ac-f742d7f5d88e" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d03cd1dc-6453-4e54-b7b1-55cabc6b12b7" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="073ee8a6-f029-4142-af2f-84eea289e56f" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2aff14b8-fe41-41e8-b4c2-cfc77777bc49" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b7f32388-19bd-44d2-8a71-4c2471651bd9" LastKnownName="OperandOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="10987423-cd42-42b6-9099-218ee6e19213" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="c7d27cc5-82ac-4708-bee1-8433bdeb836d" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <lostFoundTarget Id="26c65cd3-a0e6-45e4-bd45-8fb42052414b" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="dff29758-0af1-4da1-b444-981f6c05b03c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="a7369934-ef83-4b33-9d6c-cf181c90b8ce" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="ce9de449-8e79-4aed-a62b-09f7a9c7f779" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="0a724a93-26ef-4a0a-9859-97a0dbb79342" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="bf81e03a-2dd8-4a0c-aff1-27f1cb6a0282" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="9fd710d3-2296-4f99-8a11-c69d2a42bb7b" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="9aaae972-c8c1-4e84-893c-21b6cfa02885" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="0421416c-6433-42ee-9d65-a59396affcfc" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="217043b8-3daa-4ef5-b145-ca133570e09b" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="1747602b-ab12-48d5-9996-aecc3caa84c3" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="0a724a93-26ef-4a0a-9859-97a0dbb79342" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="574294ae-b0fe-4e33-96eb-2c7602769799" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="de915464-7a2d-4bbc-83b3-c47ea7b255f2" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="bf81e03a-2dd8-4a0c-aff1-27f1cb6a0282" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="a33b57e5-bd8f-4983-a656-c7cfcadb4ca3" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="9fd710d3-2296-4f99-8a11-c69d2a42bb7b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="168cb8b2-1a10-4954-bfdb-fdb9227aba54" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="9aaae972-c8c1-4e84-893c-21b6cfa02885" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0421416c-6433-42ee-9d65-a59396affcfc" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="4927ac9c-a81a-45bf-a44a-c53f8d0566ee" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="217043b8-3daa-4ef5-b145-ca133570e09b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="48cefc79-b85a-4ac7-93a0-c10636009964" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="72ba4be7-757f-4eef-b9ec-feba635089bc" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="1747602b-ab12-48d5-9996-aecc3caa84c3" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="ce9de449-8e79-4aed-a62b-09f7a9c7f779" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="37a10d8e-5ff6-4fbd-bbba-8f3fbee862cf" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="d1b8b640-7877-4efd-9f5d-e3c1831a7d59" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="6dd0f65b-6287-4809-b942-10583a5167ea" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="3a8e661c-c6a6-4d49-9962-d0ba0c3895bf" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="2f3849e7-6972-4a38-a5de-c85037cce3d3" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="fddfc92a-3499-41f3-8574-c728aba5e81a" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="4fe00009-5027-40ff-9647-b490fec77c6c" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="984cf250-069c-43da-a60b-b5ff91fd1ae6" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="46d0d878-060e-48e1-81ab-c3cec20173e8" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="88b66149-a756-45cb-9c57-74327a8cb52a" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d8969b58-9031-458e-8c69-fa86acc9f1fb" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="f3c30c9b-394f-465a-90ba-6d449d7842bc" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="3a8e661c-c6a6-4d49-9962-d0ba0c3895bf" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="c2b2eabb-262e-4a73-93e4-deccb2896591" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2323a9af-3bf5-4ac1-bad7-f47bfc45ac6c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2f3849e7-6972-4a38-a5de-c85037cce3d3" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <combinedFragment Id="7b5fd98d-24a1-4a4e-b607-562f4c63ac8e" name="CombinedFragment1" interactionOperator="Alt" customInteractionOperator="If">
+            <coveredLifelines>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="0da5a16f-54c7-4dee-ba1c-faaf58e27ea2" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                </coveredLifelines>
+                <guard>
+                  <interactionConstraint Id="c32636cb-d8db-450b-be68-c4e7dfa9814e" guardText="if (VideoSources.Items.Count &gt; 0)" />
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="fddfc92a-3499-41f3-8574-c728aba5e81a" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="984cf250-069c-43da-a60b-b5ff91fd1ae6" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+              <interactionOperand Id="80789c58-54fe-4113-954e-17b4d824bbc5" name="InteractionOperand2">
+                <coveredLifelines>
+                  <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                </coveredLifelines>
+                <guard>
+                  <interactionConstraint Id="1e018ea5-a215-4e17-9cb2-3e71800a2fc9" guardText="else" />
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="46d0d878-060e-48e1-81ab-c3cec20173e8" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="d8969b58-9031-458e-8c69-fa86acc9f1fb" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="fddfc92a-3499-41f3-8574-c728aba5e81a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <lostFoundTarget Id="b0972899-8473-479d-9ac2-4d81050d774e" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="4fe00009-5027-40ff-9647-b490fec77c6c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="984cf250-069c-43da-a60b-b5ff91fd1ae6" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="46d0d878-060e-48e1-81ab-c3cec20173e8" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="88b66149-a756-45cb-9c57-74327a8cb52a" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="77890fde-1a6a-453f-92a4-7d50413e7bbf" name="LostFoundTarget" />
+          <operandOccurrenceSpecification Id="d8969b58-9031-458e-8c69-fa86acc9f1fb" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6c601260-4b16-43d2-91e2-939c3f94c8f9" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="f3c30c9b-394f-465a-90ba-6d449d7842bc" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="6dd0f65b-6287-4809-b942-10583a5167ea" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="65e76928-709d-4bbd-83ab-0b54e1edb610" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <combinedFragment Id="de0d5f74-d137-4c8f-85fa-4adb31e79c0d" name="CombinedFragment2" interactionOperator="Opt" customInteractionOperator="If">
+            <coveredLifelines>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="541564aa-6bf3-408d-a48a-f6a1d35ea6fb" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+                  <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment Id="c11f7941-b34d-478f-ad14-1639e8b656f3" name="CombinedFragment1" interactionOperator="Loop" customInteractionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+                      <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="a40fa2f4-357b-4013-a4c3-f541e72d7dad" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+                          <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                        </coveredLifelines>
+                        <guard>
+                          <interactionConstraint Id="0e7a44a9-6f1a-426c-a830-bc178305db86" guardText="foreach (videoConf.requestedUsers)">
+                            <maxInt>
+                              <literalString Id="b6badf9d-d26c-4059-b79b-a4436d3ff8c9" name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString Id="abd0dc84-8089-4265-b370-d72730ec8c05" name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="78e39e77-f6b0-4bbd-bce6-470e223ae5bf" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="d03cd1dc-6453-4e54-b7b1-55cabc6b12b7" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="efcd6416-b98d-4b11-838e-f3222ef25181" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="558a4388-8b75-466f-8f11-56fec8a58743" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                  <combinedFragment Id="f7346500-0927-47fa-9e60-451da1d31293" name="CombinedFragment2" interactionOperator="Loop" customInteractionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="a8ba84de-4c72-4de7-b3d1-d9c5bc37962f" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                        </coveredLifelines>
+                        <fragments>
+                          <combinedFragment Id="e7663a72-4907-4734-a75b-f2ba674acef7" name="CombinedFragment1" interactionOperator="Opt" customInteractionOperator="If">
+                            <coveredLifelines>
+                              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                            </coveredLifelines>
+                            <operands>
+                              <interactionOperand Id="c2806854-ea26-477e-9117-1886deb3339d" name="InteractionOperand1">
+                                <coveredLifelines>
+                                  <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+                                </coveredLifelines>
+                                <guard>
+                                  <interactionConstraint Id="749ad2ff-4205-4bc8-acc7-516972c7c1cf" guardText="if (!MainWindow.hostIPS.Contains(ip))" />
+                                </guard>
+                                <operandOccurrenceSpecifications>
+                                  <operandOccurrenceSpecificationMoniker Id="b9e9cf95-48b9-4cf7-8782-5ad7ec58f45d" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="df53b698-ac60-4bae-a513-cf4eba38438b" LastKnownName="OperandOccurrenceSpecification" />
+                                </operandOccurrenceSpecifications>
+                              </interactionOperand>
+                            </operands>
+                          </combinedFragment>
+                        </fragments>
+                        <guard>
+                          <interactionConstraint Id="b5dffdf4-00ce-4010-a814-39eca6d39d2e" guardText="foreach (UserList.Selected)">
+                            <maxInt>
+                              <literalString Id="7149a9cc-1968-410a-8419-2a16128bf0d8" name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString Id="92ba1336-1177-47df-bc1c-8fd594c1a25b" name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="7c211fa9-5193-4e6a-a4b0-e911cf97ca9e" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="a37c9d63-1702-4e99-bf43-44d29ed31546" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint Id="48f587c9-6344-4c29-8088-0f24488b19b7" guardText="if (videoConf.SetVideoSources())" />
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="fcce6e40-e8a7-4158-8396-80ef6c7b26f4" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="b7f32388-19bd-44d2-8a71-4c2471651bd9" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="ed746251-b8ec-4793-9639-5c646101bd48" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="0a07ae52-73cb-476c-892f-23adfa357eca" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="ed746251-b8ec-4793-9639-5c646101bd48" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="fcce6e40-e8a7-4158-8396-80ef6c7b26f4" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="78e39e77-f6b0-4bbd-bce6-470e223ae5bf" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="efcd6416-b98d-4b11-838e-f3222ef25181" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="002dc06a-2c44-4a34-bb1f-c0aba19f4ea6" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="ff5c6958-e39e-4427-83e9-a64e5b94d029" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="2b4149d6-6e91-4a19-b666-5f5b0cad65c2" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="1e3ed98c-faf4-4071-942f-11b824f35efd" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="cc28a072-f761-4ed6-b43a-a93e8b8a8b55" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="0e63ca22-2aff-4e54-92d5-40c62f5cc21f" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="cee00216-3d7d-44e2-a3c2-460e0bf733f2" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="650659df-f492-4972-9edd-44331b04b011" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="2b4149d6-6e91-4a19-b666-5f5b0cad65c2" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="0c269042-f1bc-4a52-bfbf-9bbc9e7c6f6a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="1e3ed98c-faf4-4071-942f-11b824f35efd" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="083c9f81-f8db-4264-9921-250df8abc39d" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="a32c6d21-496a-4797-9254-0e023d010ebf" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="cc28a072-f761-4ed6-b43a-a93e8b8a8b55" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0e63ca22-2aff-4e54-92d5-40c62f5cc21f" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="45c40a22-8204-4e8b-bcc6-bd92592a030e" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="cee00216-3d7d-44e2-a3c2-460e0bf733f2" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="e0343304-a088-4150-b3d7-26fd089e898f" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="1f1359f7-0827-40d4-84ac-f742d7f5d88e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="650659df-f492-4972-9edd-44331b04b011" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="ff5c6958-e39e-4427-83e9-a64e5b94d029" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="aafb6ab8-7e5c-41d7-987a-43a638e30fcf" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d03cd1dc-6453-4e54-b7b1-55cabc6b12b7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="558a4388-8b75-466f-8f11-56fec8a58743" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="f8f13223-ec4b-4e8f-a96a-b67ca41a6f23" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="4f699462-b822-4221-b494-c0bfe71dcb69" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="620e6c90-2a1a-49a8-9626-ddf13d3e2fcf" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="a939a3a5-83ca-41a9-b2a1-1e5f3bd812c2" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="7c211fa9-5193-4e6a-a4b0-e911cf97ca9e" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b9e9cf95-48b9-4cf7-8782-5ad7ec58f45d" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="ad89098f-17ce-40a7-aa38-4f7ab876451b" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="df53b698-ac60-4bae-a513-cf4eba38438b" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a37c9d63-1702-4e99-bf43-44d29ed31546" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2ba3e6c3-5a92-47f2-8d28-a817c1902979" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="620e6c90-2a1a-49a8-9626-ddf13d3e2fcf" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="b5f6b931-0208-4658-950a-8a2659c00fae" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="073ee8a6-f029-4142-af2f-84eea289e56f" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="a939a3a5-83ca-41a9-b2a1-1e5f3bd812c2" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="7c211fa9-5193-4e6a-a4b0-e911cf97ca9e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="b9e9cf95-48b9-4cf7-8782-5ad7ec58f45d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <lostFoundTarget Id="31689cb3-d5e8-477d-b3d3-f6fbd1a16b83" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="ad89098f-17ce-40a7-aa38-4f7ab876451b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="df53b698-ac60-4bae-a513-cf4eba38438b" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a37c9d63-1702-4e99-bf43-44d29ed31546" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2ba3e6c3-5a92-47f2-8d28-a817c1902979" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2aff14b8-fe41-41e8-b4c2-cfc77777bc49" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="4f699462-b822-4221-b494-c0bfe71dcb69" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="e6ada41e-db5e-49b3-8e0c-7814c48bf029" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="b7f32388-19bd-44d2-8a71-4c2471651bd9" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="0a07ae52-73cb-476c-892f-23adfa357eca" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" LastKnownName="VideoConf.rtpClient.vcWind : VideoConf" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="a6662668-c948-42d9-8db6-f18b5b3f4a4e" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="cc660da4-a600-4d18-bcc7-24bbec0776f5" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" LastKnownName="this : MainWindow" />
+            </covered>
+          </executionOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline Id="56fe5c7a-2b4f-44f6-847e-3efd37929c4f" name="this : MainWindow" isActor="false" lifelineDisplayName="this : MainWindow" referencedInstance="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=MainWindow ObjectInstance=&quot;Object instance 3&quot;)" referencedType="SEN_project_v2‎.MainWindow">
+            <referencesInternal>
+              <reference Id="11b48df9-9254-469e-90b1-f13d64b56865" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=MainWindow)&quot;)" tag="DGQL" />
+              <reference Id="f9a712b1-d135-4ba3-9658-93a8b8f9d7d0" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=MainWindow)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="10987423-cd42-42b6-9099-218ee6e19213" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="a6662668-c948-42d9-8db6-f18b5b3f4a4e" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="f6d2bea7-9774-4152-8b19-0e8330635b6e" name="VideoConf.rtpClient.vcWind : VideoConf" isActor="false" lifelineDisplayName="VideoConf.rtpClient.vcWind : VideoConf" referencedInstance="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf ObjectInstance=&quot;Object instance 6&quot;)" referencedType="SEN_project_v2‎.VideoConf">
+            <referencesInternal>
+              <reference Id="9ec0e059-0421-4da8-87e0-093788052a7f" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)" tag="DGQL" />
+              <reference Id="cd291805-d2ef-4742-8957-e17719d5be6f" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="0a724a93-26ef-4a0a-9859-97a0dbb79342" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="ce9de449-8e79-4aed-a62b-09f7a9c7f779" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3a8e661c-c6a6-4d49-9962-d0ba0c3895bf" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="6dd0f65b-6287-4809-b942-10583a5167ea" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="ed746251-b8ec-4793-9639-5c646101bd48" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="efcd6416-b98d-4b11-838e-f3222ef25181" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="2b4149d6-6e91-4a19-b666-5f5b0cad65c2" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="ff5c6958-e39e-4427-83e9-a64e5b94d029" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="558a4388-8b75-466f-8f11-56fec8a58743" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="620e6c90-2a1a-49a8-9626-ddf13d3e2fcf" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="4f699462-b822-4221-b494-c0bfe71dcb69" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="0a07ae52-73cb-476c-892f-23adfa357eca" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message Id="ee921fbf-ebd1-43e3-9fbb-9218ecdbfff9" name="VideoConfB_Click" messageKind="Found" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="e6f9ab37-56be-43dd-8649-6d4919be1172" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=MainWindow)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=MainWindow Member=(Name=VideoConfB_Click OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System Type=Object),(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/v3.0/PresentationCore.dll&amp;quot; Namespace=System.Windows Type=RoutedEventArgs)]))&quot;)" tag="DGQL" />
+              <reference Id="82e7fb40-4710-40b2-8066-445063677fec" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=MainWindow Member=(Name=VideoConfB_Click OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System Type=Object),(Assembly=&quot;$(FxReferenceAssembliesUri)/v3.0/PresentationCore.dll&quot; Namespace=System.Windows Type=RoutedEventArgs)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <lostFoundTargetMoniker Id="26c65cd3-a0e6-45e4-bd45-8fb42052414b" LastKnownName="LostFoundTarget" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="dff29758-0af1-4da1-b444-981f6c05b03c" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c254d734-01c1-4bad-bc56-212e4e80c786" name="Create VideoConf" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new VideoConf(this,hostIP)">
+            <referencesInternal>
+              <reference Id="25fdb728-1a16-41db-adc4-a3a653aa87c0" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf Member=(Name=.ctor OverloadingParameters=[(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=MainWindow),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress)]))&quot;)" tag="DGQL" />
+              <reference Id="617532b4-d31f-4cfc-b80a-9c729dfb41e9" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=MainWindow),(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="de915464-7a2d-4bbc-83b3-c47ea7b255f2" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="bf81e03a-2dd8-4a0c-aff1-27f1cb6a0282" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="5f2f72cc-7255-4063-a937-61a92aa3a1d4" name="Create ScreenCapture" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="508b0605-b686-40cb-9700-99b7c123977a" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=::)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Type=ScreenCapture)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Type=ScreenCapture Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="4d5e1660-1392-4ebc-870a-b10f60e8cf81" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Type=ScreenCapture Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO2VQU/CQBCF308hHIxerGKiRtHEVIlEg0bwTFpA0BSKXTDgr/fbgUbAGDxxMKRpd3bmvZnp20y2rLo6yvSqSAnfT3ZthbZLVCESqY/vUmU11APh9KSUZ6SCqmAvVNSurvA7cH3F8KZ4d/SuseHO9QIvIXqmwJ7QrGdjZHwD+APQb7qD4axmDCcgf6oWEd/DgFwe+2FdjK3HAtYIu40vZVfSgQ51BOqRzCkZO/BnvLpuVFNTw6VIk3yltVHfzYB1olMds14Tj6nbXcPcZzfhXVSjgJJT0B1UqoPNsPzfedWH9jfes4eu38ga3DbrVvFNKe5jI9YuOTJ8ufLh/CR8np7pH1E5RJnITsTnuMeOiSXG+L1i0WbI2VmkvFOypcSc8SqmtzOcn78qCK99xNrCu52/7fz9X8U3NX8PIPM/WJ2wvObJvDNfbWj9RNbTcp0GvvHCVN9i+2qLFZZxfqrz29TBCswT/Ohj5l29f2fev97fX7gwo9nqBwAA
+(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Type=ScreenCapture ObjectInstance="Object instance 7")
+VideoConf.rtpClient.vcWind.sc : ScreenCapture
+new ScreenCapture()</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="9fd710d3-2296-4f99-8a11-c69d2a42bb7b" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="a33b57e5-bd8f-4983-a656-c7cfcadb4ca3" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="5ab81d7a-f56f-4b4a-9dfc-ff71f1795da0" name="Create Dictionary‎&lt;IPAddress‎, VideoPreview‎&gt;" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="932ff6bc-430a-4daf-b1ae-b43acfbaae59" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="e6d5f5aa-7fa8-4a45-b515-7e0f34a7028d" handle="(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO2Yb0/TUBTGn0/AZ2j2grCErIBRjDKTZYAu6CQy9YUxpPvjALd1rq1QPj2/e7phy1jgnRGbpuu95zzn33Pv6W66pxMNNNO5Ao34vWbWV9NmIx2iCTRG9kZ76ugMRKRPCrlieWqBrauiDTWQR+DG6mKXIv0BdoTklXy7mjb6inSCVahL8L4+MO8RJWQWYhOrprYOiOXnol+im+knst/aAbHF/ZzfXWa7SMdY9wzjauii7Vv+Hr4yD5GmjHqM6lScMo8t2xp5hYYdoI2xDskvQv4WyWTOTQ9PHaymZr9x67WufdMu7ALQKdii7bHJM4vYpC5mAiLGw84SvsFziH5s0phs6vr21zkusvZ4fttWdZ6/Fow08NAn3sBqqmrz3vrW9Qse3F57vaLWz2YxszobVJ3oQkdWaWB+zpE7JnoFPl2Nbicnts89yzYB51bRo94tbesZqGNj7WK+NyJj4YCKTqkkrzk1zh7Sdm1dfF3ppV7w3EffJe7wAcsasyvuPBurmF/tJb8CX8ikzyi0CgfGhtsBVX3nrtLRf9BtUA5b9nrZ62WvP+1ed//7bi2Htj/S255vzt8BJ8Q4s1ULiNSEz8DW0fl4z7iLbmQW9/XKmreO1lW0vCvWvE18rMrVWQ7NsmKnjsjW33lOycX1V2RRD22N3S6p2ImlZf0dI50Ya+WJpXyLlW+xp/4WK08sZa+Xvf5/9Pq/cWL5SJxFvXfPJIuMt+E9q8xlO7V6siyKeXaQJXbCyU5C7xgH4PMxijh3Elp8s4mw8k3iL2WSSe9+5cmkj/1KdAPU5qy9UBIAAA==
+(Assembly=$(FxRootUri)/v2.0.50727/mscorlib.dll Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2 GenericArguments=[(Assembly=$(FxRootUri)/v2.0.50727/System.dll Namespace=System.Net Type=IPAddress),(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=VideoPreview)]) ObjectInstance="Object instance 18")
+VideoConf.rtpClient.vcWind.vp : Dictionary‎&lt;IPAddress‎, VideoPreview‎&gt;
+new Dictionary&lt;IPAddress, VideoPreview&gt;()</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="9aaae972-c8c1-4e84-893c-21b6cfa02885" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="168cb8b2-1a10-4954-bfdb-fdb9227aba54" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="64afbac9-3ca6-4dc2-b1a1-7483399c853a" name="InitializeComponent" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="9fea70f6-5e1e-4ca2-8d85-0d12832f721f" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf Member=InitializeComponent)&quot;)" tag="DGQL" />
+              <reference Id="d272489e-0290-4fe2-9b37-2e9d7d55b46e" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf Member=InitializeComponent)" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1dYVPaQBDdn5LxQ0dnOkHtWG2rnbFoW0arnarth07HCRKRFghC1NJf37d7QQhEPBFIojuOJrnbu9vs2323OY64SUfkU5tq5FEdf//hqkJFuarTR9R41EDZe9qkY7qARIe+UYCfkBwqQXaLFmiRtlHegVyDymjXRekLuqQrkXtH52hXR+1bKshPUc5OpEUbfwto34T0b9pDi46MWUabAvoP6Aw1rEMTfbHstWhxJTo6OAtxXkFZgKtVWqYVegWpr+g5QI8+2pt2R7RLB3RKrVjNKfpbvbeWtWni+Jc26DWOO6gvY9zqPS1dXP3F76A1HEgbq3bQxoO0D3uN68WB7buoYbnv0KSCswBWDKDTOS0Bgb7EAUq5XrHJHjYcVyGOVdS2UdbDqBhhdoR+LwQpD70XYUNPsOM+9nFeRl1dWoyOtCDx2BG0uKSLXgLcV0fkPwoijOmCxHIJEoyOhyPfo8ZyFv1FYzm72Mw6lg8h0dNuOFp7Y72ONOJRWqKHJ7rE+z9G2ZVEvmGIzzj3ID84QlyOGaI3y3diV87t2R4ku+qVqXulQ18iy7M1t9DrWeSpyhrZxkdZfjp49a3PnNvGGd9dUTiO74ZL5sfdriCs2VhefEGj72lGn03+tG6VPw1G62QZlAPLcklhRBNT2pPUTCtPMznrqplWHvCZLtcbi1ajtVEH/GCkOM4XI8ssSVT76MEXBuzN6/HxatKqAL1rwp2MeYA2Icr6a683wkx/BPFXsORypIMvPTWFTULBvSm24BoXd8gruDb27orvsE4u/RB82dtuUOqKRSuyOuzCaszIVZGoxrD4gLJQalu3UvNlfcY63ZxLvcLOK4aj1JX4Zv00Vp9XrNpkaG80Q9MMYOIM4EJsGGqWlhuMHsL+yTjFWTGJr130vouR7uLtVeFtl9bwdx1X62K1QeY1fG3D0Qc4hjGLlID1NnqoRLNCZ67c27O2rk/lL5a+oAXrMujhd0UTe5lG1LQjKgkBN2Zz27xmTfMajfOJ50y2RkuzmpwgpJ80pI/YCcYenhFnm2kZD9A8K3++YpNnaXxnC7PZxndy3tePcJuMj+2vOZ/676QZRQP37kXr07qilTekdI5IH7kkFp9nRhj3C80Mn6IHaXxnGZ3pxXcYfRfONvubV+6nOV22/XE4V2ijZUs8raaZXY7xUv5PH79vOP86Bpvps7+b4A+a1+XPc+5/ptO4zy5684v7pKe6ZAawyQkZmeytCBaGskldRcxPJNzPY327ap6ZH5SyuoenQfxtK5Zh9is/aB8P33tdNGUrmR3RnFF9Ej8x76Q5i9lt8bbXLTBkTfpyhuTNCpuRCqW0KNlXUxhyZUR+G8dqzDu36Gfqdp3t3qhf+J3nDNn35lnmxur34/x+aYRjHvO9C7W1ckyWOcbu83i7t6fo5/GaoyXlaNekOzDzgY/ObMMz247U9toZ1nvYLLeqsxy866XGfCoxb75Rey0rbjcpZBvMLfosoyykLKQsNI6FNOPQWNdYfx6xPp+Mw25lY0NXNtSnJ35y1j1pTwEt3ZmSPnpZ3Jmie9Py5UPKAHlGL4sMkPbetH7WqPlh9jzWhm98Gc2Pnl4ruqvsieCm61a6ByS/e0DG+Xe6ma/hnPTeQrs2gvVj3z27L/54GfOBXeHqhujvibajb/sdjK1jjDd5fB3i3nxhhAByFTJvuh1tl41IS4/BSnfgMhs+G+2nJHHaFM3PxX/ZD5Zv+UE/NdHZ5znMPnZPXVlcubf9RtDw/4c1pUdk9/9l/wPK1OAUinYAAA==
+(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=VideoConf ObjectInstance="Object instance 6")
+VideoConf.rtpClient.vcWind : VideoConf
+InitializeComponent()</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="0421416c-6433-42ee-9d65-a59396affcfc" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="4927ac9c-a81a-45bf-a44a-c53f8d0566ee" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="10f76fd8-fec3-4eab-839d-0db125a93f8f" name="Create RTPClient" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="20589b65-dac3-4a87-a3da-e4053bbff29c" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=RTPClient)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=RTPClient Member=(Name=.ctor OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPEndPoint),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2 GenericArguments=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress),(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoPreview)])),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System Type=String),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System Type=String)]))&quot;)" tag="DGQL" />
+              <reference Id="52182990-785f-46eb-9e5f-46cc0bee467a" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=RTPClient Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPEndPoint),(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2 GenericArguments=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress),(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoPreview)])),(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System Type=String),(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System Type=String)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1daU/bQBCdnxLxoSoSItz0IJVQgDbiaERo+wFVyLmANgeNw5H++r4Z28U5gKDEwTZPyNjenZmdnZmdfTum6paUpCYduRRHGvj9F29VydtbQ/bQ40gTbZ9kS07kAhSuHEsbP13JSAG0OZmTt7KNdhd0TSmDr4fWN/JHro3uo9TB10DvB8naT96evhlHB7+z4G+B+pfsg8O1McvgyUJ+WyroUR1akKW0N6bFtemYwVMXz1W0tfG2IkuyLKugKkJyGxJr4Pf4SrIrR3ImV309Z5C38mSvatPC/U7eyQbuO+gvY9zzJzgX8XaHK2yNDKg9q7rgcUBdg70ek5KB7XvoUbpjPBdhQfWWZ5N5eOCe4gjcVdzpm/j5RtdVF/dzSOmgLfBR3vdZCXIvzFMOpKscx3ynMg7wXEZfwziGR5qz9eiat9q4epDSxrxco98zj6hP52wtF0Ch3nFw1zlyLccxXriW4+ubqNfyV1AE2g2u1mCsVdn0ddJxrkwTx7TpH+EEbde29r0c8QXPDujDY/TTaY4I9nkXXFlryQ5p4rUOIoMwd+b/0z7oe4zjF4/jjBz6lldr5uCNQH4O46sUjSONwBujaODdMYu1oH/RIsyj7/r+yMnpSJ+O9uMPk6SeujU7H+K9YrNwcdUhdREa7ULvbAiB3ppWv82faqclXOv4vYm3TbNqz3yr4y9CesO8PdpyYcojm0fYYgXMcdc0LGLMS3/tL7z4DJvgrhiN+rL8rFlqVmqYpurfS0MILto/W0x4J4BKnxXCUbFjvQGfl2EyA7zDcZE3/NGy3LIyRL+N+3nfSk1fFG1DQhXj1WxOD8UQM180me87NNGduG0zrJk1NALm5SeuZK/o8DxLaOv42Tmts1KPZUbkmIJ5uGW5qW7+1R2tiQhqWFveUFfXVuO8j3+IpYlBkrB7EIMQgxCDJDvzEYOkZ1bTwyDPqe8lN/MM71/R1M9GWzrKenh6fEIcNq0dNHnZrWARsAqZwW7E3DS73DRefX9trPp+OJtFU+FnZT9+2JKnap6qeaqOMyZg5uOpmqfqaZ6qbyDjwGK/y3o+kUei9gwiDyIPIo9kZz4ij/TMalLkEddKGXM6czpz+vRyejSV4XA+Scu3KmYeZh5mnmgyD1EG1zrX+utY69NDGfej5m211DEzRR7jfoFeht34BZoxzTow68DczeMURdzN47ybJ3lFsw78WB24YllKqfj9mbgjSTsGcQdxB3FHsjMfcUd6ZjUZ7khfXfhhS0VTG7u3aFq+v0WZ6QcR1gl0edhLjMrpROV4/0ponTVaIgaelXhW4lkpVlHEsxLPSjwrzf6sxArtS689og6iDqIOoo7Xl/mIOtIzq0lQBythk1bCZlGdZRaMOgsGf3c6O/xHn0bj00NwqC7hvBSHzB8tevL2gJJlFI+z5qPLU/h7ATosyHv/voZr2Ti4A0x7BxjvS8hGDL+EaISO93+s/QO2TjlTjm0AAA==
+(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=RTPClient ObjectInstance="Object instance 37")
+VideoConf.rtpClient.vcWind.rtpClient : RTPClient
+new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), (int)MainWindow.Ports.RTP), vp, MainWindow.hostIP.ToString(), "224.0.0.2")</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="217043b8-3daa-4ef5-b145-ca133570e09b" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="48cefc79-b85a-4ac7-93a0-c10636009964" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="632dbdc4-bf20-4f1b-bad8-e27f7ad5f19f" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="1747602b-ab12-48d5-9996-aecc3caa84c3" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="72ba4be7-757f-4eef-b9ec-feba635089bc" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="7f4c5871-a3c9-4f20-89d5-8ee0389f3c32" name="SetVideoSources" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="videoConf.SetVideoSources()">
+            <referencesInternal>
+              <reference Id="9e560394-5264-416d-a7b8-bea23ddecbe7" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf Member=SetVideoSources)&quot;)" tag="DGQL" />
+              <reference Id="bbb42fb6-a905-4859-8916-0e69e20023cd" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf Member=SetVideoSources)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2323a9af-3bf5-4ac1-bad7-f47bfc45ac6c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="2f3849e7-6972-4a38-a5de-c85037cce3d3" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="6151eac1-e9cc-4614-b635-ec9c113a14f6" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return true">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="4fe00009-5027-40ff-9647-b490fec77c6c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="b0972899-8473-479d-9ac2-4d81050d774e" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="1637cea3-b347-4916-88a3-d7cdb705a3ff" name="Return" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false" signatureText="return false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="88b66149-a756-45cb-9c57-74327a8cb52a" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="77890fde-1a6a-453f-92a4-7d50413e7bbf" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="f4e3bf5f-ce91-429e-b7f9-b35666192ea0" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="f3c30c9b-394f-465a-90ba-6d449d7842bc" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="6c601260-4b16-43d2-91e2-939c3f94c8f9" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="4b646257-a212-4c2c-acd7-ee5a2466196c" name="MakeUserPreview" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="videoConf.MakeUserPreview(ip, VideoPreview.Mode.Watting)">
+            <referencesInternal>
+              <reference Id="61a5a78c-9c5b-4b6b-9dfe-3bf998b57c52" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf Member=(Name=MakeUserPreview OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress),(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=(Name=Mode ParentType=VideoPreview))]))&quot;)" tag="DGQL" />
+              <reference Id="8874c1ee-a3d8-4a12-bf03-401f4bb32cc9" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf Member=(Name=MakeUserPreview OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress),(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=(Name=Mode ParentType=VideoPreview))]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="083c9f81-f8db-4264-9921-250df8abc39d" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="1e3ed98c-faf4-4071-942f-11b824f35efd" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="066c2216-17ca-47d8-8318-3e4b01206516" name="Create VideoPreview" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="c532fee1-8a95-4d87-8300-19289070db13" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoPreview)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoPreview Member=(Name=.ctor OverloadingParameters=[(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=(Name=Mode ParentType=VideoPreview)),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress)]))&quot;)" tag="DGQL" />
+              <reference Id="f2413936-51b2-41cc-9968-63f48fe6409d" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoPreview Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=(Name=Mode ParentType=VideoPreview)),(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1abW/aMBC+nxLxYSrSRApo7bSVSYxRDXWwCrrtw1RVAcLLCqQjvJT9+j13cajpUkirgQKykIlj3/nOz3M+Y7dn1CCXxtQnhwb4/oO3NpXkbUDn6HFoiLYPdEZX1IOET3Xy8JmQRRXIFihFR1REuw+5ITWht0DrK/pNU5F7Tx3oDdD7jmz5lKT2TTTG+LahP4L0L7qAhi82m9CxMb5HLfSwDyOMxbIz8WIqPlqoTVBvo83DW46OKUt5SF1iZA8jutAP9BpUphrd0N1Kzw3Gy23sZW9GeN7TWzrB8xP6m7Db3aCZwds9io6GBekAVR86DqRd4LVuFAvYL9DDct/hSRs1T2boChouzSkNHh7kauhnKcNQUhniNTbBswu5MdpCpkqKuQZG7wlfDmyUgKQjDPIYX1Bvom8gGk/ZS8kK9YU5D2WBsTzM0Retc2GH+U3J6q5Agply8OT5mtWd3NgxqzvpDO1mdX+FXOjp4/UbWjwBG4FnbO1O/HHEp1U7V2ibSjYIssZn1B3I6zZW5ThrhL8FfGjZ0mL/40nQ+vjXg65tLWsXkF+YmE5ITFtUVfgzpgVwElopwAsei6OJ43AmEgO8O4LbCLO4lDgL5CeKlQL9NMzukFmdsarKPZZiJsAoTmZL0+tI1qKZ+iGzZy7mgmQV7y3x00fpwGYGXpVh2dZOGHOJpVthjJE4RnmD71O8nQpuC2GP7Wcw+kD4jMZGl6xJ9OmYVDC/IkZoyyx5Tmm6RrEiIrYiiDBOfZltsA6GCsm0ypZmFzYZyzBrMta+ZCxzjjicOH/5qaMsXA0jzhxhtJgbhP2Lqyo02Bc9p63bFR9iqyQcd+ijOpFyDrz9L3vlLrPuENotkeEZNJ+ReXUU9VPvU3vJ5ggOYqyrfLcwi0CKT8tHKlbSkKujrSMYusu1s2qvL1pRGD2FTV6wsVXG8NX6cGRfYJ5LIusu8YkTgfoutcqejl1dcgTLtcHeTFkuwlpX27kayht3uXY5erLAOqcK1/OqZFUJ2q/NPpaYfLMv+1i8u7JcrLsyfefbzm2ZuSVLXqSbM+ehMmvOnNs4c/ZkLhMZydyUmaxlmDVZax+z1nNOGYeD2nb+mq2ja26X9i/nmNslc7t0WLdLuRfdJpk8vz7P9zFe/FuXbAJvXezY/xn9F/v5pBxELQAA
+(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=VideoPreview ObjectInstance="Object instance 63")
+value : VideoPreview
+new VideoPreview(mode, ip) { Nick = UserList.Get(ip).nick }</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="cc28a072-f761-4ed6-b43a-a93e8b8a8b55" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="a32c6d21-496a-4797-9254-0e023d010ebf" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="351ce060-fad9-4319-a1c7-5b6d5f2d8959" name="Get" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="bef650a2-fcfa-4884-99e4-65cb433bae7d" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=UserList)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=UserList Member=(Name=Get OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress)]))&quot;)" tag="DGQL" />
+              <reference Id="2d38217c-e955-416c-a7c7-d3b30a1067f4" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=UserList Member=(Name=Get OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO2Xb28SQRDG56Nc+sKUxEALsTVaTBBbbSy0gaovTNMccCCW3iFH/+Cn9zezd7go0mpijEoue7e7M/Ps7DOzs7k9aUskExlKKCPenxn1pG6jkRwgCeWSuWeyJy1JeKYSzHuvkcykKhuyKTVJeSK0O1jq7AP5JFem91T6YI+QPpGSPXXrvTGLCe8S9jHaH8FMGIeGM2S+x7iLRL2IwVLdayQpc+plQG9Kv8dcwqgsW7ItFbROQE5AjLB3dm3Zl6acy3hBcg5e+U6pehPzvZXHssP3BfIO6w7usCwyuqX5bARoO15TbEK0I/hahRLIKZyOTS9n7chY0Hg0Mt51tkoscvSqvOStGsegqHQEcmhcxXh+Qj+P8DSLRFXeL43m8gi+MySN0Y0x3GDcNf9TWh/UIt7s433Jy6YbZBO5sEgqQ1u0R7x3Ge0anzPbma5fBH1kcV7Oma/ZzHb7latD9lgDocd6ke2pIGe0YMneD9FyOTa03To2hyAVyPDA5OtcX+f6/5DrOWoT71VzVe7/O2z5O9c7UK0H5tFszkA9Y6TNOh8MPSRv6/gRGopiHNHXDB2ZhbLq6kdqJz+hzbBLOCOpaRzY6VZWN+ymPURDfQ/56m7WtedP1J4GFuqLn8mr6s9b9DQzEsuRmFg8zzJDM//ir6tMl1h3TUd30PmJ8+azeIxlznFBHv5iBrscG2S+B+zCaaX0N7NcKaDXYq5vHEbzs7O43tCslnH0I24qxo3zITKk2M7m1E5CbNFWSc7PfTLQr02L0fO5a1mNUL0e0bvOVq6x2sCr7u3Mm2h+djV7tuG6nDXtV6x/tq7vv62++5n+bQXP0XeIhfNCkce2dmjrL2L6N4K7OV7RD7HwV1HNU6yv5jdH/memeVSymdJ3vrjZXNON7vsX+AXySOOQMA4AAA==
+
+UserList
+UserList.Get(ip)</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="0e63ca22-2aff-4e54-92d5-40c62f5cc21f" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="45c40a22-8204-4e8b-bcc6-bd92592a030e" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="380d24f9-a997-41d6-820c-ce2cc9708e10" name="Add" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="342c24a1-e4c7-496d-b16b-86c24ffe3043" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) Member=(Name=Add OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) ParameterIdentifier=0),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) ParameterIdentifier=1)]))&quot;)" tag="DGQL" />
+              <reference Id="62584b60-e5b4-4b3f-940b-b53e80a4f2d0" handle="(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) Member=(Name=Add OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) ParameterIdentifier=0),(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2) ParameterIdentifier=1)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1b/0/aUBC/P4X4wyLJQkEyXTZZwlA34nBG2fbDYkyBgihQRgvK/vp97vqorchEtm4VLwZ4797dvfve6yXu0ik5NKIu2dTD90/sWlSRXY8OcGJTH7B3tEt1ugCGRyfk4s+nDFWBW6IN2qQy4B7w+tQA3RTQNnB7gLwhS/4qsvoG6ABULl0D36Ia9k3c4mLngsanHB3RPu6yIrdf42xEV4BNaAsYeXxe4XsHux1A+6BuCg7r0MBpS+TPgFfAwaMhVk2sStB4ir0v0uYglyu4Dk59ULuQzwP8AyADY5smONVBNRT6zZBrifbkdEZnA3sK3DjtscADCl+gfOcYGD44bM3hl/HbwXlfoD6kKdH3/27juNWWt++RaB21XxUWKYNDC/c5olOWXt6r3wv6ATtwrL1doOsXoRiJnmVoPaZLOhRNbeHTBZwt0YzZk3XkSB5LnGdE2jHw2IsZ6JunAhWBdSxWuzSx4YkV9qHROTSJnpyLzR46bYhfLLqh17SN3z2cN3Bv5wHKHHY3+EStscjyi7lEPfAVkrSwckVDR6zBEZClM3yyyOhb7CNgMa7muua65vp65zo/99mXHYmPaZjzFVMDTnHHhXjNxk0V2NMWPzKPT1g3cNYTittbK5ItbWg2Au+hUHWNd3KQphnGMO+GwqsKnuxhppziNs4gT/geiBc5DjakJ6lKBvuADsQu2pNondI6te51SnsSzXXN9eeR62npST6D00yju13HTKYCLBvIzvIMReIgJ+OSRLuYoNv5iLUNiugtjFkH9TjsdmaTFw9UlkCsOVkC6N1ZTZQ6E64OgT/VCvrHFTQLipqxHZ/GbwhqDUfQRE57oLUl2weI6nne6ai3T98j8zhVyf+B8G5LxrOv8gvrv9o7CXsXTJ1fnuJK6lTWVEvt+bTn055vvXq+9Xt+auw+n9hd5TmW1llGsnGbzJtdYNckJ8eaWclkVg0ULEs0ln/3LJh/h39vYoNj/+rJPSVW7yKjVoxODVZ/NgQx1jGyZ6BFgMXThk0TK1ngnQDWFhs6Ye7E7+sK1X02WmSbotjGMvXVM/lhh11uRXCd0D7LRGC0OsW9F7XdidQIxmvBexNzc9APe2GFPzXSOGHucvQUYOst8+F1UdZnWuH/eoXvPmIKtw1fpGMKp9M3nb49V4/o9C2d9n789G0idZLrn07gdAKnU4yn+q6lEziN3XWN3VWfZY95R1Pf/mvfJvMueRsDOjFc12jRfE67h5LK5+UmRMUUToispf8X7xdgOBzCtjcAAA==
+(Assembly=$(FxRootUri)/v2.0.50727/mscorlib.dll Namespace=System.Collections.Generic Type=(Name=Dictionary GenericParameterCount=2 GenericArguments=[(Assembly=$(FxRootUri)/v2.0.50727/System.dll Namespace=System.Net Type=IPAddress),(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=VideoPreview)]) ObjectInstance="Object instance 18")
+VideoConf.rtpClient.vcWind.vp : Dictionary‎&lt;IPAddress‎, VideoPreview‎&gt;
+vp.Add(ip, new VideoPreview(mode, ip) { Nick = UserList.Get(ip).nick })</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="cee00216-3d7d-44e2-a3c2-460e0bf733f2" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="e0343304-a088-4150-b3d7-26fd089e898f" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="5bd05fd2-f660-4a10-97ef-75ae1863e2f0" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="650659df-f492-4972-9edd-44331b04b011" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="1f1359f7-0827-40d4-84ac-f742d7f5d88e" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="670d0199-2069-45bc-afac-e0de4b2e98b8" name="Start" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="videoConf.Start()">
+            <referencesInternal>
+              <reference Id="f265fbaf-fe5c-46bc-9ad3-836de64240b6" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=VideoConf Member=Start)&quot;)" tag="DGQL" />
+              <reference Id="7e082946-edf7-49ae-b780-2285171843b3" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=VideoConf Member=Start)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="073ee8a6-f029-4142-af2f-84eea289e56f" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="a939a3a5-83ca-41a9-b2a1-1e5f3bd812c2" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c4ce0cce-b952-4f04-8aa7-ed2248b98df2" name="SendMessageTo" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="d7aa4506-2ed1-4040-8ad3-fc72db45a0ba" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=SEN_project_v2)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=UDP)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&amp;quot; Namespace=SEN_project_v2 Type=UDP Member=(Name=SendMessageTo OverloadingParameters=[(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&amp;quot; Namespace=System Type=String),(Assembly=&amp;quot;$(FxRootUri)/v2.0.50727/System.dll&amp;quot; Namespace=System.Net Type=IPAddress)]))&quot;)" tag="DGQL" />
+              <reference Id="96dc016c-783b-4e88-9b03-0b55130f47ea" handle="(Assembly=&quot;$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)&quot; Namespace=SEN_project_v2 Type=UDP Member=(Name=SendMessageTo OverloadingParameters=[(Assembly=&quot;$(FxRootUri)/v2.0.50727/mscorlib.dll&quot; Namespace=System Type=String),(Assembly=&quot;$(FxRootUri)/v2.0.50727/System.dll&quot; Namespace=System.Net Type=IPAddress)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO2abU8aQRDH56MQXjSSNJxiWptWmhiqKbEoKdi+aIw5HkRa4CgHKn76/mbugJPSShOpYDZk7/ZhZnZ2/jPDrLgvFWnKQNriS4fnHaOGFGzUkSNWfOky9172pSpXUITyWQI+Q0lJEdq8pGVLDpgPoetKDb4xsy/kp4yM7p1cwtdh9a149ilY78w4Bjw9+HtQf5djOELbswaPh/xA6qyoDj1kKe21aTEyHVP0hvQbzAWMcrItO7ILVRnJARKb8Ed8FTmUE7mQ/r2VC+TlHlxVbXq8b+WNvOb9gfUa+7Ye4MwyuqUlrZGCOrJqCI8PdRN7/U1KCtuPWVG6Ehyqy1d7qn1uWC/Ftld75s0efcmAzIzzBMoGb4fZ/8fsjL3Lc3hojA15t+AcMDfBpRDjVEHWlaHjI7GA3XzDS2V8oq9Yd4xjkUdkYx9IW5SGhlVAGyMvYC00ziPDQxFNW4QXoVBsfN56QhfhLsIdZusf4afQTnSbj+HJrmr/SDvdsW86+abX/b2SOSHKHR/p+3Akd1HKKtyjae6YVAUhXJ7NeL/pEs3O1xFJ7tS0dwz92Pnxk/jxfLbZmsrMW72oPliyHdSaLXpVs88p8pSjw8g3q/VYLZufRfzDGJO8fFuI62Isk36vti4xrttJQtolUrNoeIgWXqJmvTEf/2GYqq22aa947jHaY7YLd91otPKtsdqwqvdPFhybN6i2SYtVmBvEJ83Iyyc/VVLP5U+kOzUt/mYnK4LcARIa7BdhnZFzWmoBokXLaBpDbTtt5DfXFkWaIzJxNnHfTC6iXUQ/n4j+l9pz0z1hNbXdzKLurrZ52fULmijegSHfw7bzmbZiGA0sEqN+5GeRBTVr7pBjtO3Gb225RD9q5y7iVhJxy9yd1MvW4+7k7kzrlwNcheUqrMersNrTv+u573MXyy6Wn0csr2vVtlprraZ+a7vftTYytz7mXSm39vehTY6s5e5E6/J7UvJO5C39/yy/APHAwUT6IgAA
+(Assembly="$(e0e02e49-c8c7-46e8-9324-cc6e836de337.OutputPathUri)" Namespace=SEN_project_v2 Type=MainWindow Member=udp ObjectInstance="Object instance 13")
+MainWindow.udp : UDP
+udp.SendMessageTo(UDP.Videocall, ip)</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="ad89098f-17ce-40a7-aa38-4f7ab876451b" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="31689cb3-d5e8-477d-b3d3-f6fbd1a16b83" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="f84004b1-b9ab-44c8-93ca-1d145cc64e91" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2ba3e6c3-5a92-47f2-8d28-a817c1902979" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="2aff14b8-fe41-41e8-b4c2-cfc77777bc49" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+        </messages>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="c7d27cc5-82ac-4708-bee1-8433bdeb836d" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="cc660da4-a600-4d18-bcc7-24bbec0776f5" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="574294ae-b0fe-4e33-96eb-2c7602769799" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="37a10d8e-5ff6-4fbd-bbba-8f3fbee862cf" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="c2b2eabb-262e-4a73-93e4-deccb2896591" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="65e76928-709d-4bbd-83ab-0b54e1edb610" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="0c269042-f1bc-4a52-bfbf-9bbc9e7c6f6a" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="aafb6ab8-7e5c-41d7-987a-43a638e30fcf" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="b5f6b931-0208-4658-950a-8a2659c00fae" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="e6ada41e-db5e-49b3-8e0c-7814c48bf029" name="ExecutionEvent" />
+    </packageHasNamedElement>
+  </packagedElements>
+</SequenceDesignerModel>

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="b793321b-7db0-495f-91ed-cc08832b8c02"
+  name="DirectShow"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="ea7d3f9c-3677-4046-ab73-8be5c03dc82e"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DAForge.Video.DirectShow"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="110c81aa-221f-4a3c-a2f1-516c527ec184"
+        name="VideoCaptureDevice"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="e3939c67-c406-4712-96c9-5ad4b9ac3fb9"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FAForge.NET Framework-2.2.5-(libs only)%2FRelease%2FAForge.Video.DirectShow.dll&quot; Namespace%3DAForge.Video.DirectShow Type%3DVideoCaptureDevice"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e63e6dcf-9527-4af3-a227-18749ab067c8"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="aad551fa-14de-41e7-8952-a514b1290159">
+                <propertyInstance
+                  Id="0201fe41-9e55-4b9e-b98d-dd59d1b848f1"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3586f6ee-d61f-4704-8013-b353c716e246">
+                <propertyInstance
+                  Id="c31f1278-70ee-403b-8adf-21b9c1d5a55a"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="75df4b9f-cfc0-473b-981a-5e2951446d81">
+                <propertyInstance
+                  Id="d480cd06-21d0-4871-a1b2-4495ed312b94"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fdfd089c-e84e-42a7-bdb4-7269b121b2df">
+                <propertyInstance
+                  Id="656302a7-2f5a-4b54-9b93-6b2ac27da3d6"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bf5b9d1e-cea1-4e9e-862a-6a684e1c5942">
+                <propertyInstance
+                  Id="5c350db5-de95-4237-ae6f-bc93a4542ba1"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e594e42f-d34c-4bea-b6f4-75dfa99b25bb"
+        name="FilterInfoCollection"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="9b1fc986-b033-4490-a02e-34eba3445a4b"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FAForge.NET Framework-2.2.5-(libs only)%2FRelease%2FAForge.Video.DirectShow.dll&quot; Namespace%3DAForge.Video.DirectShow Type%3DFilterInfoCollection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="fa6579b0-b873-4815-b4e6-5fb436e56a1b"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5f5f75b9-54fd-47fb-8f60-f5719f8c5f6d">
+                <propertyInstance
+                  Id="ad9c5468-65d0-4c38-bf78-590723daf2e2"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2d4ff0c0-172a-4ec5-aac7-39e0461ce7db">
+                <propertyInstance
+                  Id="7a916c32-078f-43bc-835b-66210aeaf1b9"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="608edfd0-20c6-485a-9212-c0127d26c639">
+                <propertyInstance
+                  Id="0417574a-c2d8-4046-92c4-e745701ad8c1"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="50de6db1-4714-4e0a-af9f-a402973a81cf">
+                <propertyInstance
+                  Id="01d65206-8c66-47a6-a43f-d46bbcd53ba4"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="06b423d0-bab9-468f-8c9f-148c8693f948">
+                <propertyInstance
+                  Id="f856f1d9-0097-4a8d-a9b5-b0d11be8a3ac"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

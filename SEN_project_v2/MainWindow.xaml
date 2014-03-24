@@ -84,6 +84,7 @@
                     </RadialGradientBrush>
                 </TreeView.Background>
 
+
             </TreeView>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
                 <GridSplitter.Background>
@@ -94,26 +95,26 @@
                 </GridSplitter.Background>
             </GridSplitter>
 
-            <RichTextBox
+            <TextBox
                 
                 Name="sendBox" Grid.Row="2"  HorizontalAlignment="Stretch" Width="Auto"
                       VerticalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold" AcceptsTab="True" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" 
-                    AllowDrop="True"  >
-                <RichTextBox.Background>
+                    AllowDrop="True" Text="   Enter Text Here..."  >
+                <TextBox.Background>
                     <RadialGradientBrush RadiusY="1">
                         <GradientStop Color="#4C642E2E" Offset="1"/>
                         <GradientStop Color="#4CFFFFFF"/>
                     </RadialGradientBrush>
-                </RichTextBox.Background>
-            </RichTextBox>
+                </TextBox.Background>
+            </TextBox>
             <Grid Grid.Row="3" >
                 <Button Name="filesButton" Content="&lt;&lt; Drag Files Here &gt;&gt;" DragEnter="filesButton_DragEnter" Drop="filesButton_Drop" Click="filesButton_Click" FontFamily="Segoe UI Semibold" />
 
             </Grid>
         </Grid>
         <Button  x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="0,0,0,10"  Width="135"/>
-        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,45.349,10" Width="112" Click="Button_Click_1" FontFamily="Segoe UI Semibold"/>
-        
+        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="135"/>
+        <Button x:Name="SendB" Width="135" Content="Send" VerticalAlignment="Bottom" Margin="10,0,327,10" Click="SendB_Click" />
     </Grid>
 
 </Window>

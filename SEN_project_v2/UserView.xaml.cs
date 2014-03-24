@@ -64,13 +64,17 @@ namespace SEN_project_v2
         public UserView()
         {
             InitializeComponent();
+           
             ul_check.Click += ul_check_Checked;
-            this.MouseRightButtonDown += UserView_MouseRightButtonDown;
         }
 
-        void UserView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void Open_Conf(object sender, RoutedEventArgs e)
         {
-     
+            Window w = new Window();
+            w.Content = new Conversation(u_ip);
+            w.SizeToContent = SizeToContent.WidthAndHeight;
+            w.Show();
+              
         }
 
         void ul_check_Checked(object sender, RoutedEventArgs e)
@@ -80,6 +84,16 @@ namespace SEN_project_v2
                 UserList.SelectedUsers.Add(u_ip, true);
             else
                 UserList.SelectedUsers.Remove(u_ip);
+        }
+
+        private void openChat_Click(object sender, RoutedEventArgs e)
+        {
+            Window w = new Window();
+            w.Content = new Conversation(u_ip);
+            w.SizeToContent = SizeToContent.WidthAndHeight;
+            w.Title = u_nick;
+     
+            w.Show();
         }
 
    

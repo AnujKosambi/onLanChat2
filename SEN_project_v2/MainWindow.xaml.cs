@@ -75,7 +75,7 @@ namespace SEN_project_v2
         private TreeViewItem CreateNewGroup(string groupName)
         {
             TreeViewItem node = new TreeViewItem();
-            
+
             node.Background = System.Windows.Media.Brushes.Transparent;
             node.FontSize = 16;
             node.FontWeight = FontWeights.SemiBold;
@@ -85,7 +85,7 @@ namespace SEN_project_v2
             node.FocusVisualStyle = focus;
             node.Header = groupName;
             ListView userOfGroup = new ListView();
- 
+            
             Style itemStyle = new Style(typeof(ListViewItem));
             itemStyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_darkwhite_96x30.png", UriKind.Relative))) { Opacity=20}));
             itemStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
@@ -119,10 +119,12 @@ namespace SEN_project_v2
                 groupLists.Add(user.groupName, CreateNewGroup(user.groupName));
             _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
             listView[user.groupName].Items.Insert(_index[user.groupName][user.ip], user.CreateView());
+        
        
-        }
 
-     
+  
+        }
+           
         public void RemoveUserFromTree(User user)
         {
             try
@@ -133,7 +135,7 @@ namespace SEN_project_v2
             }
             catch
             {
-                 AddUserToTree(user);
+                AddUserToTree(user);
                  RemoveUserFromTree(user);
             }
         }
@@ -141,8 +143,7 @@ namespace SEN_project_v2
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-
+   
             threads.StartAll();
 
         }
@@ -173,7 +174,7 @@ namespace SEN_project_v2
             {
                 while (true)
                 {
-                    udp.SendMessageTo(UDP.Connect + Environment.MachineName+UDP.Breaker+"Group", BroadCasting.SEND.Address);
+                    udp.SendMessageTo(UDP.Connect + Environment.MachineName+UDP.Breaker+Environment.MachineName, BroadCasting.SEND.Address);
                     Thread.Sleep(5000);
                   
                 }
@@ -187,7 +188,7 @@ namespace SEN_project_v2
             public void StopAll()
             {
                 StopThread(broadcast);
-                udp.SendMessageTo(UDP.Disconnect, BroadCasting.SEND.Address);
+                udp.SendMessageTo(UDP.Disconnect+Environment.MachineName, BroadCasting.SEND.Address);
                 if(w.rtpClient!=null)
                 w.rtpClient.Dispose();
                 StopThread(udpReceving);
@@ -231,6 +232,12 @@ namespace SEN_project_v2
             {
                 videoConf.Show();//  CreateVideoConf(null);
                 videoConf.statusLabel.Content = "Waiting For Users's Responses...";
+                //videoConf.requestedUsers.Clear();
+                //foreach(string group in groupLists.Keys)
+                //{
+                //    foreach (UserView uv in listView[group].SelectedItems)
+                //        videoConf.requestedUsers.Add(uv.u_ip);
+                //}
                 foreach (IPAddress ip in videoConf.requestedUsers)
                 {
                     //    videoConf.vp.Add(ip, new VideoPreview(VideoPreview.Mode.Watting, null) { Nick = UserList.Get(ip).nick });
@@ -320,6 +327,20 @@ namespace SEN_project_v2
                 (sender as Button).Content = "<< Drag Files Here >>";
                 selectedFiles.Clear();
             }
+        }
+
+        private void SendB_Click(object sender, RoutedEventArgs e)
+        {
+            //foreach(string group in groupLists.Keys)
+            //foreach(var sel in listView[group].SelectedItems)
+            //{
+            foreach (IPAddress ip in UserList.Selected)
+            {
+                UserList.xml[ip].addSelfMessage(DateTime.Now, sendBox.Text);
+
+                udp.SendMessageTo(UDP.Message + sendBox.Text + UDP.Message, ip);
+            }
+            //}
         }
 
 

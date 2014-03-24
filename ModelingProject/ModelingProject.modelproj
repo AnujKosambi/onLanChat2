@@ -22,10 +22,22 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="ModelDefinition\Package10_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package11_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package12_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package1_1545.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package1_1941.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package1_2107.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package2_1545.uml">
@@ -34,10 +46,16 @@
     <Content Include="ModelDefinition\Package2_1941.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package2_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package3_1545.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package3_1941.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package3_2107.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package4_1545.uml">
@@ -46,7 +64,25 @@
     <Content Include="ModelDefinition\Package4_1941.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package4_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package5_1545.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package5_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package6_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package7_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package8_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package9_2107.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package_1545.uml">
@@ -58,12 +94,22 @@
     <Content Include="ModelDefinition\Package_1941.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="UMLClassDiagram.classdiagram">
       <SubType>Content</SubType>
     </Content>
     <Content Include="UMLClassDiagram.classdiagram.layout">
       <SubType>Content</SubType>
       <DependentUpon>UMLClassDiagram.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="UMLClassDiagram1.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UMLClassDiagram1.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UMLClassDiagram1.classdiagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\ModelingProject.uml">
