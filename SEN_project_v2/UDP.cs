@@ -2,7 +2,7 @@
 #if UDP
 #define UDPConnection
 #endif
-
+#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -216,7 +216,7 @@ namespace SEN_project_v2
         }
         private void receviedRConnect(IPEndPoint recevied, String[] splits)
         {
-            User user = new User(recevied.Address, splits[0]);
+            User user = new User(recevied.Address, splits[0],splits[ 1]);
 
             if (UserList.Add(user))
                 window.Dispatcher.Invoke((Action)(() =>

@@ -11,10 +11,13 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="43*"/>
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <StackPanel  Grid.Row="1" Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.RowSpan="2" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Loaded="MessagePanel_Loaded" >
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            
+        <StackPanel   Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Loaded="MessagePanel_Loaded" >
             <StackPanel.Background>
                 <RadialGradientBrush RadiusX="0.75" RadiusY="0.75" Center="0.75,0.75">
                     <GradientStop Color="#7F4F4646" Offset="1"/>
@@ -22,10 +25,19 @@
                     <GradientStop Color="#B4918C8C" Offset="0.451"/>
                 </RadialGradientBrush>
             </StackPanel.Background>
-
-
-
-
         </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Margin="5" Name="SendBox"  />
+            <Button Grid.Column="1" Content="Send" Margin="5" Click="Button_Click" />
+
+        </Grid>
+
     </Grid>
 </UserControl>

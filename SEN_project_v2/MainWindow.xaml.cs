@@ -340,10 +340,21 @@ namespace SEN_project_v2
 
                 udp.SendMessageTo(UDP.Message + sendBox.Text + UDP.Message, ip);
             }
+            sendBox.Text = "Enter Text Here...";
             //}
         }
 
+        private void sendBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
 
+        private void sendBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            sendBox.Text = "";
+        }
+
+    
 
 
 

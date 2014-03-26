@@ -118,6 +118,7 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TCP.cs" />
     <Compile Include="UDP.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserList.cs" />
@@ -194,6 +195,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="MainWindow_SendB_Click.sequencediagram.layout">
+      <DependentUpon>MainWindow_SendB_Click.sequencediagram</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow_VideoConfB_Click.sequencediagram.layout">
       <DependentUpon>MainWindow_VideoConfB_Click.sequencediagram</DependentUpon>
     </EmbeddedResource>
@@ -226,6 +230,7 @@
       <DependentUpon>VideoPreview_accept_Click_1.sequencediagram</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="MainWindow_SendB_Click.sequencediagram" />
     <None Include="MainWindow_VideoConfB_Click.sequencediagram" />
     <None Include="MainWindow_VideoConfB_Click_1.sequencediagram" />
     <None Include="Properties\Settings.settings">

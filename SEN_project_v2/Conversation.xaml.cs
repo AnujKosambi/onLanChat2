@@ -23,7 +23,7 @@ namespace SEN_project_v2
         ResourceDictionary rd = new ResourceDictionary();
         XMLClient client;
         IPAddress ip;
-             
+        public UDP udp;
         public Conversation(IPAddress sender)
         {
             InitializeComponent();
@@ -52,6 +52,14 @@ namespace SEN_project_v2
                     }
                 }
             }));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(udp!=null)
+            udp.SendMessageTo(UDP.Message + SendBox.Text+UDP.Message, ip);
+            MessagePanel.UpdateLayout();
+            this.UpdateLayout();
         }
     }
 }
