@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
+using System.IO;
 
 namespace SEN_project_v2
 {
@@ -21,6 +23,20 @@ namespace SEN_project_v2
         public Settings()
         {
             InitializeComponent();
+            if (File.Exists("UserSettings.xml") == false)
+            {
+                //NickName.Text = "";
+                //PasswordBox.Password = "";
+            }
         }
+        String path = ""; //Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        XmlWriter xw = null;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(File.Exists(path+"UserSettings.xml"))
+            xw = XmlWriter.Create("UserSettings.xml");
+        }
+
+
     }
 }

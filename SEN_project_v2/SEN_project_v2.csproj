@@ -57,11 +57,14 @@
     <ApplicationIcon>OnLanChat.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\..\SEN_project_v2\bin\x86\Debug\AForge.dll</HintPath>
+    </Reference>
     <Reference Include="AForge.Video">
-      <HintPath>..\..\..\..\..\Downloads\AForge.NET Framework-2.2.5-(libs only)\Release\AForge.Video.dll</HintPath>
+      <HintPath>..\..\SEN_project_v2\bin\x86\Debug\AForge.Video.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShow">
-      <HintPath>..\..\..\..\..\Downloads\AForge.NET Framework-2.2.5-(libs only)\Release\AForge.Video.DirectShow.dll</HintPath>
+      <HintPath>..\..\SEN_project_v2\bin\x86\Debug\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
     <Reference Include="LSTCommon">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\LSTCommon.dll</HintPath>
@@ -92,8 +95,9 @@
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="WPF.Themes">
-      <HintPath>..\..\..\..\..\Downloads\wpfthemes-81799\WPF.Themes\bin\Debug\WPF.Themes.dll</HintPath>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\WPFToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

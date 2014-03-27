@@ -34,7 +34,7 @@ namespace SEN_project_v2
 
             else
             {
-                MessageBox.Show("Error : Invalid username or password !");
+                MessageBox.Show("Error : Invalid Password !");
             }
             
       
