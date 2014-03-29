@@ -35,7 +35,9 @@ namespace SEN_project_v2
 
         public static IPAddress hostIP;
         public Window waiting;
-
+        public Window remoteWin;
+        public Remote remote;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -265,18 +267,65 @@ namespace SEN_project_v2
             vp.Nick = UserList.Get(host).nick;
             vp.window = this;
             waiting.Content = vp;
-            waiting.SizeToContent =SizeToContent.WidthAndHeight;
+            waiting.Width = 250; waiting.Height=250;
             waiting.WindowStyle = WindowStyle.None;
             vp.udp = udp;
             waiting.Show();
 
         }
+        private void Remote_Click(object sender, RoutedEventArgs e)
+        {
+            if (Remote.Content == "Stop Remote")
+            {
+                remote.StopSending();
+                if(remote!=null)
+                remote.rtpClient.Dispose();
+                Remote.Content = "Remote";
+            }
+            else
+            {
+                if (UserList.Selected.Count > 0)
+                {
+                    remote = new Remote(this, UserList.Selected.First());
+                    remote.Show();
+                    remote.Start();
+                }
+                else
+                    MessageBox.Show("Select At least One User...");
+            }
+        }
+        public void RequestRemote(IPAddress host)
+        {
+            //    videoConf = new VideoConf(udp, host);
 
+            //            videoConf.Show();
+
+            remoteWin = new Window();
+            remoteWin.BorderThickness = new Thickness(0, 0, 0, 0);
+            //remoteWin.AllowsTransparency = true;
+            remoteWin.Topmost = true;
+            remoteWin.HorizontalAlignment = HorizontalAlignment.Center;
+            remoteWin.VerticalAlignment = VerticalAlignment.Center;
+            remoteWin.Width = 250; remoteWin.Height = 250;
+
+
+            remoteWin.Title ="Remote Request From"+host.ToString();
+            remoteWin.Show();
+            VideoPreview vp = new VideoPreview(VideoPreview.Mode.Request, host,true);
+            vp.Height = 250; vp.Width = 250;
+            vp.Nick = UserList.Get(host).nick;
+            vp.window = this;
+            remoteWin.SizeToContent = SizeToContent.WidthAndHeight;
+            remoteWin.Content = vp;
+     
+
+        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Settings setting = new Settings();
             setting.Show();
         }
+
 
         #region FileSending
         private void filesButton_DragEnter(object sender, DragEventArgs e)
@@ -354,6 +403,7 @@ namespace SEN_project_v2
             sendBox.Text = "";
         }
 
+    
     
 
 

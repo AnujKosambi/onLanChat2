@@ -50,11 +50,14 @@ namespace SEN_project_v2
             Users = new List<IPAddress>();
             vp = new Dictionary<IPAddress, VideoPreview>();
 
-            mParent.rtpClient = this.rtpClient;
             requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
             InitializeComponent();
-            rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), (int)MainWindow.Ports.RTP), vp, MainWindow.hostIP.ToString(), "224.0.0.2");
-            rtpClient.vcWind = this;
+            if (mParent.rtpClient != null)
+                mParent.rtpClient.Dispose();
+            rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), 
+                (int)MainWindow.Ports.RTP),vp, MainWindow.hostIP.ToString(), "224.0.0.2");
+            mParent.rtpClient = this.rtpClient;
+            rtpClient.window = this;
             videoDevice = new VideoCaptureDevice();
 
         }

@@ -12,15 +12,15 @@ public class ScreenCapture : System.MarshalByRefObject
 
     [DllImport("gdi32.dll")]
     private static extern bool BitBlt(
-        IntPtr hdcDest, // handle to destination DC
-        int nXDest, // x-coord of destination upper-left corner
-        int nYDest, // y-coord of destination upper-left corner
-        int nWidth, // width of destination rectangle
-        int nHeight, // height of destination rectangle
-        IntPtr hdcSrc, // handle to source DC
-        int nXSrc, // x-coordinate of source upper-left corner
-        int nYSrc, // y-coordinate of source upper-left corner
-        System.Int32 dwRop // raster operation code
+        IntPtr hdcDest,
+        int nXDest, 
+        int nYDest, 
+        int nWidth, 
+        int nHeight, 
+        IntPtr hdcSrc,
+        int nXSrc, 
+        int nYSrc,
+        System.Int32 dwRop 
         );
     private const Int32 SRCCOPY = 0xCC0020;
     [DllImport("user32.dll")]

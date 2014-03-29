@@ -2,7 +2,7 @@
 #if UDP
 #define UDPConnection
 #endif
-#define Fake
+//#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -24,6 +24,7 @@ namespace SEN_project_v2
 {
     public class UDP
     {
+        #region Fields
         public UdpClient recevingClient = null;
         public UdpClient sendingClient = null;
         public UdpClient rtpReceClient = null;
@@ -37,9 +38,14 @@ namespace SEN_project_v2
         public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
         public const string Breaker = "<#>";
         public const string RemoveMember = "<#Remove#>";
-        
+        public const string Remote = "<#Remote#>";
+        public const string RRemote = "<\\#Remote#>";
+        public const string EndRemote = "<XEndX>";
+        public const string Mouse = "<#M#>";
+        public const string Keyboard = "<#K#>";
         private int port;
         private MainWindow window;
+        #endregion
 
         public UDP(int port)
         {
@@ -164,6 +170,41 @@ namespace SEN_project_v2
 
                 #endregion
 
+                #region Remote
+                else if (stringData.StartsWith(Remote))
+                {
+                    window.Dispatcher.Invoke((Action)(() => { 
+                        window.RequestRemote(recevied.Address);
+                    }));
+                }
+                else if (stringData.StartsWith(RRemote))
+                {
+                    window.remote.Dispatcher.Invoke((Action)(() =>
+                    {
+                      //  window.remote.Screen._Mode = VideoPreview.Mode.InCall;
+                    }));
+                }
+                else if(stringData.StartsWith(Mouse))
+                {
+                    if (window.remote!=null)
+                    {
+                       string[] splits = stringData.Split(new String[] { Mouse, Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                       if (splits.Length == 2)
+                       {
+                           window.remote.mousePos.X = Int32.Parse(splits[0]);
+                           window.remote.mousePos.Y = Int32.Parse(splits[1]);
+                       }
+                       else { }
+                    }
+
+                }
+                else if (stringData.StartsWith(EndRemote))
+                {
+                    window.remote.StopSending();
+                    
+                }
+                #endregion
+
                 #region Message
                 else if (stringData.StartsWith(Message))
                 {
@@ -174,6 +215,7 @@ namespace SEN_project_v2
 
                 }
               #endregion
+
             }
 
 

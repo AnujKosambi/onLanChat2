@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using MSR.LST.Net.Rtp;
 using MSR.LST;
+using System.Windows;
 namespace SEN_project_v2
 {
     public class RTPClient
@@ -19,12 +20,12 @@ namespace SEN_project_v2
         private UdpClient rtpSendClient;
         private IPAddress client_ip;
         public Thread listen_thread;
-        public VideoConf vcWind;
+        public Window window;
         private bool listening=false;
         public Dictionary<IPAddress, System.IO.MemoryStream> sBuffer;
         public Dictionary<IPAddress, System.IO.MemoryStream> rBuffer;
         public Dictionary<IPAddress, VideoPreview> vpList;
-
+        private Image image;
         private int port;
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace SEN_project_v2
             UnhandledExceptionHandler.Register();
             this.ipe = multiCastIP;
             this.vpList = vpList;
-            
+            this.image = null;
             rtpSession = new RtpSession(ipe, new RtpParticipant(cname,name ), true, true);
             
             System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
@@ -56,7 +57,19 @@ namespace SEN_project_v2
             //rtpSendClient = new UdpClient();
             //rtpReceClient = new UdpClient((int)MainWindow.Ports.RTP);
         }
+        public RTPClient(IPEndPoint multiCastIP, Image image, String cname, String name)
+        {
+            UnhandledExceptionHandler.Register();
+            this.ipe = multiCastIP;
+            this.image = image;
+            this.vpList = null;
+            rtpSession = new RtpSession(ipe, new RtpParticipant(cname, name), true, true);
 
+            System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
+            rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.JPEG, null, 0, 1);
+
+            EvetnBinding();
+          }
         private void EvetnBinding()
         {
             RtpEvents.RtpParticipantAdded += RtpParticipantAdded;
@@ -77,11 +90,17 @@ namespace SEN_project_v2
         {
 
             System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
-            vcWind.Dispatcher.Invoke((Action)(() => {
-                if (vpList.ContainsKey(IPAddress.Parse(ea.RtpStream.Properties.CName)))
-            vpList[IPAddress.Parse(ea.RtpStream.Properties.CName)].prev.Source = GetImage(ea.Frame.Buffer).Source;
-                 //.Values.Where(x => x.Nick == ea.RtpStream.Properties.CName).First().prev.Source = GetImage(ea.Frame.Buffer).Source;
-            }));
+          window.Dispatcher.Invoke((Action)(() => {
+              if (image == null)
+              {
+                  if (vpList.ContainsKey(IPAddress.Parse(ea.RtpStream.Properties.CName)))
+                      vpList[IPAddress.Parse(ea.RtpStream.Properties.CName)].prev.Source = GetImage(ea.Frame.Buffer).Source;
+              }else
+              {
+                  image.Source = GetImage(ea.Frame.Buffer).Source;
+              }
+                
+         }));
                    
         }
 

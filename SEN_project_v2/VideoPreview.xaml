@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignWidth="208" Height="192" Width="208" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Center" BorderThickness="0,0,0,0" BorderBrush="{x:Null}">
+             mc:Ignorable="d" d:DesignWidth="208" d:DesignHeight="208"  Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" BorderBrush="{x:Null}">
     <UserControl.Effect>
         <DropShadowEffect BlurRadius="5" Opacity="0.7" ShadowDepth="5"/>
     </UserControl.Effect>

@@ -110,6 +110,9 @@
     <Compile Include="ReceMessage.xaml.cs">
       <DependentUpon>ReceMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Remote.xaml.cs">
+      <DependentUpon>Remote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RTPClient.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="SentMessage.xaml.cs">
@@ -153,6 +156,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ReceMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Remote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,24 +282,32 @@
     <Resource Include="background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\user-frame.png" />
+    <Resource Include="Images\user-frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="OnLanChat.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\rectangle_darkwhite_96x30.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\conv-rece.png" />
+    <Resource Include="Images\conv-rece.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\conv-sender.png" />
+    <Resource Include="Images\conv-sender.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\user-icon.png" />
+    <Resource Include="Images\user-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

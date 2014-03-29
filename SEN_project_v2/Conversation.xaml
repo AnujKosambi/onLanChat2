@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
             
         <StackPanel   Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Loaded="MessagePanel_Loaded" >
             <StackPanel.Background>

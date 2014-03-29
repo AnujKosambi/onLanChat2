@@ -19,14 +19,31 @@ namespace SEN_project_v2
     /// </summary>
     public partial class VideoPreview : UserControl
     {
-        DispatcherTimer timer;
+        public Boolean isRemote=false;
+        public System.Net.IPAddress ip;
+        public UDP udp=MainWindow.udp;
+        public System.Net.IPAddress hostIP;
+        private int left = 20;
+        DispatcherTimer timer;     
+        public MainWindow window;
+        public VideoPreview()
+        {
+            InitializeComponent();
+            InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 1);
+            InitializeComponent();
+        
+        }
+
         public enum Mode{
             Watting,
             Request,
             InCall
           
         }
-        private int left = 20;
+        
         public Mode _Mode
         {
             set
@@ -39,7 +56,7 @@ namespace SEN_project_v2
                     timer.Stop();
             }
         }
-        public MainWindow window;
+ 
         public string Nick
         {
             set
@@ -51,11 +68,21 @@ namespace SEN_project_v2
                 return _Nick.Content.ToString();
             }
         }
-        public System.Net.IPAddress ip;
-        public UDP udp;
-        public System.Net.IPAddress hostIP;
+
         public VideoPreview(Mode mode,System.Net.IPAddress hostIP)
         {
+            InitializeComponent();
+            this.hostIP = hostIP;
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 1);
+            InitializeComponent();
+            SetVisibility(mode);
+            _Mode = mode;
+        }
+        public VideoPreview(Mode mode, System.Net.IPAddress hostIP,Boolean isRemote)
+        {
+            this.isRemote = isRemote;
             InitializeComponent();
             this.hostIP = hostIP;
             timer = new DispatcherTimer();
@@ -106,34 +133,55 @@ namespace SEN_project_v2
         private void accept_Click(object sender, RoutedEventArgs e)
         {
             _Mode = Mode.InCall;
-            udp.SendMessageTo(UDP.RVideocall, hostIP);
-            VideoConf videoConf = new VideoConf(window, hostIP);
-            window.videoConf = videoConf;
-            if (videoConf.SetVideoSources())
+            if (!isRemote)
             {
-                videoConf.Show();
-                videoConf.statusLabel.Content = "Connected to Host ...";
-                videoConf.AddUser(hostIP);
-                videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
-              
-            }
-            else
-            {
-                _Mode = Mode.InCall;
-                udp.SendMessageTo(UDP.RemoveMember, hostIP);
-            }
-            window.Dispatcher.Invoke((Action)(() =>
-            {
+                udp.SendMessageTo(UDP.RVideocall, hostIP);
+                VideoConf videoConf = new VideoConf(window, hostIP);
+                window.videoConf = videoConf;
+                if (videoConf.SetVideoSources())
+                {
+                    videoConf.Show();
+                    videoConf.statusLabel.Content = "Connected to Host ...";
+                    videoConf.AddUser(hostIP);
+                    videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+                        
+                }
+                else
+                {
+                    _Mode = Mode.InCall;
+                    udp.SendMessageTo(UDP.RemoveMember, hostIP);
+                }
+                window.Dispatcher.Invoke((Action)(() =>
+                {
 
-                window.waiting.Close();
-            }));
+                    window.waiting.Close();
+                }));
+            }else
+            {
+                udp.SendMessageTo(UDP.RRemote, hostIP);
+                window.Dispatcher.Invoke((Action)(() =>
+                {
+                    window.remote = new Remote(window, hostIP);
+                    window.remote.StartSending();
+                    window.remoteWin.Close();
+                    window.Remote.Content = "Stop Remote";
+                }));
+            }
+
         }
 
         private void decline_Click(object sender, RoutedEventArgs e)
         {
             _Mode = Mode.InCall;
-            udp.SendMessageTo(UDP.RemoveMember, hostIP);
-            window.waiting.Close();
+            if (isRemote)
+            {
+                window.remoteWin.Close();
+            }
+            else
+            {
+                udp.SendMessageTo(UDP.RemoveMember, hostIP);
+                window.waiting.Close();
+            }
         }
     }
 }

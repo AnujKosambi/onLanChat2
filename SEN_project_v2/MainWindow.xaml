@@ -112,9 +112,10 @@
 
             </Grid>
         </Grid>
-        <Button  x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="0,0,0,10"  Width="135"/>
-        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="135"/>
-        <Button x:Name="SendB" Width="135" Content="Send" VerticalAlignment="Bottom" Margin="10,0,327,10" Click="SendB_Click" />
+        <Button  x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="115,0,241,10"  Width="116"/>
+        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="112"/>
+        <Button x:Name="SendB" Content="Send" VerticalAlignment="Bottom" Margin="10,0,362,10" Click="SendB_Click" />
+        <Button x:Name="Remote" Content="Remote" HorizontalAlignment="Left" Margin="236,0,0,10" VerticalAlignment="Bottom" Width="109" Click="Remote_Click" />
     </Grid>
 
 </Window>
