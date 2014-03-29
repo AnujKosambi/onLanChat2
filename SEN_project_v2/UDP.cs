@@ -2,7 +2,7 @@
 #if UDP
 #define UDPConnection
 #endif
-#define Fake
+//#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -80,8 +80,6 @@ namespace SEN_project_v2
                 IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
 
                 data = recevingClient.Receive(ref recevied);
-
-
                 string stringData = Encoding.ASCII.GetString(data);
 #if UDPConnection
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
