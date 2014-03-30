@@ -8,12 +8,8 @@
             <GradientStop Color="White"/>
         </RadialGradientBrush>
     </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <StackPanel>
+        
         <Expander x:Name="General" Header="General"  HorizontalAlignment="Stretch" IsExpanded="True" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold">
             <Grid Height="90" Margin="0,0,-2,0">
                 <Grid.ColumnDefinitions>
@@ -35,7 +31,7 @@
                 <PasswordBox Grid.Row="2" Grid.Column="1" PasswordChar="*" Name="PasswordBox" MaxLength="8" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="150" Grid.ColumnSpan="2"/>
             </Grid>
         </Expander>
-        <Expander Grid.Row="1" Header="Conference" IsExpanded="True" HorizontalAlignment="Stretch" Height="118" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold">
+        <Expander Header="Conference" IsExpanded="True" HorizontalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold">
             <Grid Height="66.5" Margin="0,0,-2,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -51,18 +47,15 @@
                 <ComboBox Grid.Row="1" Grid.Column="1" Name ="Microphone" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="150" IsEditable="True" Margin="10.5,4"/>
             </Grid>
         </Expander>
-        <Grid Grid.Row="2">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="Close" Grid.Column="2" Content="Ok, Done" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Close_Click"/>
-            <Button x:Name="Apply" Grid.Column="1" Content="Apply"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Apply_Click"/>
-            <Button x:Name="ChangePassword" Grid.Column="0" Content="Change PW"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Apply_Click"/>
+            <Button x:Name="Close" Grid.Column="2" Content="Ok, Done" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Close_Click" Margin="27,58,29,-58"/>
+            <Button x:Name="Apply" Grid.Column="1" Content="Apply"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Apply_Click" Margin="19,58,38,-58"/>
+            <Button x:Name="ChangePassword" Grid.Column="0" Content="Change PW"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Apply_Click" Margin="30,58,26,-58"/>
         </Grid>
-
-        
-
-    </Grid>
+      </StackPanel>
 </Window>

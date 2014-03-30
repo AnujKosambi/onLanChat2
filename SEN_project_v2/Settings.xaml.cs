@@ -30,19 +30,32 @@ namespace SEN_project_v2
                 settings.Load("UserSettings.xml");
                 NickName.Text = settings.SelectSingleNode("UserProfile/General/Nick").InnerText;
                 GroupName.Text = settings.SelectSingleNode("UserProfile/General/GroupName").InnerText;
-                PasswordBox.Password = settings.SelectSingleNode("UserProfile/General/Password").InnerText;
+                if (settings.SelectSingleNode("UserProfile/General/pwenable").InnerText == "yes")
+                {
+                    PasswordCheck.IsChecked = true;
+                    ChangePassword.IsEnabled = true;
+                    PasswordBox.Password = settings.SelectSingleNode("UserProfile/General/Password").InnerText;
+                    PasswordBox.IsEnabled = false;
+                }
+                else
+                {
+                    PasswordCheck.IsChecked = false;
+                    ChangePassword.IsEnabled = false;
+                    PasswordBox.IsEnabled = false;
+                }
                 Camera.Text = settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText;
                 Microphone.Text = settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText;
             }
             else {
                 NickName.Text = "";
                 GroupName.Text = "";
-                PasswordBox.Password = "";
+                PasswordBox.IsEnabled = false;
+                ChangePassword.IsEnabled = false;
                 Camera.Text = "";
                 Microphone.Text = "";
+                PasswordCheck.IsChecked = false;
             }
-            PasswordBox.IsEnabled = false;
-            
+                      
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -57,6 +70,8 @@ namespace SEN_project_v2
                 xw.WriteEndElement();
                 xw.WriteStartElement("GroupName");
                 xw.WriteString(GroupName.Text);
+                xw.WriteEndElement();
+                xw.WriteStartElement("pwenable");
                 xw.WriteEndElement();
                 xw.WriteStartElement("Password");
                 xw.WriteString(PasswordBox.Password);
@@ -75,6 +90,14 @@ namespace SEN_project_v2
                 settings.Load("UserSettings.xml");
                 settings.SelectSingleNode("UserProfile/General/Nick").InnerText = NickName.Text;
                 settings.SelectSingleNode("UserProfile/General/GroupName").InnerText = GroupName.Text;
+                if (PasswordCheck.IsChecked == true)
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "yes";
+                }
+                else
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "no";
+                }
                 settings.SelectSingleNode("UserProfile/General/Password").InnerText = PasswordBox.Password;
                 settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText = Camera.Text;
                 settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText = Microphone.Text;
@@ -86,15 +109,23 @@ namespace SEN_project_v2
                 settings.Load("UserSettings.xml");
                 settings.SelectSingleNode("UserProfile/General/Nick").InnerText = NickName.Text;
                 settings.SelectSingleNode("UserProfile/General/GroupName").InnerText = GroupName.Text;
+                if (PasswordCheck.IsChecked == true)
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "yes";
+                }
+                else
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "no";
+                }
                 settings.SelectSingleNode("UserProfile/General/Password").InnerText = PasswordBox.Password;
                 settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText = Camera.Text;
                 settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText = Microphone.Text;
                 settings.Save("UserSettings.xml"); 
            }
-            if (PasswordCheck.IsChecked == true) {
-                if (PasswordBox.Password == "") { new passworderror().Show(); }
-            }
-            else this.Close();
+            //if (PasswordCheck.IsChecked == true) {
+               // if (PasswordBox.Password == "") { new passworderror().Show(); }
+            //}
+            this.Close();
             
         }
         XmlDocument settings = null;
@@ -110,6 +141,8 @@ namespace SEN_project_v2
                 xw.WriteEndElement();
                 xw.WriteStartElement("GroupName");
                 xw.WriteString(GroupName.Text);
+                xw.WriteEndElement();
+                xw.WriteStartElement("pwenable");
                 xw.WriteEndElement();
                 xw.WriteStartElement("Password");
                 xw.WriteString(PasswordBox.Password);
@@ -128,6 +161,13 @@ namespace SEN_project_v2
                 settings.Load("UserSettings.xml");
                 settings.SelectSingleNode("UserProfile/General/Nick").InnerText = NickName.Text;
                 settings.SelectSingleNode("UserProfile/General/GroupName").InnerText = GroupName.Text;
+                if (PasswordCheck.IsChecked == true)
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "yes";
+                }
+                else {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "no";
+                }
                 settings.SelectSingleNode("UserProfile/General/Password").InnerText = PasswordBox.Password;
                 settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText = Camera.Text;
                 settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText = Microphone.Text;
@@ -138,21 +178,30 @@ namespace SEN_project_v2
                 settings.Load("UserSettings.xml");
                 settings.SelectSingleNode("UserProfile/General/Nick").InnerText = NickName.Text;
                 settings.SelectSingleNode("UserProfile/General/GroupName").InnerText = GroupName.Text;
+                if (PasswordCheck.IsChecked == true)
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "yes";
+                }
+                else
+                {
+                    settings.SelectSingleNode("UserProfile/General/pwenable").InnerText = "no";
+                }
                 settings.SelectSingleNode("UserProfile/General/Password").InnerText = PasswordBox.Password;
                 settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText = Camera.Text;
                 settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText = Microphone.Text;
                 settings.Save("UserSettings.xml");
             }
-            if (PasswordCheck.IsChecked == true) {
-                if (PasswordBox.Password == "") { new passworderror().Show(); }
-                else { PasswordBox.IsEnabled = false; }
-            }
+            //if (PasswordCheck.IsChecked == true) {
+             //   if (PasswordBox.Password == "") { new passworderror().Show(); }
+              //  else { PasswordBox.IsEnabled = false; }
+           // }
 
         }
 
         private void PasswordCheck_Checked(object sender, RoutedEventArgs e)
         {
             PasswordBox.IsEnabled = true;
+            ChangePassword.IsEnabled = true;
         }
 
         private void PasswordCheck_Unchecked(object sender, RoutedEventArgs e)
