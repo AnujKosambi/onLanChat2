@@ -61,9 +61,12 @@ namespace SEN_project_v2
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
                 {
 
-                        if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        hostIPS.Add(x.Address);
 
+                    if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        hostIPS.Add(x.Address);
+                        System.Diagnostics.Debug.WriteLine(x.Address);
+                    }
                 }
             }
             #endregion
@@ -228,7 +231,7 @@ namespace SEN_project_v2
         }
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
-
+            
             videoConf = new VideoConf(this,hostIP);
             if (videoConf.SetVideoSources())
             {
@@ -275,7 +278,7 @@ namespace SEN_project_v2
         }
         private void Remote_Click(object sender, RoutedEventArgs e)
         {
-            if (Remote.Content == "Stop Remote")
+            if (Remote.Content.Equals("Stop Remote"))
             {
                 remote.StopSending();
                 if(remote!=null)

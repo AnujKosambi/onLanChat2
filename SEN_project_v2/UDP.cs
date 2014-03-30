@@ -1,4 +1,4 @@
-﻿#define UDP
+﻿//#define UDP
 #if UDP
 #define UDPConnection
 #endif
@@ -111,7 +111,7 @@ namespace SEN_project_v2
                 else if (stringData.StartsWith(RConnect))
                 {
                     string[] splits = stringData.Split(new String[] { RConnect, Breaker }, StringSplitOptions.RemoveEmptyEntries);
-                    if (splits.Length != 2)
+                    if (splits.Length < 2)
                     {
 #if UDPConnection
                         System.Diagnostics.Debug.WriteLine("-----" + recevied.Address + "Does  not Contain PC/Nick Name/Group Name----");
@@ -189,10 +189,12 @@ namespace SEN_project_v2
                     if (window.remote!=null)
                     {
                        string[] splits = stringData.Split(new String[] { Mouse, Breaker }, StringSplitOptions.RemoveEmptyEntries);
-                       if (splits.Length == 2)
+                       if (splits.Length == 3)
                        {
-                           window.remote.mousePos.X = Int32.Parse(splits[0]);
-                           window.remote.mousePos.Y = Int32.Parse(splits[1]);
+                           SEN_project_v2.Remote.MouseFlag = Convert.ToInt32(splits[0]);
+                           SEN_project_v2.Remote.mousePos.X = Convert.ToInt32(splits[1]);
+                           SEN_project_v2.Remote.mousePos.Y= Convert.ToInt32(splits[2]);
+
                        }
                        else { }
                     }
@@ -227,7 +229,7 @@ namespace SEN_project_v2
 
            
             
-            SendMessageTo(RConnect + Environment.MachineName + Breaker + Environment.MachineName, recevied.Address);
+            SendMessageTo(RConnect + Environment.MachineName + Breaker + Environment.MachineName+Breaker+recevied.Address, recevied.Address);
 #if UDPConnection
             System.Diagnostics.Debug.WriteLine("-----Sending:" + RConnect + "------");
 #endif
@@ -259,7 +261,10 @@ namespace SEN_project_v2
         private void receviedRConnect(IPEndPoint recevied, String[] splits)
         {
             User user = new User(recevied.Address, splits[0],splits[ 1]);
-
+            if(splits.Length==3)
+            {
+                user.hostIP = IPAddress.Parse(splits[2]);
+            }
             if (UserList.Add(user))
                 window.Dispatcher.Invoke((Action)(() =>
                 {

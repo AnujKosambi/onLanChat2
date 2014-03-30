@@ -135,7 +135,7 @@ namespace SEN_project_v2
             _Mode = Mode.InCall;
             if (!isRemote)
             {
-                udp.SendMessageTo(UDP.RVideocall, hostIP);
+                udp.SendMessageTo(UDP.RVideocall+hostIP, hostIP);
                 VideoConf videoConf = new VideoConf(window, hostIP);
                 window.videoConf = videoConf;
                 if (videoConf.SetVideoSources())

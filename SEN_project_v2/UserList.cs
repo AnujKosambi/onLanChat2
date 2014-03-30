@@ -12,6 +12,7 @@ namespace SEN_project_v2
         static Dictionary<System.Net.IPAddress,int> indexOf=new Dictionary<System.Net.IPAddress,int>();
         public static Dictionary<System.Net.IPAddress, string> GroupList = new Dictionary<System.Net.IPAddress, string>();
         public static Dictionary<System.Net.IPAddress, XMLClient> xml = new Dictionary<System.Net.IPAddress, XMLClient>();
+        
         public static bool Add(User user)
         {
 

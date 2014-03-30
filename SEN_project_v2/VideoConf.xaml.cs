@@ -18,6 +18,7 @@ using System.Threading;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
 using AForge.Video;
+using NAudio.Wave;
 using System.Runtime.InteropServices;
 namespace SEN_project_v2
 {
@@ -35,6 +36,7 @@ namespace SEN_project_v2
         public System.Windows.Forms.Timer timer;
         private ScreenCapture sc = new ScreenCapture();
         public RTPClient rtpClient;
+        private Audio audio;
         /// <summary>
         /// Video Devices
         /// </summary>
@@ -54,17 +56,25 @@ namespace SEN_project_v2
             InitializeComponent();
             if (mParent.rtpClient != null)
                 mParent.rtpClient.Dispose();
+            
             rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), 
-                (int)MainWindow.Ports.RTP),vp, MainWindow.hostIP.ToString(), "224.0.0.2");
+                (int)MainWindow.Ports.RTP),vp, string.Join("#",MainWindow.hostIPS.Select(x =>x.ToString()).ToArray()), "224.0.0.2");
             mParent.rtpClient = this.rtpClient;
             rtpClient.window = this;
             videoDevice = new VideoCaptureDevice();
+            audio = new Audio();
 
         }
      
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            for (int i = 0; i < audio.sources.Count;i++ )
+                AudioSources.Items.Add(audio.sources.ElementAt(i).ProductName);
+            if (audio.sources.Count > 0)
+            {
+                AudioSources.SelectedIndex = 0;
+            }
             timer = new System.Windows.Forms.Timer();
             timer.Tick += timer_Tick;
             timer.Interval = 500;
@@ -162,16 +172,16 @@ namespace SEN_project_v2
             {
                 b_start.Content = "Start";
                 videoDevice.Stop();
-              
+                audio.sourceStream.StopRecording();
             }
             else
             {
 
                 videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString) { DesiredFrameRate = 20 };
-                
 
+                audio.init(AudioSources.SelectedIndex);
                  videoDevice.NewFrame += capture_NewFrame;
-                
+                 audio.sourceStream.StartRecording();
                 videoDevice.Start();
                 b_start.Content = "Stop";
             }
@@ -185,7 +195,24 @@ namespace SEN_project_v2
             
             eventArgs.Frame.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             Byte[] b = ms.GetBuffer();
-            rtpClient.rtpSender.Send(b);
+            System.IO.MemoryStream withSize = new System.IO.MemoryStream();
+            Byte[] length = new Byte[4];
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < BitConverter.GetBytes(ms.GetBuffer().Length).Length)
+                    length[i] = BitConverter.GetBytes(ms.GetBuffer().Length)[i];
+            }
+            withSize.Write(length, 0, 4);
+            withSize.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+            if (audio != null && audio.listBytes.Count > 0)
+            {
+
+                int oldsize = audio.listBytes.Count;
+                withSize.Write(audio.listBytes.ToArray(), 0, oldsize);
+                audio.listBytes = audio.listBytes.Skip(oldsize).ToList();
+
+            }
+            rtpClient.rtpSender.Send(withSize.GetBuffer());
 
             System.IO.MemoryStream ms2 = new System.IO.MemoryStream();
             eventArgs.Frame.Save(ms2, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -216,5 +243,47 @@ namespace SEN_project_v2
 
 
     }
+    class Audio
+    {
+        public List<WaveInCapabilities> sources = new List<WaveInCapabilities>();
+      //  public static WaveInCapabilities _default;
+        public WaveIn sourceStream;
+        public List<Byte> listBytes = new List<Byte>();
+      //  public WinSound.Recorder recorder;
+        public Audio()
+        {
+             for (int i = 0; i < WaveIn.DeviceCount; i++)
+            {
+                sources.Add(WaveIn.GetCapabilities(i));
+                
+            }
+            
+            
+        }
+        public void init(int deviceNumber)
+        {
+            if (sources.Count >= 0)
+            {
 
-}
+            
+                sourceStream = new WaveIn();
+                sourceStream.DeviceNumber = deviceNumber;
+                sourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(deviceNumber).Channels);
+                sourceStream.RecordingStopped += sourceStream_RecordingStopped;
+                sourceStream.DataAvailable += sourceStream_DataAvailable;
+
+            }
+        }
+        void sourceStream_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            listBytes = listBytes.Concat(e.Buffer).ToList();
+        }
+
+        void sourceStream_RecordingStopped(object sender, EventArgs e)
+        {
+
+            listBytes.Clear();
+        }
+    }
+
+    }

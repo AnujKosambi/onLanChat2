@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using MSR.LST.Net.Rtp;
 using MSR.LST;
 using System.Windows;
+using NAudio.Wave;
 namespace SEN_project_v2
 {
     public class RTPClient
@@ -27,14 +28,24 @@ namespace SEN_project_v2
         public Dictionary<IPAddress, VideoPreview> vpList;
         private Image image;
         private int port;
-
+        ///
+        /// 
+        /// 
+        public DirectSoundOut waveOut;
+        public BufferedWaveProvider waveProvider;
         /// <summary>
         /// 
         /// </summary>
         public RtpSession rtpSession;
         public RtpSender rtpSender;
         public IPEndPoint ipe;
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="multiCastIP"></param>
+        /// <param name="vpList"></param>
+        /// <param name="cname"></param>
+        /// <param name="name"></param>
         public RTPClient(IPEndPoint multiCastIP,Dictionary<IPAddress, VideoPreview> vpList,String cname,String name)
 
         { 
@@ -76,6 +87,14 @@ namespace SEN_project_v2
             RtpEvents.RtpParticipantRemoved += RtpParticipantRemoved;
             RtpEvents.RtpStreamAdded += RtpEvents_RtpStreamAdded;
             RtpEvents.RtpStreamRemoved += RtpEvents_RtpStreamRemoved;
+            AudioLoader();
+        }
+        private void AudioLoader()
+        {
+            waveProvider = new BufferedWaveProvider(new WaveFormat(44100, 2));
+            waveProvider.DiscardOnBufferOverflow = true;
+            waveOut = new DirectSoundOut();
+            waveOut.Init(waveProvider);
         }
         void RtpEvents_RtpStreamAdded(object sender, RtpEvents.RtpStreamEventArgs ea)
         {
@@ -85,16 +104,41 @@ namespace SEN_project_v2
         {
             ea.RtpStream.FrameReceived -= RtpStream_FrameReceived;
         }
-
+        
         void RtpStream_FrameReceived(object sender, RtpStream.FrameReceivedEventArgs ea)
         {
 
-            System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
+         //   System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
           window.Dispatcher.Invoke((Action)(() => {
               if (image == null)
               {
-                  if (vpList.ContainsKey(IPAddress.Parse(ea.RtpStream.Properties.CName)))
-                      vpList[IPAddress.Parse(ea.RtpStream.Properties.CName)].prev.Source = GetImage(ea.Frame.Buffer).Source;
+                  System.IO.MemoryStream ms = new System.IO.MemoryStream(ea.Frame.Buffer);
+                  int sizeBytes = 0;
+                  Byte[] buffer = new Byte[4];
+                  ms.Read(buffer, 0, 4);
+                  sizeBytes = BitConverter.ToInt32(buffer, 0);
+                    Byte[] imageData = new Byte[sizeBytes];
+                    ms.Read(imageData, 0, imageData.Length);
+                  string[] hostIPS = ea.RtpStream.Properties.CName.Split('#');
+
+                  foreach (var ip in hostIPS)
+                  {
+                      if (vpList.ContainsKey(IPAddress.Parse(ip)))
+                      {
+                          vpList[IPAddress.Parse(ip)].prev.Source = GetImage(imageData).Source;
+                          break;
+                      }
+                  }
+                  Byte[] audio = new Byte[ms.Length - ms.Position];
+                  ms.Read(audio, 0, audio.Length);
+
+                  {
+                      if (ea.RtpStream.FramesReceived > 10)
+                          waveProvider.AddSamples(audio, 0, audio.Length);
+                      if (waveOut.PlaybackState != PlaybackState.Playing)
+                          waveOut.Play();
+
+                  }
               }else
               {
                   image.Source = GetImage(ea.Frame.Buffer).Source;

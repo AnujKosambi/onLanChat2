@@ -69,6 +69,9 @@
     <Reference Include="MSR.LST.Net.Rtp">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\MSR.LST.Net.Rtp.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio">
+      <HintPath>..\..\SEN_Project_v1\SEN_Project_v1\bin\x86\Debug\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="NetworkingBasics">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\NetworkingBasics.dll</HintPath>
     </Reference>
@@ -92,6 +95,9 @@
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
+    <Reference Include="WinSound">
+      <HintPath>..\..\SEN_Project_v1\SEN_Project_v1\bin\x86\Debug\WinSound.dll</HintPath>
+    </Reference>
     <Reference Include="WPF.Themes">
       <HintPath>..\..\..\..\..\Downloads\wpfthemes-81799\WPF.Themes\bin\Debug\WPF.Themes.dll</HintPath>
     </Reference>
