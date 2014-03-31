@@ -155,6 +155,7 @@ namespace SEN_project_v2
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+
         }
         public class Threads
         {
@@ -224,7 +225,11 @@ namespace SEN_project_v2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            if (remote != null)
+            {
+                remote.StartSending();
+                remote.Close();
+            }
             threads.StopAll();
 
             udp.recevingClient.Close();
@@ -284,6 +289,7 @@ namespace SEN_project_v2
                 if(remote!=null)
                 remote.rtpClient.Dispose();
                 Remote.Content = "Remote";
+                remote.Close();
             }
             else
             {

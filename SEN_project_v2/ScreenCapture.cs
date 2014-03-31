@@ -77,7 +77,7 @@ public class ScreenCapture : System.MarshalByRefObject
 
         Graphics g = System.Drawing.Graphics.FromImage(MemImage);
         System.Windows.Forms.Cursor cur = System.Windows.Forms.Cursors.Arrow;
-        cur.Draw(g, new Rectangle(System.Windows.Forms.Cursor.Position.X - 10, System.Windows.Forms.Cursor.Position.Y - 10, cur.Size.Width, cur.Size.Height));
+        cur.Draw(g, new Rectangle(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y, cur.Size.Width, cur.Size.Height));
 
         MemoryStream ms = new MemoryStream();
         MemImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);

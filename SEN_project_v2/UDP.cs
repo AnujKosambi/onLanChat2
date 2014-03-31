@@ -1,4 +1,4 @@
-﻿//#define UDP
+﻿#define UDP
 #if UDP
 #define UDPConnection
 #endif
@@ -199,6 +199,22 @@ namespace SEN_project_v2
                        else { }
                     }
 
+                }
+                else if(stringData.StartsWith(Keyboard))
+                {
+                    if (window.remote != null)
+                    {
+                        string[] splits = stringData.Split(new String[] { Keyboard, Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                        if (splits.Length == 2)
+                        {
+                            Remote.KeyStatus ks= new Remote.KeyStatus();
+                            ks.code=(SEN_project_v2.Remote.Keys)Convert.ToByte(splits[0]);
+                            ks.Flag=Convert.ToByte(splits[1]);
+                            window.remote.waiting.Add(ks);
+
+                        }
+                        else { }
+                    }
                 }
                 else if (stringData.StartsWith(EndRemote))
                 {
