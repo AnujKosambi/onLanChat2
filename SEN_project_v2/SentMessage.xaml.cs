@@ -19,11 +19,33 @@ namespace SEN_project_v2
     /// </summary>
     public partial class SentMessage : UserControl
     {
-        public SentMessage(IPAddress ip, string message, string time)
+        XMLClient xmlClient;
+        XMLClient.Message message;
+        public SentMessage(IPAddress ip, string message, string time,XMLClient client)
         {
             InitializeComponent();
             Message.Text = message;
             Time.Text = time;
+            this.xmlClient = client;
+        }
+        public void SetMessage(XMLClient.Message m)
+        {
+            message = m;
+        }
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            xmlClient.deleteMessage(message);
+            (this.Parent as StackPanel).Children.Remove(this);
+        }
+
+        private void Label_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Foreground = System.Windows.Media.Brushes.Orange;
+        }
+
+        private void Label_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Foreground = System.Windows.Media.Brushes.DarkGray;
         }
     }
 }

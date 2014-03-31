@@ -10,34 +10,44 @@
 
     </UserControl.Resources>
     <Grid>
+        <Grid.Background>
+            <RadialGradientBrush RadiusX="0.75" RadiusY="0.75" Center="0.75,0.75">
+                <GradientStop Color="#7F4F4646" Offset="1"/>
+                <GradientStop Color="#7FFFFFFF"/>
+                <GradientStop Color="#B4918C8C" Offset="0.451"/>
+            </RadialGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="3" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="30" />
+
         </Grid.RowDefinitions>
+        <Label HorizontalAlignment="Center" FontFamily="Segoe UI Semibold" Name="Header">Nick</Label>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
-            
-        <StackPanel   Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Loaded="MessagePanel_Loaded" >
-            <StackPanel.Background>
-                <RadialGradientBrush RadiusX="0.75" RadiusY="0.75" Center="0.75,0.75">
-                    <GradientStop Color="#7F4F4646" Offset="1"/>
-                    <GradientStop Color="#7FFFFFFF"/>
-                    <GradientStop Color="#B4918C8C" Offset="0.451"/>
-                </RadialGradientBrush>
-            </StackPanel.Background>
-        </StackPanel>
+
+            <StackPanel   Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Loaded="MessagePanel_Loaded" >
+
+            </StackPanel>
         </ScrollViewer>
 
-        <Grid Grid.Row="2" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+        <GridSplitter Grid.Row="2"  HorizontalAlignment="Stretch" Foreground="Black"  >
+            <GridSplitter.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.51"/>
+                    <GradientStop Offset="1" Color="#00000000"/>
+                    <GradientStop Offset="0.008" Color="#00000000"/>
+                    <GradientStop Color="#BF000000" Offset="0.276"/>
+                    <GradientStop Color="#BF000000" Offset="0.762"/>
+                </LinearGradientBrush>
+            </GridSplitter.Background>
+        </GridSplitter>
+        <TextBox Grid.Row="3" Margin="5" Name="SendBox"  />
+        <Button Grid.Row="4" Content="Send"  Click="Button_Click" Height="25" Width="200"/>
 
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Margin="5" Name="SendBox"  />
-            <Button Grid.Column="1" Content="Send" Margin="5" Click="Button_Click" />
 
-        </Grid>
 
     </Grid>
 </UserControl>

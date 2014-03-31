@@ -36,13 +36,13 @@ namespace SEN_project_v2
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
         public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
-        public const string Breaker = "<#>";
         public const string RemoveMember = "<#Remove#>";
         public const string Remote = "<#Remote#>";
         public const string RRemote = "<\\#Remote#>";
         public const string EndRemote = "<XEndX>";
         public const string Mouse = "<#M#>";
         public const string Keyboard = "<#K#>";
+        public const string Breaker = "<#>";
         private int port;
         private MainWindow window;
         #endregion
@@ -308,6 +308,7 @@ namespace SEN_project_v2
             {
                 MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
                 UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0]);
+
             }
         }
         private void receviedRVoiceCall(IPEndPoint recevied)

@@ -25,5 +25,18 @@ namespace SEN_project_v2
             Message.Text = nick;
             Time.Text = time;
         }
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+        private void Label_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Foreground = System.Windows.Media.Brushes.DarkRed;
+        }
+
+        private void Label_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Foreground = System.Windows.Media.Brushes.DarkGray;
+        }
     }
 }

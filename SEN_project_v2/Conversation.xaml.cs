@@ -17,9 +17,10 @@ namespace SEN_project_v2
     /// <summary>
     /// Interaction logic for Conversation.xaml
     /// </summary>
+   
     public partial class Conversation : UserControl
     {
-        static List<XMLClient.Message> messages;
+        List<XMLClient.Message> messages;
         ResourceDictionary rd = new ResourceDictionary();
         XMLClient client;
         IPAddress ip;
@@ -35,25 +36,36 @@ namespace SEN_project_v2
         int timeIndex=1;
         private void MessagePanel_Loaded(object sender, RoutedEventArgs e)
         {
+            Draw();
+           
+        }
+        public void Redraw()
+        {
+            MessagePanel.Children.Clear();
+            Draw();
 
+        }
+        private void Draw()
+        {
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 messages = client.fetchMessages();
                 foreach (XMLClient.Message m in messages)
                 {
-                    if(m.self)
+                    if (m.self)
                     {
                         ReceMessage s = new ReceMessage(ip, m.value, m.time.ToString("hh:mm"));
                         MessagePanel.Children.Add(s);
                     }
-                    else { 
-                    SentMessage s = new SentMessage(ip,m.value,m.time.ToString("hh:mm"));
-                    MessagePanel.Children.Add(s);
+                    else
+                    {
+                        SentMessage s = new SentMessage(ip, m.value, m.time.ToString("hh:mm"), client);
+                        s.SetMessage(m);
+                        MessagePanel.Children.Add(s);
                     }
                 }
             }));
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if(udp!=null)

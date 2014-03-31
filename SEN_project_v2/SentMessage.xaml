@@ -10,7 +10,7 @@
             <DropShadowEffect BlurRadius="10" Opacity="0.7" Color="#FF222523"/>
         </Grid.Effect>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/conv-rece.png" Opacity="0.7" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="Images/rectangle_blue_154x48.png" Opacity="0.5" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -18,8 +18,9 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" TextWrapping="Wrap"  Text="text" FontFamily="Segoe UI Semibold" FontSize="14" Margin="10,10,10,0" Name="Message" />
-        <TextBlock Grid.Row="2" TextWrapping="Wrap"   Text="20:20" FontFamily="Segoe UI Semibold" FontSize="12" Margin="10,0,10,10" TextAlignment="Right" Name="Time" />
+        <TextBlock Grid.Row="1" TextWrapping="Wrap"  Text="text" FontFamily="Segoe UI Semibold" FontSize="14" Margin="10,10,10,0" Name="Message" Foreground="White" />
 
+        <TextBlock Grid.Row="2" TextWrapping="Wrap"   Text="20:20" FontFamily="Segoe UI Semibold" FontSize="12" Margin="10,0,10,10" TextAlignment="Right" Name="Time" Foreground="White" />
+        <Label Content="X" Foreground="DarkGray" Grid.Row="2" Margin="10,0,0,0" FontFamily="Forte"  FontWeight="ExtraBlack" FontSize="12"  Width="20" HorizontalAlignment="Left" Focusable="True" RenderTransformOrigin="0.45,0" MouseLeftButtonDown="Label_MouseLeftButtonDown" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave"/>
     </Grid >
 </UserControl>

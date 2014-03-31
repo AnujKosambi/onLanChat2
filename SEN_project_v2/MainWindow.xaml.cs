@@ -390,16 +390,19 @@ namespace SEN_project_v2
         private void SendB_Click(object sender, RoutedEventArgs e)
         {
             //foreach(string group in groupLists.Keys)
-            //foreach(var sel in listView[group].SelectedItems)
+            //foreach(var sel in listview[group].selecteditems)
             //{
             foreach (IPAddress ip in UserList.Selected)
             {
-                UserList.xml[ip].addSelfMessage(DateTime.Now, sendBox.Text);
 
-                udp.SendMessageTo(UDP.Message + sendBox.Text + UDP.Message, ip);
+                string Messeage =new TextRange(sendBox.Document.ContentStart, sendBox.Document.ContentEnd).Text;
+                UserList.xml[ip].addSelfMessage(DateTime.Now, Messeage);
+                udp.SendMessageTo(UDP.Message + Messeage + UDP.Message, ip);
             }
-            sendBox.Text = "Enter Text Here...";
             //}
+            
+           
+       
         }
 
         private void sendBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -409,8 +412,11 @@ namespace SEN_project_v2
 
         private void sendBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            sendBox.Text = "";
+           // sendBox.Selection.Select(sendBox.Document.ContentStart, sendBox.Document.ContentEnd);
+
         }
+
+   
 
     
     

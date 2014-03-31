@@ -214,6 +214,12 @@
         </appliedStereotypesInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="29544fa1-95e4-4587-9a20-9a8c1dc5edc0"
+        LastKnownName="NAudio"
+        LastKnownLocation="Package_1653.uml" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

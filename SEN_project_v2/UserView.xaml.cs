@@ -89,12 +89,16 @@ namespace SEN_project_v2
         private void openChat_Click(object sender, RoutedEventArgs e)
         {
             Window w = new Window();
-            w.Content = new Conversation(u_ip) { udp=MainWindow.udp};
+            Conversation conver = new Conversation(u_ip) { udp = MainWindow.udp };
+            w.Content = conver;
+            conver.Header.Content= u_nick;
 
             w.SizeToContent = SizeToContent.WidthAndHeight;
             w.Title = u_nick;
-             
             w.Show();
+            w.MinWidth = 400;
+            w.MinHeight = 400;
+            w.MaxWidth = 700;
         }
 
    

@@ -95,18 +95,24 @@
                 </GridSplitter.Background>
             </GridSplitter>
 
-            <TextBox
+            <RichTextBox 
                 
                 Name="sendBox" Grid.Row="2"  HorizontalAlignment="Stretch" Width="Auto"
                       VerticalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold" AcceptsTab="True" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" 
-                    AllowDrop="True" Text="   Enter Text Here..." GotFocus="sendBox_GotFocus"   >
-                <TextBox.Background>
+                    AllowDrop="True"  GotFocus="sendBox_GotFocus"  IsDocumentEnabled="True"    >
+                <RichTextBox.Background>
                     <RadialGradientBrush RadiusY="1">
                         <GradientStop Color="#4C642E2E" Offset="1"/>
                         <GradientStop Color="#4CFFFFFF"/>
                     </RadialGradientBrush>
-                </TextBox.Background>
-            </TextBox>
+                </RichTextBox.Background>
+                
+                <FlowDocument >
+                    <Paragraph Name="Paragraph" >
+                        <Run >Enter Text Here...</Run>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
             <Grid Grid.Row="3" >
                 <Button Name="filesButton" Content="&lt;&lt; Drag Files Here &gt;&gt;" DragEnter="filesButton_DragEnter" Drop="filesButton_Drop" Click="filesButton_Click" FontFamily="Segoe UI Semibold" />
 

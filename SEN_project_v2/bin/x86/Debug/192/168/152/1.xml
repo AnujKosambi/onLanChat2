@@ -1,13 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Messages>
-  <Count>7</Count>
-  <Unread>7</Unread>
-  <Message index="0" time="24-03-2014 14:30:34" self="true">ANUJ</Message>
-  <Message index="0" time="24-03-2014 14:30:37" self="false">ANUJ</Message>
-  <Message index="1" time="24-03-2014 14:56:26" self="false">ANUj</Message>
-  <Message index="2" time="24-03-2014 15:04:37" self="false">ANUJ</Message>
-  <Message index="3" time="24-03-2014 15:05:58" self="false">AYBH</Message>
-  <Message index="4" time="24-03-2014 15:07:25" self="false">ANUJ</Message>
-  <Message index="5" time="24-03-2014 15:08:07" self="false">xxxx</Message>
-  <Message index="6" time="24-03-2014 15:08:11" self="false">xxxx</Message>
+  <Count>10</Count>
+  <Unread>10</Unread>
 </Messages>

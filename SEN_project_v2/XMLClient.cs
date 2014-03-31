@@ -85,9 +85,6 @@ namespace SEN_project_v2
             lastMessage.value = value;
             CountMessages++;
             UnreadMessages++;
-
-
-
         }
         public void addSelfMessage(DateTime time, String value)
         {
@@ -98,6 +95,18 @@ namespace SEN_project_v2
 
             message.InnerText = value;
             fetchRootOfMessages().AppendChild(message);
+            xmlDoc.Save(path);
+        }
+
+        public void deleteMessage(Message m)
+        {
+            XmlNodeList nodelist = xmlDoc.SelectNodes("//Messages//Message");
+
+            foreach (XmlNode xn in nodelist)
+            {
+                if (xn.Attributes.GetNamedItem("index").Value.Equals(m.index.ToString()))
+                    fetchRootOfMessages().RemoveChild(xn);
+            }
             xmlDoc.Save(path);
         }
         public int CountMessages

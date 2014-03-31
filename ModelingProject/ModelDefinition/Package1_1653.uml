@@ -1,270 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
-  Id="2186ecc3-1691-49f1-95b3-db5213a8d48f"
-  name="Rtp"
+  Id="851976bf-3322-4369-bc0d-b42f5882d165"
+  name="Wave"
   visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <referencesInternal>
     <reference
-      Id="ed14139a-e6b1-4d6e-9fc0-9b921d4e0cc1"
-      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMSR.LST.Net.Rtp"
+      Id="1d22b173-3188-4997-b732-153090295470"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DNAudio.Wave"
       tag="ViewCode" />
   </referencesInternal>
   <packagedElements>
     <packageHasNamedElement>
       <class
-        Id="6a929c1d-77b9-4e55-a6cc-a086c62bb748"
-        name="RtpStreamEventArgs"
+        Id="9e2e1311-bd17-4c9a-8056-60a0b137a9d2"
+        name="WaveInEventArgs"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <referencesInternal>
           <reference
-            Id="f2e33fad-0098-4a10-9de8-1f802af71eaf"
-            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DRtpStreamEventArgs ParentType%3DRtpEvents)"
+            Id="dc5c5c67-e006-4f12-8d75-0e8d93857e50"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DWaveInEventArgs"
             tag="ViewCode" />
         </referencesInternal>
         <appliedStereotypesInternal>
           <stereotypeInstance
-            Id="e41331ae-6774-4329-86f1-2071071e2073"
+            Id="97cfe994-eb8b-4b46-9ff0-3884cb29a4d5"
             name="class"
             profile="CSharpProfile">
             <propertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="21a46533-fa34-4921-ac6c-073d0f2acac8">
+                Id="3c8bc7ec-5005-464d-afc4-0f7953cc7f97">
                 <propertyInstance
-                  Id="5924a67b-6817-448c-9725-b8dd76999ae5"
+                  Id="6f4a0520-2a46-4ace-acd6-cedcfb61ac75"
                   name="ClrAttributes" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="d4eb9df8-13bd-4fef-8952-b1363627e85f">
+                Id="19c465fe-18d2-4e33-a41e-ffc78c57e37e">
                 <propertyInstance
-                  Id="0e188f62-bd10-4c15-91eb-c165d15383c7"
+                  Id="bad5f1e6-4781-448e-a146-a9bca150fb27"
                   name="IsPartial"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="087bc043-063f-4887-925a-f33545d2883a">
+                Id="1c55f9ba-3b3a-40d4-aa0e-7001b4d0c5c1">
                 <propertyInstance
-                  Id="a6359bde-af7c-4868-a61c-ea95726822d8"
+                  Id="59777840-5a60-4ff1-9710-401d4dc71364"
                   name="IsStatic"
                   value="False" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="dca90f44-7f00-49ff-a110-0e530ff6778d">
+                Id="5cf21544-c38a-4b02-b828-58d637f66c67">
                 <propertyInstance
-                  Id="936a06ee-6f63-4ba1-af54-f6350b8925a7"
+                  Id="bf0beaff-b889-4d87-9dd7-ae4c49622a53"
                   name="IsUnsafe"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="46748698-c86e-412c-a8bd-4aa0a1584175">
+                Id="ea9c2d38-3fe9-4684-8618-8b02957a4377">
                 <propertyInstance
-                  Id="9fb4175a-da98-413b-8f30-e624ad666a5e"
-                  name="PackageVisibility"
-                  value="internal" />
-              </stereotypeInstanceHasPropertyInstances>
-            </propertyInstances>
-          </stereotypeInstance>
-        </appliedStereotypesInternal>
-        <generalsInternal>
-          <generalization
-            Id="11affac7-d872-4526-b2f0-237f5cc4f7c3"
-            isSubstitutable="false">
-            <classMoniker
-              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
-              LastKnownName="EventArgs"
-              LastKnownLocation="Package1_1941.uml" />
-          </generalization>
-        </generalsInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="edcdcf36-e626-4e6c-974a-d1f352b12082"
-        name="FrameReceivedEventArgs"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <referencesInternal>
-          <reference
-            Id="3eda417f-895f-4514-aed3-ae1e3691ff9e"
-            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DFrameReceivedEventArgs ParentType%3DRtpStream)"
-            tag="ViewCode" />
-        </referencesInternal>
-        <appliedStereotypesInternal>
-          <stereotypeInstance
-            Id="e86ae922-eb4b-4526-bf50-3a61e0fae3ba"
-            name="class"
-            profile="CSharpProfile">
-            <propertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="088c18d5-6cb4-4815-aee9-2a7caa53a07b">
-                <propertyInstance
-                  Id="a151259c-8270-4b23-9a39-1db1aa52868c"
-                  name="ClrAttributes" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="d84875d6-aab4-428b-ba1f-122ff87697e9">
-                <propertyInstance
-                  Id="0b187715-875f-4ef7-ae1b-7e4f4700271b"
-                  name="IsPartial"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="32505e33-3901-4fe6-aa5c-1cb6272d1c19">
-                <propertyInstance
-                  Id="2f370a4e-2383-4dfb-b045-04ed023ece34"
-                  name="IsStatic"
-                  value="False" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="cc071e16-7c8b-4b57-a503-9e16abef4e31">
-                <propertyInstance
-                  Id="0ea11cf4-ded5-4ca7-aa38-6e6f01c5aad4"
-                  name="IsUnsafe"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="e4c58cee-ab8b-4d67-9fb2-6553484272ff">
-                <propertyInstance
-                  Id="226a689f-9c53-48d9-b052-e3f7bd79931e"
-                  name="PackageVisibility"
-                  value="internal" />
-              </stereotypeInstanceHasPropertyInstances>
-            </propertyInstances>
-          </stereotypeInstance>
-        </appliedStereotypesInternal>
-        <generalsInternal>
-          <generalization
-            Id="c033e313-2395-400c-bb4e-0ab23edc45f0"
-            isSubstitutable="false">
-            <classMoniker
-              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
-              LastKnownName="EventArgs"
-              LastKnownLocation="Package1_1941.uml" />
-          </generalization>
-        </generalsInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="960f087a-f9aa-4383-ad17-87f92e7640bb"
-        name="RtpParticipantEventArgs"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <referencesInternal>
-          <reference
-            Id="a7187ad0-4ec6-4c3b-9b21-f220fc7dd6c6"
-            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3D(Name%3DRtpParticipantEventArgs ParentType%3DRtpEvents)"
-            tag="ViewCode" />
-        </referencesInternal>
-        <appliedStereotypesInternal>
-          <stereotypeInstance
-            Id="3660218c-22b1-4077-9579-37724b119da4"
-            name="class"
-            profile="CSharpProfile">
-            <propertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="cfadf603-1473-4ba7-85fd-d01fa098151e">
-                <propertyInstance
-                  Id="59a06448-5f04-4603-ab28-a2e043c1d756"
-                  name="ClrAttributes" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="66645a12-cc6e-4b34-905b-afca9e523219">
-                <propertyInstance
-                  Id="ef9576f8-6528-47b2-8629-74b07f79c430"
-                  name="IsPartial"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="34d9662e-9de4-4c54-8b69-7694c3d025c0">
-                <propertyInstance
-                  Id="263e2543-1587-4544-9dc3-92ffafb37686"
-                  name="IsStatic"
-                  value="False" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="f2e57ed4-024d-4e71-a53a-32f92ea8ac05">
-                <propertyInstance
-                  Id="7911b65e-bd97-4b21-b4e9-f9d3d677a84a"
-                  name="IsUnsafe"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="5739ba65-3cb9-4a6e-bafa-8274c620dfa5">
-                <propertyInstance
-                  Id="f33b3f86-3b4e-4bbb-b17a-74b5805dc835"
-                  name="PackageVisibility"
-                  value="internal" />
-              </stereotypeInstanceHasPropertyInstances>
-            </propertyInstances>
-          </stereotypeInstance>
-        </appliedStereotypesInternal>
-        <generalsInternal>
-          <generalization
-            Id="1325547f-4572-4898-94f6-3a9b79d92d24"
-            isSubstitutable="false">
-            <classMoniker
-              Id="f70ac517-274f-4620-8b3d-2f2624e4d6e8"
-              LastKnownName="EventArgs"
-              LastKnownLocation="Package1_1941.uml" />
-          </generalization>
-        </generalsInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="518a0280-e2b8-472d-9620-388d611ce703"
-        name="RtpSession"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <referencesInternal>
-          <reference
-            Id="dcf8926d-3284-4837-8c66-244ea9e3dd64"
-            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3DRtpSession"
-            tag="ViewCode" />
-        </referencesInternal>
-        <appliedStereotypesInternal>
-          <stereotypeInstance
-            Id="779e1de2-abe2-4dd6-ba12-30cb573f87d2"
-            name="class"
-            profile="CSharpProfile">
-            <propertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="6a14c737-dfaf-46c9-b442-1e17fb8d1256">
-                <propertyInstance
-                  Id="dc14edbd-eea4-4788-8d36-5a270a48bc63"
-                  name="ClrAttributes" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="3f6793d4-be28-4fed-92dd-f532142fe528">
-                <propertyInstance
-                  Id="2076f624-18c8-4349-a733-5214ee0fbae7"
-                  name="IsPartial"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="f5953d49-cf7d-47a4-8861-553a0b6322e2">
-                <propertyInstance
-                  Id="42a05b84-2b7a-43cd-a50c-5ff858d708a3"
-                  name="IsStatic"
-                  value="False" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="8d455d3d-9c55-418c-b0f2-7d6ddb80de68">
-                <propertyInstance
-                  Id="8ff7fc4b-f951-4cac-bee4-d3666b035c16"
-                  name="IsUnsafe"
-                  value="false" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="5f0efa73-1b13-4235-b941-5169a4103ce1">
-                <propertyInstance
-                  Id="4372b5d1-5562-4df1-b6a5-37de8a3e9908"
+                  Id="2d103f90-86c4-4042-9f2c-ef4eb0d231b1"
                   name="PackageVisibility"
                   value="internal" />
               </stereotypeInstanceHasPropertyInstances>
@@ -275,54 +71,221 @@
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
-        Id="1f2f30bb-deaa-45c6-89b6-ddb7c1ccb553"
-        name="RtpSender"
+        Id="15215be5-2d75-4bd0-9128-6b684766a845"
+        name="WaveInCapabilities"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <referencesInternal>
           <reference
-            Id="0478c66f-f7b0-46de-bf5e-59b75b3152bc"
-            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2FDownloads%2FCompressed%2FRTP_Presenter%2FRTP Presenter%2FRTPTeacherPresenter%2FMSR.LST.Net.Rtp.dll&quot; Namespace%3DMSR.LST.Net.Rtp Type%3DRtpSender"
+            Id="846eb5b3-d857-4615-b9be-5b5f5db595ec"
+            handle="viewcode://./CodeSchema_Struct?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DWaveInCapabilities"
             tag="ViewCode" />
         </referencesInternal>
         <appliedStereotypesInternal>
           <stereotypeInstance
-            Id="78042ee5-64f3-421a-a189-8622dc1fbf72"
-            name="class"
+            Id="8ce3d054-5c65-442a-93cb-c5b2d25459a6"
+            name="struct"
             profile="CSharpProfile">
             <propertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="46c6871b-396e-43ee-885b-0219cd5ab3f2">
+                Id="64873b78-fc1e-4eff-b212-a7bdf3609f8b">
                 <propertyInstance
-                  Id="d22a480c-abbe-4f86-953e-c1253fe88e17"
+                  Id="11266506-ff24-42a0-8ca2-a1ca10a45ce1"
                   name="ClrAttributes" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="e72cf540-c867-4e74-b87e-d661777d91b4">
+                Id="f16dec46-1bf4-40e7-911b-a1e23ab09978">
                 <propertyInstance
-                  Id="aefd9483-4757-4740-92d3-a11c6b5ab8e7"
+                  Id="6127dcb2-58cc-456f-bafc-9b89198bbbdf"
                   name="IsPartial"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="503bea2e-5c2c-49f0-ad47-cd5c738388ca">
+                Id="f863fe50-cb3c-40a6-b7e2-a8a1b1a61e92">
                 <propertyInstance
-                  Id="22d3929f-c3d2-4cbc-b625-a7c289c3a196"
-                  name="IsStatic"
-                  value="False" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances
-                Id="774e93f1-08db-4976-aa7a-395793ffe8bb">
-                <propertyInstance
-                  Id="f4e777e5-b3c5-48f2-89fb-b95605142162"
+                  Id="5a20841c-10f8-41aa-8515-2e60a179f735"
                   name="IsUnsafe"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="29abe663-8520-4082-b67e-571b3a8f8064">
+                Id="12ddc772-eb99-419f-a6b4-1efdc073d011">
                 <propertyInstance
-                  Id="17bfaa52-6eb5-4239-a19a-73e0725f7eb9"
+                  Id="d0b095d3-26a4-4b92-9ce0-c3f64edcf7be"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e24f0cbe-b9a7-438e-9cf1-bf7bf3d44bf7"
+        name="WaveIn"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="ad00b897-0c2f-41cf-bb49-690dd0ff228b"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DWaveIn"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="f7d7b50e-08d5-4705-ac19-a2a60eb818d3"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="00719316-b635-4e1f-b56c-7863a12340f2">
+                <propertyInstance
+                  Id="ee53eb93-3b61-4c10-94f1-07efdd2da9df"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="eb148c58-ca3c-4167-9166-9bd09a93910e">
+                <propertyInstance
+                  Id="300fe5dd-bb1e-43cf-846e-2a869a2920e2"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cff20938-f59e-425b-8ff1-0ae7d34676a0">
+                <propertyInstance
+                  Id="631b48b8-2d52-41b6-be9e-b7d915f7d9f1"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b77bdd28-7ed2-4232-8114-9d22502750a2">
+                <propertyInstance
+                  Id="3f7f8b12-44f6-4e44-943d-df342d012fa3"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="22ff9bd4-7d52-4049-afbc-cf7a086ec9d9">
+                <propertyInstance
+                  Id="954f892c-8beb-45de-befd-f4f8c583fcc7"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c0cc8057-d7f5-422d-b8e5-d33f1216e35d"
+        name="DirectSoundOut"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="fdfcec26-cf27-4936-9b5c-d44e08eb28ef"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DDirectSoundOut"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="141bfeff-b638-4ccd-8e62-44fe22423541"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="49965821-9ee8-4b41-8fdc-c44fbd3f7e04">
+                <propertyInstance
+                  Id="28d6e6a2-f0bc-4139-8108-2c579bea5b90"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e512f0eb-ad67-46d8-8f70-3d6c73bf1b87">
+                <propertyInstance
+                  Id="480e47b8-b0fc-4467-858a-9c229b37c021"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b91f8c91-ff1d-4113-9437-d3328bb00cc9">
+                <propertyInstance
+                  Id="e8c95190-9b02-4c3a-9283-ab4065059548"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="52451193-db06-4f47-a78d-1f02f703a7f8">
+                <propertyInstance
+                  Id="cf27a4eb-8161-48d7-bccd-80e9808a0336"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="eae12605-d826-4ffe-8c58-871f46f45a73">
+                <propertyInstance
+                  Id="463a9630-17ea-4a5d-92c9-e20a80cd51b8"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c77f550d-5f6c-4070-8339-ebf8e38b5700"
+        name="BufferedWaveProvider"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="5a1fb63d-71d6-4ab1-8efc-21be78308f76"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DBufferedWaveProvider"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="a907fde5-b4e3-47de-8f80-71000b951555"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="38f1cb31-dc7b-480b-a94f-019c1a4fda21">
+                <propertyInstance
+                  Id="fb569053-1bd4-4a81-86c3-163545982bd3"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6c262247-0ce8-418f-85f7-10800a8d47d7">
+                <propertyInstance
+                  Id="572999f5-fd11-497d-8748-15792a306fcf"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="257037bc-469e-4240-99bb-95c6406c579a">
+                <propertyInstance
+                  Id="7d20f16b-b30a-4913-b52f-898f9168b02d"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="83f0e135-e5fa-47c6-8144-eb3f57dcbf1e">
+                <propertyInstance
+                  Id="b7ef5737-7b23-45bb-b02f-39596369d70e"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="48a9040b-b31d-41dd-b71e-3e4e96f9457f">
+                <propertyInstance
+                  Id="b01cc8a9-2d8f-4099-85a1-3107527908bd"
                   name="PackageVisibility"
                   value="internal" />
               </stereotypeInstanceHasPropertyInstances>
