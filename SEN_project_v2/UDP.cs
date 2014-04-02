@@ -1,8 +1,8 @@
-﻿#define UDP
+﻿//#define UDP
 #if UDP
 #define UDPConnection
 #endif
-//#define Fake
+#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -133,7 +133,7 @@ namespace SEN_project_v2
 
                 else if (stringData.StartsWith(Videocall))
                 {
-                    window.Dispatcher.Invoke((Action)(() => { window.CreateVideoConf(recevied.Address); }));
+                    window.Dispatcher.Invoke((Action)(() => { if(window.videoConf==null) window.CreateVideoConf(recevied.Address); }));
 
                 }
                 else if (stringData.StartsWith(RVideocall))
@@ -146,6 +146,10 @@ namespace SEN_project_v2
                     string[] splits = stringData.Split(new String[] { AddMember }, StringSplitOptions.RemoveEmptyEntries);
                     if (splits.Length > 0)
                     {
+                        if (window.videoConf == null)
+                        {
+                            window.Dispatcher.Invoke((Action)(() => { window.CreateVideoConf(recevied.Address); }));
+                        }
                         window.videoConf.Dispatcher.Invoke((Action)(() =>
                         {
                             window.videoConf.AddUser(IPAddress.Parse(splits[0]));
@@ -308,7 +312,10 @@ namespace SEN_project_v2
             {
                 MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
                 UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0]);
-
+                UserView uv= UserList.Get(recevied.Address).userView;
+                uv.Dispatcher.BeginInvoke((Action)(() => {
+                uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
+                }));
             }
         }
         private void receviedRVoiceCall(IPEndPoint recevied)

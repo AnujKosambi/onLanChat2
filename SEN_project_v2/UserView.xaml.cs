@@ -49,23 +49,23 @@ namespace SEN_project_v2
                 ul_ip.Content = value;
             }
         }
-        public bool u_check
-        {
-            get
-            {
-                return (bool)ul_check.IsChecked;
-            }
-            set
-            {
-                ul_check.IsChecked = value;
-            }
-        }
+        //public bool u_check
+        //{
+        //    get
+        //    {
+        //        return (bool)ul_check.IsChecked;
+        //    }
+        //    set
+        //    {
+        //        ul_check.IsChecked = value;
+        //    }
+        //}
 
         public UserView()
         {
             InitializeComponent();
            
-            ul_check.Click += ul_check_Checked;
+      //      ul_check.Click += ul_check_Checked;
         }
 
         private void Open_Conf(object sender, RoutedEventArgs e)
@@ -80,10 +80,10 @@ namespace SEN_project_v2
         void ul_check_Checked(object sender, RoutedEventArgs e)
         {
 
-            if (ul_check.IsChecked==true)
-                UserList.SelectedUsers.Add(u_ip, true);
-            else
-                UserList.SelectedUsers.Remove(u_ip);
+            //if (ul_check.IsChecked==true)
+            //    UserList.SelectedUsers.Add(u_ip, true);
+            //else
+            //    UserList.SelectedUsers.Remove(u_ip);
         }
 
         private void openChat_Click(object sender, RoutedEventArgs e)
@@ -99,6 +99,8 @@ namespace SEN_project_v2
             w.MinWidth = 400;
             w.MinHeight = 400;
             w.MaxWidth = 700;
+            UserList.xml[u_ip].UnreadMessages = 0;
+            this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
 
    

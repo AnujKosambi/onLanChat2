@@ -105,6 +105,7 @@ namespace SEN_project_v2
             foreach (XmlNode xn in nodelist)
             {
                 if (xn.Attributes.GetNamedItem("index").Value.Equals(m.index.ToString()))
+                  //  if (xn.Attributes.GetNamedItem("self").Value.Equals(m.self.ToString()))
                     fetchRootOfMessages().RemoveChild(xn);
             }
             xmlDoc.Save(path);

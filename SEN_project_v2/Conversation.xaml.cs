@@ -28,7 +28,7 @@ namespace SEN_project_v2
         public Conversation(IPAddress sender)
         {
             InitializeComponent();
-            client = new XMLClient(sender);
+            client = UserList.xml[sender];
             ip = sender;
            
         }
@@ -54,7 +54,8 @@ namespace SEN_project_v2
                 {
                     if (m.self)
                     {
-                        ReceMessage s = new ReceMessage(ip, m.value, m.time.ToString("hh:mm"));
+                        ReceMessage s = new ReceMessage(ip, m.value, m.time.ToString("hh:mm"),client);
+                        s.SetMessage(m);
                         MessagePanel.Children.Add(s);
                     }
                     else

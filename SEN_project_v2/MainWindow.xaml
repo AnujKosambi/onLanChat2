@@ -67,7 +67,12 @@
                 <RowDefinition Height="36"/>
 
             </Grid.RowDefinitions>
-            <TreeView Name="Groups" Grid.Row="0"  RenderTransformOrigin="-3.353,-1.007"
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TreeView Name="Groups" Grid.Column="0"  RenderTransformOrigin="-3.353,-1.007"
                       BorderThickness="1" BorderBrush="#FF162C55" 
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
@@ -86,6 +91,17 @@
 
 
             </TreeView>
+                <StackPanel Grid.Column="1" >
+                    <Label Content="Member"  Background="{x:Null}" Height="23"  />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" />
+                    <Label Content="Groups"  Background="{x:Null}" Height="25"  />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Group"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" />
+                    <Label Content="Selected"  Background="{x:Null}" Height="25"  />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Selected"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" />
+                    <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
+                    <Button Content="Select All"  Grid.Column="1" Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
+                </StackPanel>
+            </Grid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
                 <GridSplitter.Background>
                     <RadialGradientBrush>
@@ -118,10 +134,18 @@
 
             </Grid>
         </Grid>
-        <Button  x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="115,0,241,10"  Width="116"/>
-        <Button Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="112"/>
-        <Button x:Name="SendB" Content="Send" VerticalAlignment="Bottom" Margin="10,0,362,10" Click="SendB_Click" />
-        <Button x:Name="Remote" Content="Remote" HorizontalAlignment="Left" Margin="236,0,0,10" VerticalAlignment="Bottom" Width="109" Click="Remote_Click" />
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="5"  Width="116"/>
+            <Button Grid.Column="1" Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="112" Margin="5"/>
+            <Button Grid.Column="2" x:Name="SendB" Content="Send" VerticalAlignment="Bottom"  Click="SendB_Click" Margin="5"/>
+            <Button Grid.Column="3" x:Name="Remote" Content="Remote" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="109" Click="Remote_Click" Margin="5" />
+        </Grid>
     </Grid>
 
 </Window>

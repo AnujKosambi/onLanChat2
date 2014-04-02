@@ -18,6 +18,8 @@ using System.Threading;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
 using AForge.Video;
+using AForge.Video.VFW;
+using AForge.Video.FFMPEG;
 using NAudio.Wave;
 using System.Runtime.InteropServices;
 namespace SEN_project_v2
@@ -42,7 +44,7 @@ namespace SEN_project_v2
         /// </summary>
         private VideoCaptureDevice videoDevice;
         private FilterInfoCollection infos;
-
+        private WaveFileWriter waveWriter;
         BitmapImage bi = new BitmapImage();
         public VideoConf(MainWindow parent, IPAddress host)
         {
@@ -51,19 +53,20 @@ namespace SEN_project_v2
             mParent = parent;
             Users = new List<IPAddress>();
             vp = new Dictionary<IPAddress, VideoPreview>();
-
             requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
             InitializeComponent();
             if (mParent.rtpClient != null)
                 mParent.rtpClient.Dispose();
             
             rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), 
-                (int)MainWindow.Ports.RTP),vp, string.Join("#",MainWindow.hostIPS.Select(x =>x.ToString()).ToArray()), "224.0.0.2");
+                (int)MainWindow.Ports.RTP),vp, MainWindow.hostIP.ToString(), "224.0.0.2");
             mParent.rtpClient = this.rtpClient;
             rtpClient.window = this;
             videoDevice = new VideoCaptureDevice();
             audio = new Audio();
 
+
+            
         }
      
 
@@ -173,13 +176,23 @@ namespace SEN_project_v2
                 b_start.Content = "Start";
                 videoDevice.Stop();
                 audio.sourceStream.StopRecording();
+               //writer.Close();
+               waveWriter.Close();
             }
             else
             {
 
                 videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString) { DesiredFrameRate = 20 };
+                //writer.Open("test.avi", 640,480);
+                //writer.FrameRate =20;
+                //writer.Quality = 0;
+
+           
+           
 
                 audio.init(AudioSources.SelectedIndex);
+             //   waveWriter = new WaveFileWriter("test.wav",audio.sourceStream.WaveFormat);
+                
                  videoDevice.NewFrame += capture_NewFrame;
                  audio.sourceStream.StartRecording();
                 videoDevice.Start();
@@ -192,9 +205,11 @@ namespace SEN_project_v2
         void capture_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             System.IO.MemoryStream ms=new System.IO.MemoryStream();
-            
+           // for (int i = 0; i < 10;i++ )
+           //     writer.AddFrame(eventArgs.Frame);
             eventArgs.Frame.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             Byte[] b = ms.GetBuffer();
+                       
             System.IO.MemoryStream withSize = new System.IO.MemoryStream();
             Byte[] length = new Byte[4];
             for (int i = 0; i < 4; i++)
@@ -209,6 +224,8 @@ namespace SEN_project_v2
 
                 int oldsize = audio.listBytes.Count;
                 withSize.Write(audio.listBytes.ToArray(), 0, oldsize);
+            //    waveWriter.WriteData(audio.listBytes.ToArray(), 0, audio.listBytes.Count);
+                
                 audio.listBytes = audio.listBytes.Skip(oldsize).ToList();
 
             }
@@ -229,14 +246,14 @@ namespace SEN_project_v2
                server_img.Source = bi;
            }));
            }));
-            bi = null;
-            
-            
+  
             
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (audio.sourceStream != null)
+                audio.sourceStream.StopRecording();
             videoDevice.Stop();
             rtpClient.Dispose();
         }

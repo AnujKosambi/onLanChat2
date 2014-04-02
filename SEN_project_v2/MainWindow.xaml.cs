@@ -16,7 +16,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
-//using WPF.Themes;
+using Microsoft.Win32;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -24,10 +24,11 @@ namespace SEN_project_v2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public const int REFRESH_INTERVAL = 5;
 
         public static UDP udp;
         Threads threads;
-        
+        static Registry reg;
         public RTPClient rtpClient;
         public VideoConf videoConf;
         private List<string> selectedFiles;
@@ -37,7 +38,49 @@ namespace SEN_project_v2
         public Window waiting;
         public Window remoteWin;
         public Remote remote;
-        
+        private int nomem;
+        private int nosel;
+        private int nogro;
+
+        private int NoMembers
+        {
+            set
+            {
+             l_Members.Content = value.ToString();
+             nomem = value;
+            }
+            get
+            {
+
+                return nomem;
+            }
+        }
+        private int NoSelected
+        {
+            set
+            {
+             l_Selected.Content = value.ToString();
+             nosel = value;
+            }
+            get
+            {
+
+                return nosel;
+            }
+        }
+        private int NoGroup
+        {
+            set
+            {
+                l_Group.Content = value.ToString();
+                nogro = value;
+            }
+            get
+            {
+
+                return nogro;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -46,7 +89,6 @@ namespace SEN_project_v2
 
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
-            
             threads = new Threads(this);
             indexer = new Dictionary<IPAddress, int>();
             groupLists = new Dictionary<string, TreeViewItem>();
@@ -56,20 +98,19 @@ namespace SEN_project_v2
             #region hostIP init
             hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
-            {
-               
-                foreach (var x in ni.GetIPProperties().UnicastAddresses)
-                {
-
-
-                    if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            {   foreach (var x in ni.GetIPProperties().UnicastAddresses)
+                {if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                     {
                         hostIPS.Add(x.Address);
                         System.Diagnostics.Debug.WriteLine(x.Address);
                     }
                 }
             }
+
             #endregion
+            reg = new Registry();
+            
+
         }
 
         #region UI Stuffs
@@ -86,15 +127,25 @@ namespace SEN_project_v2
             node.FontWeight = FontWeights.SemiBold;
             Style focus = new Style(typeof(TreeViewItem));
             focus.Setters.Add(new Setter(ForegroundProperty, System.Windows.Media.Brushes.DarkBlue));
-
-            node.FocusVisualStyle = focus;
-            node.Header = groupName;
-            ListView userOfGroup = new ListView();
             
+            //// Header
+            node.FocusVisualStyle = focus;
+            Grid g = new Grid();
+            Label b = new Label() { Content = groupName };
+            b.Background = System.Windows.Media.Brushes.Transparent;
+            b.MouseDown += ((sender, e) => { 
+                listView[(sender as Label).Content.ToString()].SelectAll();
+                groupLists[(sender as Label).Content.ToString()].IsExpanded = true;
+            });
+            g.Children.Add(b);
+
+            node.Header = g;
+          
+            ListView userOfGroup = new ListView();
+            userOfGroup.SelectionChanged+=userOfGroup_SelectionChanged;
             Style itemStyle = new Style(typeof(ListViewItem));
             itemStyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_darkwhite_96x30.png", UriKind.Relative))) { Opacity=20}));
             itemStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
-
             userOfGroup.ItemContainerStyle = itemStyle;
            
             GridView grid = new GridView();
@@ -114,9 +165,24 @@ namespace SEN_project_v2
             node.Items.Add(userOfGroup);
             Groups.Items.Add(node);
             _index.Add(groupName, new Dictionary<IPAddress, int>());
-         
-       
+
+            NoGroup++;
             return node;
+        }
+        private void userOfGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (UserView item in e.RemovedItems)
+            {
+                UserList.SelectedUsers.Remove(item.u_ip);
+            }
+            foreach (UserView item in e.AddedItems)
+            {
+                UserList.SelectedUsers.Add(item.u_ip, true);
+            
+            }
+            NoSelected = UserList.Selected.Count;
+
+            
         }
         public void AddUserToTree(User user)
         {
@@ -124,19 +190,21 @@ namespace SEN_project_v2
                 groupLists.Add(user.groupName, CreateNewGroup(user.groupName));
             _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
             listView[user.groupName].Items.Insert(_index[user.groupName][user.ip], user.CreateView());
-        
-       
-
-  
+            NoMembers++;
         }
            
         public void RemoveUserFromTree(User user)
         {
             try
             {
-
                 listView[user.groupName].Items.RemoveAt(_index[user.groupName][user.ip]);
                 _index[user.groupName].Remove(user.ip);
+                if(listView[user.groupName].Items.Count==0)
+                {
+                    Groups.Items.Remove(groupLists[user.groupName]);
+                    NoGroup--;
+                }
+                NoMembers--;
             }
             catch
             {
@@ -180,8 +248,8 @@ namespace SEN_project_v2
             {
                 while (true)
                 {
-                    udp.SendMessageTo(UDP.Connect + Environment.MachineName+UDP.Breaker+Environment.MachineName, BroadCasting.SEND.Address);
-                    Thread.Sleep(5000);
+                    BroadCasting.Do();
+                    Thread.Sleep(REFRESH_INTERVAL*1000);
                   
                 }
             }
@@ -194,7 +262,7 @@ namespace SEN_project_v2
             public void StopAll()
             {
                 StopThread(broadcast);
-                udp.SendMessageTo(UDP.Disconnect+Environment.MachineName, BroadCasting.SEND.Address);
+                BroadCasting.Disconnect();
                 if(w.rtpClient!=null)
                 w.rtpClient.Dispose();
                 StopThread(udpReceving);
@@ -210,10 +278,27 @@ namespace SEN_project_v2
                     thread.Abort();
             }
         }
-        public struct BroadCasting
+        public static class BroadCasting
         {
             public static IPEndPoint SEND = new IPEndPoint(IPAddress.Parse("255.255.255.255"), (int)Ports.UDP);
             public static IPEndPoint RECEIVE = new IPEndPoint(IPAddress.Any, (int)Ports.UDP);
+          
+            public static void Do()
+            {
+                udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, BroadCasting.SEND.Address);
+                foreach(IPAddress ip in reg.Read())
+                {
+                    udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, ip);
+                }
+            }
+            public static void Disconnect()
+            {
+                udp.SendMessageTo(UDP.Disconnect + Environment.MachineName, BroadCasting.SEND.Address);
+                foreach (IPAddress ip in reg.Read())
+                {
+                    udp.SendMessageTo(UDP.Disconnect + Environment.MachineName + UDP.Breaker + Environment.MachineName, ip);
+                }
+            }
 
         }
         public enum Ports : int
@@ -221,6 +306,30 @@ namespace SEN_project_v2
             UDP = 1716,
             TCP = 12316,
             RTP = 56789,
+
+        }
+
+        public class Registry
+        {
+            public List<IPAddress> Read()
+            {
+                try{
+                RegistryKey rkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE", true);
+
+                rkey=rkey.CreateSubKey("OnLanChat");
+                rkey = rkey.CreateSubKey("BroadCast");
+
+                return rkey.GetValueNames().Select(x => IPAddress.Parse(rkey.GetValue(x).ToString())).ToList();
+                    
+                 
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return null;
+                }
+           //     System.Diagnostics.Debug.WriteLine ( string.Join(" ", subKey.GetValueNames()) );
+            }
 
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -414,6 +523,48 @@ namespace SEN_project_v2
         {
            // sendBox.Selection.Select(sendBox.Document.ContentStart, sendBox.Document.ContentEnd);
 
+        }
+
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).Content.Equals("SelectAll"))
+            {
+                foreach (ListView lv in listView.Values)
+                    lv.SelectAll();
+                (sender as Button).Content = "DeselectAll";
+            }
+            else
+            {
+                foreach (ListView lv in listView.Values)
+                    lv.UnselectAll();
+                (sender as Button).Content = "SelectAll";
+            }
+             
+
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            NoMembers = 0;
+            NoGroup = 0;
+            NoSelected = 0;
+            groupLists.Clear();
+            listView.Clear();
+            _index.Clear();
+            selectedFiles.Clear();
+            hostIPS.Clear();
+            foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
+                foreach (var x in ni.GetIPProperties().UnicastAddresses)
+                {
+                    if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        hostIPS.Add(x.Address);
+                        System.Diagnostics.Debug.WriteLine(x.Address);
+                    }
+                }
+            UserList.ClearAllList();
+            Groups.Items.Clear();
+            udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, BroadCasting.SEND.Address);
         }
 
    

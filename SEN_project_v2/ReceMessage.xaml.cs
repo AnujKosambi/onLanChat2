@@ -19,15 +19,23 @@ namespace SEN_project_v2
     /// </summary>
     public partial class ReceMessage : UserControl
     {
-        public ReceMessage(System.Net.IPAddress ip,string nick,string time)
+        XMLClient.Message message;
+        XMLClient xmlClient;
+        public ReceMessage(System.Net.IPAddress ip,string nick,string time,XMLClient client)
         {
             InitializeComponent();
             Message.Text = nick;
+            this.xmlClient = client;
             Time.Text = time;
+        }
+        public void SetMessage(XMLClient.Message m)
+        {
+            message = m;
         }
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+            xmlClient.deleteMessage(message);
+            (this.Parent as StackPanel).Children.Remove(this);
         }
         private void Label_MouseEnter(object sender, MouseEventArgs e)
         {
