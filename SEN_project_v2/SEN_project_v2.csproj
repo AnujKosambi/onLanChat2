@@ -303,7 +303,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="OnLanChat.ico" />
+    <Content Include="OnLanChat.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\rectangle_darkwhite_96x30.png">

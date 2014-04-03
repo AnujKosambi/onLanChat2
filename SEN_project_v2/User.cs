@@ -35,7 +35,7 @@ namespace SEN_project_v2
             if (userView == null)
             {
                 userView = new UserView() { u_ip = ip, u_nick = nick };
-               
+                userView.openChat.Content = UserList.xml[ip].UnreadMessages;
             }
             return userView;
         }

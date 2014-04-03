@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
         xmlns:local="clr-namespace:SEN_project_v2" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" xmlns:Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit" x:Class="SEN_project_v2.MainWindow"
-        Title="OnLanChat" Height="522.141" Width="522" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" BorderThickness="25" Icon="OnLanChat.ico" WindowStyle="None" AllowsTransparency="True" AllowDrop="True">
+        Title="OnLanChat" Height="522.141" Width="522" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" BorderThickness="25" Icon="OnLanChat.ico" WindowStyle="None" AllowsTransparency="True" AllowDrop="True" StateChanged="Window_StateChanged">
 
     <Window.Resources>
 
@@ -68,6 +68,7 @@
 
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*"/>
                     <ColumnDefinition/>
@@ -91,7 +92,8 @@
 
 
             </TreeView>
-                <StackPanel Grid.Column="1" >
+               
+                <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                     <Label Content="Member"  Background="{x:Null}" Height="23"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" />
                     <Label Content="Groups"  Background="{x:Null}" Height="25"  />
@@ -101,6 +103,7 @@
                     <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
                     <Button Content="Select All"  Grid.Column="1" Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
                 </StackPanel>
+                
             </Grid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
                 <GridSplitter.Background>

@@ -6,100 +6,139 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Controls;
 using System.IO;
+using System.Threading;
+
 namespace SEN_project_v2
 {
-    class TCP
+    public class TCP
     {
         TcpListener tcpRecevingListner;
         TcpClient tcpRecevingClient;
         TcpClient tcpSendingClient;
+        List<string> files;
+        public List<IPAddress> ips;
+        public Thread recevingThread;
+        public Thread sendingThread;
         public TCP()
         {
             tcpRecevingListner = new TcpListener((int)MainWindow.Ports.TCP);
             tcpRecevingListner.Start();
-       
+            files = new List<string>();
+            recevingThread = new Thread(new ThreadStart(tcpReceving_proc));
+            recevingThread.Start();
         }
-        private void accept()
+        public void SendFiles(List<string> list,List<IPAddress> ips)
         {
-            tcpRecevingClient = tcpRecevingListner.AcceptTcpClient();
-           }
+            files = list;
+            this.ips = ips;
+            sendingThread = new Thread(new ThreadStart(fileSending_proc));
+            sendingThread.Start();
+        }
+    
         public  void tcpReceving_proc()
         {
-
-            ProgressBar pb = new ProgressBar();
+          
+          
             while (true)
             {
-
-                
+                tcpRecevingClient = tcpRecevingListner.AcceptTcpClient();
                 IPAddress ip = ((IPEndPoint)tcpRecevingClient.Client.RemoteEndPoint).Address;
                 NetworkStream readStream = tcpRecevingClient.GetStream();
-                Int64 bytesReceived = 0;
-                int count;
-                var buffer = new byte[1024 * 8];
-                readStream.Read(buffer, 0, 8);
-                Int64 numberOfBytes = BitConverter.ToInt64(buffer, 0);
-                using (FileStream fileIO = File.Create("anuj.mkv"))
+                
+                var filesCount=new Byte[4];
+                readStream.Read(filesCount, 0, 4);
+                for (int i = 0; i < BitConverter.ToInt32(filesCount, 0); i++)
                 {
-                    while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, buffer.Length)) > 0)
+                    Int64 bytesReceived = 0;
+                    ProgressBar progress = UserList.Get(ip).userView.Progressbar;
+               
+                    int count;
+                    var buffer = new byte[1024 * 8];
+                    readStream.Read(buffer, 0, 8);
+                    Int64 numberOfBytes = BitConverter.ToInt64(buffer, 0);
+                    progress.Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        fileIO.Write(buffer, 0, count);
-                        bytesReceived += count;
-                        pb.Dispatcher.BeginInvoke((Action)(() => { pb.Value = (int)(bytesReceived / (1024 * 8)); }));
+                        progress.Value = 0;
+                        progress.Visibility = System.Windows.Visibility.Visible;
+                        progress.Maximum = numberOfBytes / (1024 * 8);
+                    }));
+                    System.Diagnostics.Debug.WriteLine(numberOfBytes);
+                    String FileName = "file";
+                    Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
+                    if (saveFile.ShowDialog().Value == true)
+                    {
+                        System.Diagnostics.Debug.WriteLine(saveFile.FileName);
+                        FileName = saveFile.FileName;
+
                     }
-                    fileIO.Close();
+
+                    using (FileStream fileIO = File.Create(FileName))
+                    {
+                        int l = buffer.Length;
+                        while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, l)) > 0)
+                        {
+                            fileIO.Write(buffer, 0, count);
+                            progress.Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                progress.Value++;
+                                progress.UpdateLayout();
+                            }));
+                            bytesReceived += count;
+                            if ((numberOfBytes - bytesReceived) < buffer.Length)
+                                l = (int)(numberOfBytes - bytesReceived);
+
+                        }
+                        fileIO.Close();
+                    }
+                    progress.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        progress.Visibility = System.Windows.Visibility.Hidden;
+                    }));
+                 
                 }
                  readStream.Close();
             }
         }
 
-        private void fileSending_proc(IPAddress[] ips)
+        private void fileSending_proc()
         {
             foreach (IPAddress ip in ips)
             {
 
                 tcpSendingClient = new TcpClient();
                 tcpSendingClient.Connect(ip, (int)MainWindow.Ports.TCP);
-                string filePath = null;
-                ProgressBar pb = null;
-                 while (pb == null || filePath == null)
-                    System.Threading.Thread.Sleep(10);
+     
                 if (tcpSendingClient.Connected)
                 {
-
-                    using (FileStream fileIO = File.OpenRead(filePath))
+                    NetworkStream stream = tcpSendingClient.GetStream();
+                    stream.Write(BitConverter.GetBytes(files.Count), 0, 4);
+                    foreach (string file in files)
                     {
-                        NetworkStream stream = tcpSendingClient.GetStream();
-                        Byte[] length = BitConverter.GetBytes(fileIO.Length);
-
-                        stream.Write(length, 0, 8);
-
-                        var buffer = new byte[1024 * 8];
-                       pb.Dispatcher.BeginInvoke((Action)(() =>
+                       
+                        using (FileStream fileIO = File.OpenRead(file))
                         {
-                            pb.Minimum = 0;
-                            pb.Maximum = (int)(fileIO.Length / (1024 * 8));
-                            pb.SmallChange = 1;
-                        }));
-                        int progress=0;
-                        int count;
-                        try
-                        {
-                            while ((count = fileIO.Read(buffer, 0, buffer.Length)) > 0)
+                            Byte[] length = BitConverter.GetBytes(fileIO.Length);
+                            stream.Write(length, 0, 8);
+                            Int64 byteSent = 0;
+                            var buffer = new byte[1024 * 8];
+                            int count;
+                            try
                             {
-                                progress=+1;
-                                stream.Write(buffer, 0, count);
-                                UpdateProgressBarDelegate upbd = new UpdateProgressBarDelegate(pb.SetValue);
-                                pb.Dispatcher.Invoke(upbd, System.Windows.Threading.DispatcherPriority.Background,
-                                new object[] { ProgressBar.ValueProperty, progress });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            System.Windows.Forms.MessageBox.Show(e.Message, "Error in sending File", 
-                                System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
 
+                                while ((count = fileIO.Read(buffer, 0, buffer.Length)) > 0)
+                                {
+                                stream.Write(buffer, 0, count);
+                              
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                System.Windows.Forms.MessageBox.Show(e.Message, "Error in sending File",
+                                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+
+                            }
+                            fileIO.Close();
                         }
-                        fileIO.Close();
                     }
           
                 }
@@ -107,6 +146,16 @@ namespace SEN_project_v2
             }
 
         }
-        private delegate void UpdateProgressBarDelegate(System.Windows.DependencyProperty dp, Object value);   
+        public void Stop()
+        {
+            if(recevingThread!=null && recevingThread.IsAlive)
+            recevingThread.Abort();
+            if(tcpRecevingClient!=null)
+            tcpRecevingClient.Close();
+            if (tcpRecevingListner != null)
+                tcpRecevingListner.Stop();
+            
+
+        }
     }
 }

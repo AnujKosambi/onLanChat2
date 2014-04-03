@@ -49,30 +49,21 @@ namespace SEN_project_v2
                 ul_ip.Content = value;
             }
         }
-        //public bool u_check
-        //{
-        //    get
-        //    {
-        //        return (bool)ul_check.IsChecked;
-        //    }
-        //    set
-        //    {
-        //        ul_check.IsChecked = value;
-        //    }
-        //}
+   
 
         public UserView()
         {
             InitializeComponent();
-           
-      //      ul_check.Click += ul_check_Checked;
+            Progressbar.Visibility = Visibility.Hidden;
+            //this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
 
         private void Open_Conf(object sender, RoutedEventArgs e)
         {
             Window w = new Window();
             w.Content = new Conversation(u_ip);
-            w.SizeToContent = SizeToContent.WidthAndHeight;
+         //   w.SizeToContent = SizeToContent.WidthAndHeight;
+            
             w.Show();
               
         }
@@ -99,6 +90,8 @@ namespace SEN_project_v2
             w.MinWidth = 400;
             w.MinHeight = 400;
             w.MaxWidth = 700;
+            if (UserList.xml[u_ip].UnreadMessages > 0)
+                MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
             UserList.xml[u_ip].UnreadMessages = 0;
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }

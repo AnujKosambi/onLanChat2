@@ -27,17 +27,20 @@ namespace SEN_project_v2
         public const int REFRESH_INTERVAL = 5;
 
         public static UDP udp;
+        
         Threads threads;
         static Registry reg;
         public RTPClient rtpClient;
         public VideoConf videoConf;
+        public TCP tcp;
         private List<string> selectedFiles;
         public static List<IPAddress> hostIPS;
-
+        public System.Windows.Forms.NotifyIcon nicon;
         public static IPAddress hostIP;
         public Window waiting;
         public Window remoteWin;
         public Remote remote;
+        
         private int nomem;
         private int nosel;
         private int nogro;
@@ -85,8 +88,19 @@ namespace SEN_project_v2
         {
             InitializeComponent();
          //   ThemeManager.ApplyTheme(this, "BureauBlack");
-
-
+            tcp = new TCP();
+       //     MainWindow.icon = new NotifyIcon();
+            nicon = new System.Windows.Forms.NotifyIcon();
+            nicon.Text = "OnLanChat";
+            nicon.Icon = new System.Drawing.Icon("OnLanChat.ico");
+            nicon.Visible = true;
+            nicon.Click += nicon_Click;
+            System.Windows.Forms.ContextMenu cmenu = new  System.Windows.Forms.ContextMenu();
+            cmenu.MenuItems.Add("Exit");
+            cmenu.MenuItems[0].Click+=(a,b)=>{
+                this.Close();
+            };
+            nicon.ContextMenu = cmenu;
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
             threads = new Threads(this);
@@ -113,6 +127,13 @@ namespace SEN_project_v2
 
         }
 
+        void nicon_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = WindowState.Normal;
+
+        }
+
         #region UI Stuffs
         private Dictionary<IPAddress, int> indexer;
         private Dictionary<string, TreeViewItem> groupLists;
@@ -133,9 +154,17 @@ namespace SEN_project_v2
             Grid g = new Grid();
             Label b = new Label() { Content = groupName };
             b.Background = System.Windows.Media.Brushes.Transparent;
-            b.MouseDown += ((sender, e) => { 
-                listView[(sender as Label).Content.ToString()].SelectAll();
-                groupLists[(sender as Label).Content.ToString()].IsExpanded = true;
+            b.MouseDown += ((sender, e) => {
+                if (listView[(sender as Label).Content.ToString()].SelectedItems.Count == listView[(sender as Label).Content.ToString()].Items.Count)
+                {
+                    listView[(sender as Label).Content.ToString()].UnselectAll();
+                    groupLists[(sender as Label).Content.ToString()].IsExpanded = false;
+                }
+                else
+                {
+                    listView[(sender as Label).Content.ToString()].SelectAll();
+                    groupLists[(sender as Label).Content.ToString()].IsExpanded = true;
+                }
             });
             g.Children.Add(b);
 
@@ -149,7 +178,7 @@ namespace SEN_project_v2
             userOfGroup.ItemContainerStyle = itemStyle;
            
             GridView grid = new GridView();
-            
+
             Style style = new Style(typeof(GridViewColumnHeader));
             style.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
             style.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
@@ -220,9 +249,9 @@ namespace SEN_project_v2
             threads.StartAll();
 
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+        private void Button_Click(object sender, RoutedEventArgs e){
+
+            this.WindowState = WindowState.Minimized;
 
         }
         public class Threads
@@ -262,6 +291,7 @@ namespace SEN_project_v2
             public void StopAll()
             {
                 StopThread(broadcast);
+                
                 BroadCasting.Disconnect();
                 if(w.rtpClient!=null)
                 w.rtpClient.Dispose();
@@ -340,7 +370,7 @@ namespace SEN_project_v2
                 remote.Close();
             }
             threads.StopAll();
-
+            tcp.Stop();
             udp.recevingClient.Close();
         }
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
@@ -495,7 +525,6 @@ namespace SEN_project_v2
                 selectedFiles.Clear();
             }
         }
-
         private void SendB_Click(object sender, RoutedEventArgs e)
         {
             //foreach(string group in groupLists.Keys)
@@ -509,6 +538,12 @@ namespace SEN_project_v2
                 udp.SendMessageTo(UDP.Message + Messeage + UDP.Message, ip);
             }
             //}
+            if(selectedFiles.Count>0)
+            {
+              
+                tcp.SendFiles(selectedFiles,UserList.Selected);
+                
+            }
             
            
        
@@ -565,6 +600,19 @@ namespace SEN_project_v2
             UserList.ClearAllList();
             Groups.Items.Clear();
             udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, BroadCasting.SEND.Address);
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                this.Hide();
+                this.ShowInTaskbar = false;
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
+            }
         }
 
    

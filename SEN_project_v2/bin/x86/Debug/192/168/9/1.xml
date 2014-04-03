@@ -1,10 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Messages>
   <Count>4</Count>
-  <Unread>4</Unread>
-  <Message index="0" time="24-03-2014 12:42:34" self="false">ANUJ </Message>
-  <Message index="1" time="24-03-2014 12:42:47" self="false">ANUJ 2</Message>
-  <Message index="2" time="24-03-2014 12:54:55" self="false">   Enter Text Here...</Message>
-  <Message index="3" time="24-03-2014 13:18:49" self="true">   Enter Text Here...</Message>
-  <Message index="3" time="24-03-2014 13:18:52" self="false">   Enter Text Here...</Message>
+  <Unread>0</Unread>
 </Messages>

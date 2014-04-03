@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignWidth="274.06" Height="35" >
-
-    <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch">
+             mc:Ignorable="d" d:DesignWidth="340" Height="35" >
+  
+    <Grid Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="247*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
-        <WrapPanel Height="31" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,0,0,-6" Grid.ColumnSpan="2"   >
+        <ProgressBar VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="340" Name="Progressbar"/>
+        <WrapPanel Height="31" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.ColumnSpan="2"   >
             <Button Name="openChat" Height="30" Width="30" VerticalAlignment="Center" Margin="2" BorderBrush="{x:Null}" Click="openChat_Click">
                 <Button.Background>
                     <RadialGradientBrush RadiusX="0.75" RadiusY="0.75">
@@ -20,7 +21,9 @@
                     </RadialGradientBrush>
                 </Button.Background>
             </Button>
-            <Label Content="Nick" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ul_Nick" Height="31" FontWeight="SemiBold"/>
+            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ul_Nick" Height="31" FontWeight="SemiBold">
+               
+            </Label>
             <Label Content="IPAddress" HorizontalAlignment="Right" VerticalAlignment="Bottom"  x:Name="ul_ip"/>
 
 

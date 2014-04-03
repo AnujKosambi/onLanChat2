@@ -2,7 +2,7 @@
 #if UDP
 #define UDPConnection
 #endif
-#define Fake
+//#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -33,6 +33,7 @@ namespace SEN_project_v2
         public const string RConnect = "<\\#Connect#>";
         public const string Disconnect = "<#Disconnect#>";
         public const string Message = "<#Message#>";
+        public const string RMessage = "<#RMessage#>";
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
         public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
@@ -236,6 +237,11 @@ namespace SEN_project_v2
 
 
                 }
+                else if (stringData.StartsWith(RMessage))
+                {
+                    window.nicon.ShowBalloonTip(5, "Message was opened", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+
+                }
               #endregion
 
             }
@@ -310,7 +316,9 @@ namespace SEN_project_v2
           
             if (splits.Length > 0)
             {
-                MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
+
+               // MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
+                window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
                 UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0]);
                 UserView uv= UserList.Get(recevied.Address).userView;
                 uv.Dispatcher.BeginInvoke((Action)(() => {
