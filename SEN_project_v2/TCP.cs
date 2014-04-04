@@ -14,27 +14,49 @@ namespace SEN_project_v2
     {
         TcpListener tcpRecevingListner;
         TcpClient tcpRecevingClient;
-        TcpClient tcpSendingClient;
-        List<string> files;
-        public List<IPAddress> ips;
-        public Thread recevingThread;
-        public Thread sendingThread;
+      //  TcpClient tcpSendingClient;
+     //   List<string> files;
+    //    public List<IPAddress> ips;
+        //public Thread recevingThread;
+        // public Thread sendingThread;
+    //Dictionary<IPAddress, Thread> SendingThreads;
+  //      Dictionary<IPAddress, TcpClient> Clients;
+        List<Thread> SendingThreads;
+        List<TcpClient> Clients;
+        TCPServer server;
         public TCP()
         {
-            tcpRecevingListner = new TcpListener((int)MainWindow.Ports.TCP);
-            tcpRecevingListner.Start();
-            files = new List<string>();
-            recevingThread = new Thread(new ThreadStart(tcpReceving_proc));
-            recevingThread.Start();
+            //tcpRecevingListner = new TcpListener((int)MainWindow.Ports.TCP);
+            //tcpRecevingListner.Start();
+            //files = new List<string>();
+            //recevingThread.Start();
+          //  SendingThreads = new Dictionary<IPAddress, Thread>();
+          //  Clients = new Dictionary<IPAddress, TcpClient>();
+            SendingThreads = new List< Thread>();
+            Clients = new List< TcpClient>();
+            server = new TCPServer();
         }
         public void SendFiles(List<string> list,List<IPAddress> ips)
         {
-            files = list;
-            this.ips = ips;
-            sendingThread = new Thread(new ThreadStart(fileSending_proc));
-            sendingThread.Start();
+          //  files = list;
+      //      this.ips = ips;
+            foreach (IPAddress ip in ips)
+            {
+               // if (Clients.Keys.Contains(ip))
+              //      Clients.Remove(ip);
+              //      Clients.Add(ip, new TcpClient());
+              //      if (SendingThreads.ContainsKey(ip))
+               //         SendingThreads.Remove(ip);
+                TcpClient tcpClient = new TcpClient();
+                tcpClient.Connect(ip, (int)MainWindow.Ports.TCP);
+
+                Thread thread = new Thread((ThreadStart)delegate { fileSending_proc(list,  tcpClient); });
+                SendingThreads.Add(thread);
+                thread.Start();
+                
+            }
         }
-    
+    /*
         public  void tcpReceving_proc()
         {
           
@@ -99,16 +121,13 @@ namespace SEN_project_v2
                  readStream.Close();
             }
         }
-
-        private void fileSending_proc()
+        */
+        private void fileSending_proc(List<string> files,TcpClient tcpClient)
         {
-            foreach (IPAddress ip in ips)
-            {
-
-                tcpSendingClient = new TcpClient();
-                tcpSendingClient.Connect(ip, (int)MainWindow.Ports.TCP);
-     
-                if (tcpSendingClient.Connected)
+            //foreach (IPAddress ip in ips)
+            //{
+                TcpClient tcpSendingClient = tcpClient;
+               if (tcpSendingClient.Connected)
                 {
                     NetworkStream stream = tcpSendingClient.GetStream();
                     stream.Write(BitConverter.GetBytes(files.Count), 0, 4);
@@ -119,6 +138,9 @@ namespace SEN_project_v2
                         {
                             Byte[] length = BitConverter.GetBytes(fileIO.Length);
                             stream.Write(length, 0, 8);
+                            string fileNames=file.Split('\\').Last();
+                            stream.Write(BitConverter.GetBytes(fileNames.Length),0,4);
+                            stream.Write(Encoding.ASCII.GetBytes(fileNames), 0, fileNames.Length);
                             Int64 byteSent = 0;
                             var buffer = new byte[1024 * 8];
                             int count;
@@ -142,20 +164,30 @@ namespace SEN_project_v2
                     }
           
                 }
-
-            }
+              //  Clients.Remove(ip);
+              //  SendingThreads.Remove(ip);
+            //}
 
         }
         public void Stop()
         {
-            if(recevingThread!=null && recevingThread.IsAlive)
-            recevingThread.Abort();
-            if(tcpRecevingClient!=null)
-            tcpRecevingClient.Close();
-            if (tcpRecevingListner != null)
-                tcpRecevingListner.Stop();
-            
+            //if(recevingThread!=null && recevingThread.IsAlive)
+            //recevingThread.Abort();
+            //if(tcpRecevingClient!=null)
+            //tcpRecevingClient.Close();
+            //if (tcpRecevingListner != null)
+            //    tcpRecevingListner.Stop();
 
+            foreach (TcpClient client in Clients)
+            {
+                client.Close();
+            }
+            foreach (Thread thread in SendingThreads)
+            {
+                if (thread.IsAlive)
+                    thread.Abort();
+            }
+            server.Stop();
         }
     }
 }

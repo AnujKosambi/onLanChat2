@@ -30,6 +30,7 @@ namespace SEN_project_v2
     public partial class VideoConf : Window
     {
         public List<IPAddress> Users;
+        public Boolean IsHost = false;
         private UDP udp;
         public List<IPAddress> requestedUsers;
         public Dictionary<IPAddress,VideoPreview> vp;
@@ -117,7 +118,8 @@ namespace SEN_project_v2
         }
         public void MakeUserPreview(IPAddress ip,VideoPreview.Mode mode)
         {
-            vp.Add(ip, new VideoPreview(mode, ip) { Nick = UserList.Get(ip).nick });
+            vp.Add(ip, new VideoPreview(mode, ip) { Nick = UserList.Get(ip).nick ,myip=ip});
+            vp[ip].window = mParent;
             vp[ip].udp = udp;
             vp[ip].HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             vp[ip].VerticalAlignment = VerticalAlignment.Stretch;
@@ -252,6 +254,13 @@ namespace SEN_project_v2
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+          if(IsHost==true)
+          {
+              foreach(IPAddress ip in  Users)
+              {
+                  udp.SendMessageTo(UDP.ExitCall, ip);
+              }
+          }
             if (audio.sourceStream != null)
                 audio.sourceStream.StopRecording();
             videoDevice.Stop();

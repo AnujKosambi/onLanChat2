@@ -15,6 +15,7 @@
       <class
         Id="45c64245-9ccd-437f-a4c4-844efa8e5cf8"
         name="UdpClient"
+        visibility="Private"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -73,6 +74,7 @@
       <class
         Id="d7100965-a604-424d-9550-fac4ab6ced0a"
         name="TcpListener"
+        visibility="Private"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">

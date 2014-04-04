@@ -11,7 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.IO;
+using System.Windows.Markup;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -21,10 +22,12 @@ namespace SEN_project_v2
     {
         XMLClient.Message message;
         XMLClient xmlClient;
-        public ReceMessage(System.Net.IPAddress ip,string nick,string time,XMLClient client)
+        public ReceMessage(System.Net.IPAddress ip, string message, string time, XMLClient client)
         {
             InitializeComponent();
-            Message.Text = nick;
+            MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(message));
+
+            Message.Document = (FlowDocument)XamlReader.Load(ms);
             this.xmlClient = client;
             Time.Text = time;
         }

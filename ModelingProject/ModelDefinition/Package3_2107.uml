@@ -277,6 +277,7 @@
       <class
         Id="1f2f30bb-deaa-45c6-89b6-ddb7c1ccb553"
         name="RtpSender"
+        visibility="Private"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">

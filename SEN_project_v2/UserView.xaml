@@ -13,11 +13,11 @@
         </Grid.ColumnDefinitions>
         <ProgressBar VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="340" Name="Progressbar"/>
         <WrapPanel Height="31" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.ColumnSpan="2"   >
-            <Button Name="openChat" Height="30" Width="30" VerticalAlignment="Center" Margin="2" BorderBrush="{x:Null}" Click="openChat_Click">
+            <Button Name="openChat" Height="30" Width="30" VerticalAlignment="Center" Margin="2" BorderBrush="{x:Null}" Click="openChat_Click" AllowDrop="True" Foreground="White">
                 <Button.Background>
                     <RadialGradientBrush RadiusX="0.75" RadiusY="0.75">
-                        <GradientStop Color="#BF58AC39" Offset="0.009"/>
-                        <GradientStop Color="#BF1C211A" Offset="1"/>
+                        <GradientStop Color="#BF185F70"/>
+                        <GradientStop Color="#FF12532A" Offset="1"/>
                     </RadialGradientBrush>
                 </Button.Background>
             </Button>

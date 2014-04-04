@@ -34,8 +34,10 @@ namespace SEN_project_v2
         public const string Disconnect = "<#Disconnect#>";
         public const string Message = "<#Message#>";
         public const string RMessage = "<#RMessage#>";
+
         public const string Videocall = "<#VideoCall>";
         public const string RVideocall = "<\\#VideoCall>";
+        public const string ExitCall = "<#ExitCall#>";
         public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
         public const string RemoveMember = "<#Remove#>";
         public const string Remote = "<#Remote#>";
@@ -74,7 +76,14 @@ namespace SEN_project_v2
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 #endif
         }
-
+        public void SendMessageTo(Byte[] value, IPAddress ip)
+        {
+            sendingClient.Connect(new IPEndPoint(ip, port));
+            sendingClient.Send(value, value.Length);
+#if UDP
+            System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
+#endif
+        }
         public void recevingThread()
         {
             recevingClient.Client.ReceiveBufferSize = 1024 * 1024;
@@ -171,6 +180,23 @@ namespace SEN_project_v2
                             window.videoConf.statusLabel.Content = "Room Created Successfully With (" + window.videoConf.requestedUsers.Count + ")Members ...:D";
 
                     }));
+                }else if(stringData.StartsWith(ExitCall))
+                {
+                    if(window.waiting!=null)
+                    {
+                        window.waiting.Dispatcher.Invoke((Action)(() =>
+                        {
+                            window.waiting.Close();
+                        }));
+                    }
+                    if(window.videoConf!=null)
+                    {
+                        window.videoConf.Dispatcher.Invoke((Action)(() =>
+                        {
+                            window.videoConf.Close();
+                        }));
+                    }
+
                 }
 
                 #endregion

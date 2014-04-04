@@ -20,7 +20,7 @@ namespace SEN_project_v2
     public partial class VideoPreview : UserControl
     {
         public Boolean isRemote=false;
-        public System.Net.IPAddress ip;
+        public System.Net.IPAddress myip;
         public UDP udp=MainWindow.udp;
         public System.Net.IPAddress hostIP;
         private int left = 20;
@@ -126,7 +126,14 @@ namespace SEN_project_v2
         {
             
             time_left.Content = --left;
-            
+            if(left==0)
+            {
+                udp.SendMessageTo(UDP.ExitCall,myip);
+                window.videoConf.Dispatcher.Invoke((Action)(() =>
+                   {
+                       window.videoConf._stack.Children.Remove(window.videoConf.vp[myip]);
+                   }));
+            }
 
         }
 

@@ -294,5 +294,63 @@
         </appliedStereotypesInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ee042abb-ef73-4874-9966-bce96d3d6ac7"
+        name="WaveFileWriter"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="81312d46-8c73-45a3-87fe-5d6dcbc6b3a7"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FUsers%2FAnujKosambi%2Fdocuments%2Fvisual studio 2013%2FProjects%2FSEN_Project_v1%2FSEN_Project_v1%2Fbin%2Fx86%2FDebug%2FNAudio.dll&quot; Namespace%3DNAudio.Wave Type%3DWaveFileWriter"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="23eea722-e22f-481c-a9e8-7d053ef8d340"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d8136e85-47fc-4b41-92cb-126e2b25037a">
+                <propertyInstance
+                  Id="24a38006-b503-4d23-8390-54e61a56dedb"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e665df87-53f5-4d24-8b56-a963363663f1">
+                <propertyInstance
+                  Id="e6ac2fd2-1d85-4dde-9319-fc93f6a6213d"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="86078b36-6c45-4137-aebe-cad5dfc4334f">
+                <propertyInstance
+                  Id="02a86367-b1a4-4a6a-a189-dcf17c100d1f"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0246def3-4d3a-407c-a6d2-562dbac6c031">
+                <propertyInstance
+                  Id="41e44601-1c50-4d37-8f52-137909ae15dc"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="669e2b64-ec6d-4b96-bc56-5121208881c5">
+                <propertyInstance
+                  Id="a8cead53-4cd1-4731-baf3-d90b1536234d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
 </package>

@@ -138,6 +138,7 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="TCP.cs" />
+    <Compile Include="TCPServer.cs" />
     <Compile Include="UDP.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserList.cs" />
@@ -303,14 +304,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\rectangle_darkwhite_96x30.png" />
     <Content Include="OnLanChat.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\rectangle_darkwhite_96x30.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\conv-rece.png">

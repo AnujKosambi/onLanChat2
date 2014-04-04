@@ -17,6 +17,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using System.Windows.Markup;
+using System.IO;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -152,7 +154,12 @@ namespace SEN_project_v2
             //// Header
             node.FocusVisualStyle = focus;
             Grid g = new Grid();
-            Label b = new Label() { Content = groupName };
+            g.Width = 400;
+            Style Headstyle = new System.Windows.Style();
+            Headstyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_blue_154x48.png", 
+                UriKind.Relative))) { Opacity = 0.75 }));
+            g.Style = Headstyle;
+            Label b = new Label() { Content = groupName, Foreground = System.Windows.Media.Brushes.White};
             b.Background = System.Windows.Media.Brushes.Transparent;
             b.MouseDown += ((sender, e) => {
                 if (listView[(sender as Label).Content.ToString()].SelectedItems.Count == listView[(sender as Label).Content.ToString()].Items.Count)
@@ -173,7 +180,8 @@ namespace SEN_project_v2
             ListView userOfGroup = new ListView();
             userOfGroup.SelectionChanged+=userOfGroup_SelectionChanged;
             Style itemStyle = new Style(typeof(ListViewItem));
-            itemStyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_darkwhite_96x30.png", UriKind.Relative))) { Opacity=20}));
+            itemStyle.Setters.Add(new Setter(BackgroundProperty,
+                new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/rectangle_darkwhite_96x30.png", UriKind.Absolute))) { Opacity = 0.75 }));
             itemStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
             userOfGroup.ItemContainerStyle = itemStyle;
            
@@ -377,6 +385,8 @@ namespace SEN_project_v2
         {
             
             videoConf = new VideoConf(this,hostIP);
+            
+            videoConf.IsHost = true;
             if (videoConf.SetVideoSources())
             {
                 videoConf.Show();//  CreateVideoConf(null);
@@ -530,12 +540,28 @@ namespace SEN_project_v2
             //foreach(string group in groupLists.Keys)
             //foreach(var sel in listview[group].selecteditems)
             //{
-            foreach (IPAddress ip in UserList.Selected)
-            {
 
-                string Messeage =new TextRange(sendBox.Document.ContentStart, sendBox.Document.ContentEnd).Text;
-                UserList.xml[ip].addSelfMessage(DateTime.Now, Messeage);
-                udp.SendMessageTo(UDP.Message + Messeage + UDP.Message, ip);
+
+            MemoryStream stream = new MemoryStream();
+
+            using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create(stream))
+                {
+                    XamlWriter.Save(TransformImages(sendBox.Document), writer);
+                }
+
+            System.Diagnostics.Debug.WriteLine(Encoding.ASCII.GetString(stream.GetBuffer().Skip(3).ToArray()));
+         
+            foreach (IPAddress ip in UserList.Selected)
+
+            {
+             
+                //TextRange tr=new TextRange(sendBox.Document.ContentStart, sendBox.Document.ContentEnd);
+                Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
+              //  tr.Save(docStream, System.Windows.DataFormats.Rtf);
+                UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
+                udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage) .ToArray(), ip);
+
+                
             }
             //}
             if(selectedFiles.Count>0)
@@ -548,6 +574,58 @@ namespace SEN_project_v2
            
        
         }
+        private FlowDocument TransformImages(FlowDocument flowDocument)
+        {
+            FlowDocument img_flowDocument = flowDocument;
+            Paragraph img_paragraph;
+            InlineUIContainer img_inline;
+            System.Windows.Controls.Image newImage;
+            Type inlineType;
+            InlineUIContainer uic;
+            System.Windows.Controls.Image replacementImage;
+
+            //loop through replacing images in the flowdoc with the base64 versions
+            foreach (Block b in flowDocument.Blocks)
+            {
+                //loop through inlines looking for images
+                foreach(Inline i in  ((Paragraph)b).Inlines)
+                {
+                    
+                    inlineType = i.GetType();
+                    if (inlineType == typeof(InlineUIContainer))
+                    {
+                        uic = ((InlineUIContainer)i);
+
+                    
+                        if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                        {
+                           replacementImage = (System.Windows.Controls.Image)uic.Child;
+
+                            //BitmapImage bimage = new BitmapImage(new Uri("C:\\Users\\AnujKosambi\\Pictures\\user-icon.jpg", UriKind.Absolute)) { CacheOption = BitmapCacheOption.OnDemand };
+                            //System.Diagnostics.Debug.WriteLine(bimage.BaseUri);
+                            //replacementImage.Source = bimage;
+                            //replacementImage.Width = bimage.Width;
+                            //replacementImage.Height=bimage.Height;
+                            
+    
+                        }
+                    }
+                }
+            }
+            return img_flowDocument;
+        }
+               
+        private string TransformImageTo64String(FlowDocument flowDocument)
+        {
+            TextRange documentTextRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                documentTextRange.Save(ms, DataFormats.XamlPackage);
+                ms.Position = 0;
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
+    
 
         private void sendBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -616,7 +694,7 @@ namespace SEN_project_v2
         }
 
    
-
+        
     
     
 

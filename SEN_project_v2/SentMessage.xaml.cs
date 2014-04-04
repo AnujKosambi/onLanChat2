@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
+using System.Windows.Markup;
+using System.IO;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -24,10 +26,14 @@ namespace SEN_project_v2
         public SentMessage(IPAddress ip, string message, string time,XMLClient client)
         {
             InitializeComponent();
-            Message.Text = message;
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(message));
+
+            Message.Document = (FlowDocument)XamlReader.Load(ms);
+          //  Message.Text = message;
             Time.Text = time;
             this.xmlClient = client;
         }
+ 
         public void SetMessage(XMLClient.Message m)
         {
             message = m;

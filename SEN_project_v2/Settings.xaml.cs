@@ -21,6 +21,7 @@ namespace SEN_project_v2
         public Settings()
         {
             InitializeComponent();
+      
         }
     }
 }

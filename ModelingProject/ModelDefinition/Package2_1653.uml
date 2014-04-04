@@ -15,7 +15,6 @@
       <class
         Id="bbe24fea-b883-4bc3-8922-e6ae65d772b7"
         name="Paragraph"
-        visibility="Private"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -62,6 +61,64 @@
                 Id="fc4640b2-a515-4c11-8efe-b1048354606c">
                 <propertyInstance
                   Id="469abad4-f516-4112-aefc-caf6f1660198"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="46198e2a-8567-43bc-83e9-494166ad4682"
+        name="FlowDocument"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="4cd50027-f4d3-4122-a4fb-7de3c73b3030"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2Fv3.0%2FPresentationFramework.dll&quot; Namespace%3DSystem.Windows.Documents Type%3DFlowDocument"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="3c6bc706-48f0-470f-90be-1781b174f480"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="dfe001a0-d9d0-4fa3-86e3-8ffc69379822">
+                <propertyInstance
+                  Id="516ccade-9324-4f00-bba8-361c65fbcf06"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b19ed03a-764e-4ead-acda-5a316589894d">
+                <propertyInstance
+                  Id="5b340c73-d9c9-491e-920f-cf9badaa9b19"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fdbef217-a92a-4d6a-a0e5-b3f51d96a100">
+                <propertyInstance
+                  Id="90d72419-6c0b-49aa-bf30-4e1a167a67e4"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2c45bc46-0bf5-4053-a231-93a613dbde03">
+                <propertyInstance
+                  Id="7244443f-9ae7-49c6-89af-dac163ed81db"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2594d501-a05f-47ae-96d7-2fa7bb9c2d2e">
+                <propertyInstance
+                  Id="31627c2b-f483-4f82-89f7-a1e745e5c496"
                   name="PackageVisibility"
                   value="internal" />
               </stereotypeInstanceHasPropertyInstances>
