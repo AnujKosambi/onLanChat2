@@ -106,10 +106,14 @@ namespace SEN_project_v2
             udp = new UDP((int)Ports.UDP);
             udp.SetWindow(this);
             threads = new Threads(this);
-            indexer = new Dictionary<IPAddress, int>();
+            
             groupLists = new Dictionary<string, TreeViewItem>();
             listView = new Dictionary<string, ListView>();
             _index = new Dictionary<string, Dictionary<System.Net.IPAddress,int>> ();
+            
+            ogroupLists = new Dictionary<string, TreeViewItem>();
+            olistView = new Dictionary<string, ListView>();
+            o_index = new Dictionary<string, Dictionary<System.Net.IPAddress, int>>();
             selectedFiles = new List<string>();
             #region hostIP init
             hostIPS = new List<IPAddress>();
@@ -131,20 +135,34 @@ namespace SEN_project_v2
 
         void nicon_Click(object sender, EventArgs e)
         {
+            
             this.Show();
             this.WindowState = WindowState.Normal;
 
         }
 
         #region UI Stuffs
-        private Dictionary<IPAddress, int> indexer;
+        
         private Dictionary<string, TreeViewItem> groupLists;
         private Dictionary<string, ListView> listView;
         private Dictionary<string, Dictionary<System.Net.IPAddress,int>> _index;
+        
+        private Dictionary<string, TreeViewItem> ogroupLists;
+        private Dictionary<string, ListView> olistView;
+        private Dictionary<string, Dictionary<System.Net.IPAddress, int>> o_index;
         private TreeViewItem CreateNewGroup(string groupName,TreeView groups)
         {
             TreeViewItem node = new TreeViewItem();
-
+            Dictionary<string, ListView> listViewDic;
+            if(groups==Groups)
+            {
+                listViewDic = listView;
+            }
+            else
+            {
+                listViewDic = olistView;
+            }
+            
             node.Background = System.Windows.Media.Brushes.Transparent;
             node.FontSize = 16;
             node.FontWeight = FontWeights.SemiBold;
@@ -162,14 +180,14 @@ namespace SEN_project_v2
             Label b = new Label() { Content = groupName, Foreground = System.Windows.Media.Brushes.White};
             b.Background = System.Windows.Media.Brushes.Transparent;
             b.MouseDown += ((sender, e) => {
-                if (listView[(sender as Label).Content.ToString()].SelectedItems.Count == listView[(sender as Label).Content.ToString()].Items.Count)
+                if (listViewDic[(sender as Label).Content.ToString()].SelectedItems.Count == listViewDic[(sender as Label).Content.ToString()].Items.Count)
                 {
-                    listView[(sender as Label).Content.ToString()].UnselectAll();
+                    listViewDic[(sender as Label).Content.ToString()].UnselectAll();
                     groupLists[(sender as Label).Content.ToString()].IsExpanded = false;
                 }
                 else
                 {
-                    listView[(sender as Label).Content.ToString()].SelectAll();
+                    listViewDic[(sender as Label).Content.ToString()].SelectAll();
                     groupLists[(sender as Label).Content.ToString()].IsExpanded = true;
                 }
             });
@@ -190,20 +208,29 @@ namespace SEN_project_v2
             Style style = new Style(typeof(GridViewColumnHeader));
             style.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
             style.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+         
             grid.ColumnHeaderContainerStyle = style;
-            
-            grid.Columns.Add(new GridViewColumn() {Width=Groups.RenderSize.Width-40});
-            userOfGroup.HorizontalAlignment = HorizontalAlignment.Stretch;
+         
+            grid.Columns.Add(new GridViewColumn() {Width=400});
+           userOfGroup.HorizontalAlignment = HorizontalAlignment.Stretch;
             userOfGroup.View = grid;
             userOfGroup.BorderThickness = new Thickness(0);
             userOfGroup.Background = System.Windows.Media.Brushes.Transparent;
 
-            listView.Add(groupName, userOfGroup);
+            listViewDic.Add(groupName, userOfGroup);
             node.Items.Add(userOfGroup);
             groups.Items.Add(node);
-            _index.Add(groupName, new Dictionary<IPAddress, int>());
+            if (groups == this.Groups)
+            {
+                _index.Add(groupName, new Dictionary<IPAddress, int>());
+                NoGroup++;
+            }
+            else
+            {
+                o_index.Add(groupName, new Dictionary<IPAddress, int>());
+            }
 
-            NoGroup++;
+           
             return node;
         }
         private void userOfGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -248,7 +275,17 @@ namespace SEN_project_v2
                  RemoveUserFromTree(user);
             }
         }
-      
+        public void AddUserToOffile(User user)
+        {
+            if (!ogroupLists.ContainsKey(user.groupName))
+                ogroupLists.Add(user.groupName, CreateNewGroup(user.groupName, OfflineGroups));
+            o_index[user.groupName].Add(user.ip, o_index[user.groupName].Keys.Count);
+            olistView[user.groupName].Items.Insert(o_index[user.groupName][user.ip], user.CreateView());
+        }
+        public void RemoveUserFromOffline(User user)
+        {
+
+        }
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -379,6 +416,7 @@ namespace SEN_project_v2
             threads.StopAll();
             tcp.Stop();
             udp.recevingClient.Close();
+            if(snippingWindow!=null)
             snippingWindow.Close();
         }
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
@@ -555,7 +593,7 @@ namespace SEN_project_v2
               
                 UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
                 udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage) .ToArray(), ip);
-
+                 stream.Close();
                 
             }
        
@@ -580,35 +618,37 @@ namespace SEN_project_v2
             int index = UserList.xml[ip].CountMessages;
             foreach (Block b in flowDocument.Blocks)
             {
-         
-                foreach(Inline i in  ((Paragraph)b).Inlines)
+                if (b is Paragraph)
                 {
-                    
-                    inlineType = i.GetType();
-                    if (inlineType == typeof(InlineUIContainer))
+                    foreach (Inline i in ((Paragraph)b).Inlines)
                     {
-                        uic = ((InlineUIContainer)i);
 
-                    
-                        if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                        inlineType = i.GetType();
+                        if (inlineType == typeof(InlineUIContainer))
                         {
-                           replacementImage = (System.Windows.Controls.Image)uic.Child;
-                           JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                           encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
-                           string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index+"."+count + ".jpg";
-                           FileStream stream = new FileStream(Path, FileMode.Create);
-                           encoder.Save(stream);
-                           stream.Close();
-                            BitmapImage bitmapImage=new BitmapImage(new Uri(Path, UriKind.Absolute));
-                            replacementImage.Source = bitmapImage;
-                            replacementImage.Height = bitmapImage.Height;
-                            replacementImage.Width = bitmapImage.Width;
+                            uic = ((InlineUIContainer)i);
 
 
-                            files.Add(Path);
-                            count++;
-                            
-    
+                            if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                            {
+                                replacementImage = (System.Windows.Controls.Image)uic.Child;
+                                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
+                                string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
+                                FileStream stream = new FileStream(Path, FileMode.Create);
+                                encoder.Save(stream);
+                                stream.Close();
+                                BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+                                replacementImage.Source = bitmapImage;
+                                replacementImage.Height = bitmapImage.Height;
+                                replacementImage.Width = bitmapImage.Width;
+
+
+                                files.Add(Path);
+                                count++;
+
+
+                            }
                         }
                     }
                 }

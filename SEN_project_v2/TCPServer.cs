@@ -71,17 +71,18 @@ namespace SEN_project_v2
                     readStream.Read(buffer, 0, 4);
                     Flag = BitConverter.ToInt32(buffer,0);
 
-                    progress.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        progress.Value = 0;
-                        progress.Visibility = System.Windows.Visibility.Visible;
-                        progress.Maximum = numberOfBytes / (1024 * 8);
-                    }));
                     System.Diagnostics.Debug.WriteLine(numberOfBytes);
                     String FileName = filename;
                   
                     if (Flag == 0)
-                    { 
+                    {
+
+                        progress.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            progress.Value = 0;
+                            progress.Visibility = System.Windows.Visibility.Visible;
+                            progress.Maximum = numberOfBytes / (1024 * 8);
+                        }));
                         Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
                         saveFile.Title = filename;
                         if (saveFile.ShowDialog().Value == true)
@@ -102,9 +103,10 @@ namespace SEN_project_v2
                     }
                     else
                     {
-                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + filename;
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + UserList.xml[ip].CountMessages+"."+
+                            string.Join(".",filename.Split('.').Skip(1).ToArray());
                     }
-                   using (FileStream fileIO = File.Create(FileName))
+                   using (FileStream fileIO = File.Open(FileName,FileMode.CreateNew))
                    // FileStream fileIO = File.Create(FileName);
                     {
                         int l = buffer.Length;

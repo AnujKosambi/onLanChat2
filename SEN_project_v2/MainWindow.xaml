@@ -75,30 +75,37 @@
                     </ColumnDefinition>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-              
-               
+                <StackPanel    >
+                    <StackPanel.Effect>
+                        <DropShadowEffect Color="#FF7A7A7A"/>
+                    </StackPanel.Effect>
+                    <StackPanel.Background>
+                        <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
+                            <GradientStop Color="#7F4F4646" Offset="0.987"/>
+                            <GradientStop Color="#7FFFFFFF"/>
+                            <GradientStop Color="#7F888282" Offset="0.665"/>
+                        </RadialGradientBrush>
+                    </StackPanel.Background>
+                    <Expander Header="On-line" BorderThickness="0">
                     <TreeView Name="Groups" RenderTransformOrigin="-3.353,-1.007"
-                      BorderThickness="1" BorderBrush="#FF162C55" 
+                   
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True"  >
-                        <TreeView.Effect>
-                            <DropShadowEffect Color="#FF7A7A7A"/>
-                        </TreeView.Effect>
-                        <TreeView.Background>
-                            <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
-                                <GradientStop Color="#7F4F4646" Offset="0.987"/>
-                                <GradientStop Color="#7FFFFFFF"/>
-                                <GradientStop Color="#7F888282" Offset="0.665"/>
-                            </RadialGradientBrush>
-                        </TreeView.Background>
-
-
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True" Background="{x:Null}"  >
+                </TreeView>
+                </Expander>
+                <Expander Header="Off-line" BorderThickness="0">
+                    <TreeView Name="OfflineGroups" RenderTransformOrigin="-3.353,-1.007"
+                    
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True" Background="{x:Null}"  >
 
                     </TreeView>
-             
-                
+                </Expander>
+                </StackPanel>
                 <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                     <Label Content="Member"  Background="{x:Null}" Height="23" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />

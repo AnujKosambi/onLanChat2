@@ -327,14 +327,25 @@ namespace SEN_project_v2
         }
         private void receviedDisconnect(IPEndPoint recevied,String[] splits)
         {
-            User user = new User(recevied.Address, "Disconnecting", splits[0]);
-            UserList.Add(user);
-            UserList.Remove(recevied.Address);
+            
+            User user = new User(recevied.Address,"No Information", "Others");
+            if (!UserList.Add(user))
+                user = UserList.Get(recevied.Address);
+        
             window.Dispatcher.Invoke((Action)(() =>
             {
                 window.RemoveUserFromTree(user);
                 
             }));
+            if(UserList.xml[recevied.Address].UnreadMessages>0)
+            {
+                window.Dispatcher.Invoke((Action)(() =>
+                {
+                    window.AddUserToOffile(user);
+
+                }));
+            }else
+            UserList.Remove(recevied.Address);
         }
         private void receviedMessage(IPEndPoint recevied,String[] splits)
         {
