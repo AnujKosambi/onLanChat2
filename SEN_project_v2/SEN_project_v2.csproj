@@ -137,6 +137,9 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Snipping.xaml.cs">
+      <DependentUpon>Snipping.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TCP.cs" />
     <Compile Include="TCPServer.cs" />
     <Compile Include="UDP.cs" />
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Snipping.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

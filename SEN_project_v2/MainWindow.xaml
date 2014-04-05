@@ -70,30 +70,35 @@
             <Grid Grid.Row="0">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="7*">
+                        
+                    </ColumnDefinition>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TreeView Name="Groups" Grid.Column="0"  RenderTransformOrigin="-3.353,-1.007"
+              
+               
+                    <TreeView Name="Groups" RenderTransformOrigin="-3.353,-1.007"
                       BorderThickness="1" BorderBrush="#FF162C55" 
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True"  >
-                    <TreeView.Effect>
-                        <DropShadowEffect Color="#FF7A7A7A"/>
-                    </TreeView.Effect>
-                    <TreeView.Background>
-                        <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
-                            <GradientStop Color="#7F4F4646" Offset="0.987"/>
-                            <GradientStop Color="#7FFFFFFF"/>
-                            <GradientStop Color="#7F888282" Offset="0.665"/>
-                        </RadialGradientBrush>
-                    </TreeView.Background>
-                   
+                        <TreeView.Effect>
+                            <DropShadowEffect Color="#FF7A7A7A"/>
+                        </TreeView.Effect>
+                        <TreeView.Background>
+                            <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
+                                <GradientStop Color="#7F4F4646" Offset="0.987"/>
+                                <GradientStop Color="#7FFFFFFF"/>
+                                <GradientStop Color="#7F888282" Offset="0.665"/>
+                            </RadialGradientBrush>
+                        </TreeView.Background>
 
 
-                </TreeView>
 
+                    </TreeView>
+             
+                
                 <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                     <Label Content="Member"  Background="{x:Null}" Height="23" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
@@ -102,9 +107,10 @@
                     <Label Content="Selected"  Background="{x:Null}" Height="25" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Selected"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
                     <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
-                    <Button Content="Select All"  Grid.Column="1" Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
+                    <Button Content="Select All" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
+                    <Button Content="Snipping" VerticalAlignment="Top"  Height="25" Name="Snipping" Click="Snipping_Click"/>
                 </StackPanel>
-
+              
             </Grid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
                 <GridSplitter.Background>
@@ -149,6 +155,7 @@
             <Button Grid.Column="1" Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="112" Margin="5"/>
             <Button Grid.Column="2" x:Name="SendB" Content="Send" VerticalAlignment="Bottom"  Click="SendB_Click" Margin="5"/>
             <Button Grid.Column="3" x:Name="Remote" Content="Remote" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="109" Click="Remote_Click" Margin="5" />
+
         </Grid>
     </Grid>
 

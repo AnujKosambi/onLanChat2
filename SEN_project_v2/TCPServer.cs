@@ -39,6 +39,7 @@ namespace SEN_project_v2
                 Thread thread = new Thread((ThreadStart)delegate { tcpReceving_proc(client); });
                 Threads.Add(thread);
                 thread.Start();
+                System.Diagnostics.Debug.WriteLine("Recieving Thread is Started ...");
             }
         }
         public void tcpReceving_proc(TcpClient Client)
@@ -65,6 +66,11 @@ namespace SEN_project_v2
                     int stringLength = BitConverter.ToInt32(buffer, 0);
                     readStream.Read(buffer, 0, stringLength);
                     filename = Encoding.ASCII.GetString(buffer,0,stringLength);
+
+                    int Flag;
+                    readStream.Read(buffer, 0, 4);
+                    Flag = BitConverter.ToInt32(buffer,0);
+
                     progress.Dispatcher.BeginInvoke((Action)(() =>
                     {
                         progress.Value = 0;
@@ -72,26 +78,34 @@ namespace SEN_project_v2
                         progress.Maximum = numberOfBytes / (1024 * 8);
                     }));
                     System.Diagnostics.Debug.WriteLine(numberOfBytes);
-                    String FileName = "file";
-                    Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
-                    saveFile.Title = filename;
-                    if (saveFile.ShowDialog().Value == true)
-                    {
+                    String FileName = filename;
+                  
+                    if (Flag == 0)
+                    { 
+                        Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
+                        saveFile.Title = filename;
+                        if (saveFile.ShowDialog().Value == true)
+                        {
 
-                        FileName = saveFile.FileName;
+                            FileName = saveFile.FileName;
 
+                        }
+                        else
+                        {
+                            readStream.Close();
+                            progress.Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                progress.Visibility = System.Windows.Visibility.Hidden;
+                            }));
+                            break;
+                        }
                     }
                     else
                     {
-                        readStream.Close(); 
-                        progress.Dispatcher.BeginInvoke((Action)(() =>
-                        {
-                            progress.Visibility = System.Windows.Visibility.Hidden;
-                        }));
-                        break;
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + filename;
                     }
-                  //  using (FileStream fileIO = File.Create(FileName))
-                    FileStream fileIO = File.Create(FileName);
+                   using (FileStream fileIO = File.Create(FileName))
+                   // FileStream fileIO = File.Create(FileName);
                     {
                         int l = buffer.Length;
                         while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, l)) > 0)

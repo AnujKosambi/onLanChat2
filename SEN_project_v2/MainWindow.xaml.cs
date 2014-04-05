@@ -141,7 +141,7 @@ namespace SEN_project_v2
         private Dictionary<string, TreeViewItem> groupLists;
         private Dictionary<string, ListView> listView;
         private Dictionary<string, Dictionary<System.Net.IPAddress,int>> _index;
-        private TreeViewItem CreateNewGroup(string groupName)
+        private TreeViewItem CreateNewGroup(string groupName,TreeView groups)
         {
             TreeViewItem node = new TreeViewItem();
 
@@ -200,7 +200,7 @@ namespace SEN_project_v2
 
             listView.Add(groupName, userOfGroup);
             node.Items.Add(userOfGroup);
-            Groups.Items.Add(node);
+            groups.Items.Add(node);
             _index.Add(groupName, new Dictionary<IPAddress, int>());
 
             NoGroup++;
@@ -224,12 +224,11 @@ namespace SEN_project_v2
         public void AddUserToTree(User user)
         {
             if (!groupLists.ContainsKey(user.groupName))
-                groupLists.Add(user.groupName, CreateNewGroup(user.groupName));
+                groupLists.Add(user.groupName, CreateNewGroup(user.groupName,Groups));
             _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
             listView[user.groupName].Items.Insert(_index[user.groupName][user.ip], user.CreateView());
             NoMembers++;
         }
-           
         public void RemoveUserFromTree(User user)
         {
             try
@@ -380,6 +379,7 @@ namespace SEN_project_v2
             threads.StopAll();
             tcp.Stop();
             udp.recevingClient.Close();
+            snippingWindow.Close();
         }
         private void VideoConfB_Click(object sender, RoutedEventArgs e)
         {
@@ -537,33 +537,28 @@ namespace SEN_project_v2
         }
         private void SendB_Click(object sender, RoutedEventArgs e)
         {
-            //foreach(string group in groupLists.Keys)
-            //foreach(var sel in listview[group].selecteditems)
-            //{
+     
 
 
-            MemoryStream stream = new MemoryStream();
-
-            using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create(stream))
-                {
-                    XamlWriter.Save(TransformImages(sendBox.Document), writer);
-                }
-
-            System.Diagnostics.Debug.WriteLine(Encoding.ASCII.GetString(stream.GetBuffer().Skip(3).ToArray()));
-         
             foreach (IPAddress ip in UserList.Selected)
 
             {
-             
-                //TextRange tr=new TextRange(sendBox.Document.ContentStart, sendBox.Document.ContentEnd);
+
+                MemoryStream stream = new MemoryStream();
+    
+                using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create(stream))
+                {
+                    XamlWriter.Save(TransformImages(sendBox.Document,ip), writer);
+                }
+                
                 Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
-              //  tr.Save(docStream, System.Windows.DataFormats.Rtf);
+              
                 UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
                 udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage) .ToArray(), ip);
 
                 
             }
-            //}
+       
             if(selectedFiles.Count>0)
             {
               
@@ -574,20 +569,18 @@ namespace SEN_project_v2
            
        
         }
-        private FlowDocument TransformImages(FlowDocument flowDocument)
+        public  FlowDocument TransformImages(FlowDocument flowDocument,IPAddress ip)
         {
             FlowDocument img_flowDocument = flowDocument;
-            Paragraph img_paragraph;
-            InlineUIContainer img_inline;
-            System.Windows.Controls.Image newImage;
             Type inlineType;
             InlineUIContainer uic;
             System.Windows.Controls.Image replacementImage;
-
-            //loop through replacing images in the flowdoc with the base64 versions
+            List<string> files = new List<string>();
+            int count = 0;
+            int index = UserList.xml[ip].CountMessages;
             foreach (Block b in flowDocument.Blocks)
             {
-                //loop through inlines looking for images
+         
                 foreach(Inline i in  ((Paragraph)b).Inlines)
                 {
                     
@@ -600,21 +593,33 @@ namespace SEN_project_v2
                         if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
                         {
                            replacementImage = (System.Windows.Controls.Image)uic.Child;
+                           JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                           encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
+                           string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index+"."+count + ".jpg";
+                           FileStream stream = new FileStream(Path, FileMode.Create);
+                           encoder.Save(stream);
+                           stream.Close();
+                            BitmapImage bitmapImage=new BitmapImage(new Uri(Path, UriKind.Absolute));
+                            replacementImage.Source = bitmapImage;
+                            replacementImage.Height = bitmapImage.Height;
+                            replacementImage.Width = bitmapImage.Width;
 
-                            //BitmapImage bimage = new BitmapImage(new Uri("C:\\Users\\AnujKosambi\\Pictures\\user-icon.jpg", UriKind.Absolute)) { CacheOption = BitmapCacheOption.OnDemand };
-                            //System.Diagnostics.Debug.WriteLine(bimage.BaseUri);
-                            //replacementImage.Source = bimage;
-                            //replacementImage.Width = bimage.Width;
-                            //replacementImage.Height=bimage.Height;
+
+                            files.Add(Path);
+                            count++;
                             
     
                         }
                     }
                 }
             }
+            List<IPAddress> ips= new List<IPAddress>();
+            ips.Add(ip);
+            tcp.SendFiles(files, ips,1);
             return img_flowDocument;
         }
                
+
         private string TransformImageTo64String(FlowDocument flowDocument)
         {
             TextRange documentTextRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
@@ -692,6 +697,14 @@ namespace SEN_project_v2
                 this.ShowInTaskbar = true;
             }
         }
+        Snipping snippingWindow;
+        private void Snipping_Click(object sender, RoutedEventArgs e)
+        {
+            snippingWindow = new Snipping();
+            snippingWindow.Show();
+        }
+
+
 
    
         

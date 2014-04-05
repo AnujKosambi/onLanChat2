@@ -22,7 +22,7 @@ namespace SEN_project_v2
             this.nick = UserList.Get(user).nick;
             this.groupName = UserList.Get(user).groupName;
             
-            path =AppDomain.CurrentDomain.BaseDirectory + "\\" + user.ToString().Replace('.', '\\') + ".xml";
+            path =AppDomain.CurrentDomain.BaseDirectory + "\\" + user.ToString().Replace('.', '\\') + "\\Message.xml";
             xmlDoc = new XmlDocument();
 
             if (!System.IO.File.Exists(path))
@@ -96,6 +96,7 @@ namespace SEN_project_v2
 
             message.InnerText = value;
             fetchRootOfMessages().AppendChild(message);
+            CountMessages++;
             xmlDoc.Save(path);
         }
 

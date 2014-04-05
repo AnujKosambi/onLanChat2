@@ -38,22 +38,26 @@ namespace SEN_project_v2
         }
         public void SendFiles(List<string> list,List<IPAddress> ips)
         {
-          //  files = list;
-      //      this.ips = ips;
+                SendFiles(list, ips, 0);
+        }
+        public void SendFiles(List<string> list, List<IPAddress> ips,int Flags)
+        {
+            //  files = list;
+            //      this.ips = ips;
             foreach (IPAddress ip in ips)
             {
-               // if (Clients.Keys.Contains(ip))
-              //      Clients.Remove(ip);
-              //      Clients.Add(ip, new TcpClient());
-              //      if (SendingThreads.ContainsKey(ip))
-               //         SendingThreads.Remove(ip);
+                // if (Clients.Keys.Contains(ip))
+                //      Clients.Remove(ip);
+                //      Clients.Add(ip, new TcpClient());
+                //      if (SendingThreads.ContainsKey(ip))
+                //         SendingThreads.Remove(ip);
                 TcpClient tcpClient = new TcpClient();
                 tcpClient.Connect(ip, (int)MainWindow.Ports.TCP);
-
-                Thread thread = new Thread((ThreadStart)delegate { fileSending_proc(list,  tcpClient); });
+                List<string> newList = list;
+                Thread thread = new Thread((ThreadStart)delegate { fileSending_proc(newList, tcpClient,Flags); });
                 SendingThreads.Add(thread);
                 thread.Start();
-                
+
             }
         }
     /*
@@ -122,7 +126,7 @@ namespace SEN_project_v2
             }
         }
         */
-        private void fileSending_proc(List<string> files,TcpClient tcpClient)
+        private void fileSending_proc(List<string> files,TcpClient tcpClient,int Flag)
         {
             //foreach (IPAddress ip in ips)
             //{
@@ -131,7 +135,8 @@ namespace SEN_project_v2
                 {
                     NetworkStream stream = tcpSendingClient.GetStream();
                     stream.Write(BitConverter.GetBytes(files.Count), 0, 4);
-                    foreach (string file in files)
+                    List<String> newList = new List<string>(files);
+                    foreach (string file in newList)
                     {
                        
                         using (FileStream fileIO = File.OpenRead(file))
@@ -141,6 +146,8 @@ namespace SEN_project_v2
                             string fileNames=file.Split('\\').Last();
                             stream.Write(BitConverter.GetBytes(fileNames.Length),0,4);
                             stream.Write(Encoding.ASCII.GetBytes(fileNames), 0, fileNames.Length);
+                         
+                            stream.Write(BitConverter.GetBytes(Flag), 0, 4);
                             Int64 byteSent = 0;
                             var buffer = new byte[1024 * 8];
                             int count;
@@ -164,11 +171,14 @@ namespace SEN_project_v2
                     }
           
                 }
-              //  Clients.Remove(ip);
-              //  SendingThreads.Remove(ip);
+               tcpClient.Close();
+               Clients.Remove(tcpClient);
+               SendingThreads.Remove(System.Threading.Thread.CurrentThread);
+               System.Threading.Thread.CurrentThread.Abort();
             //}
 
         }
+
         public void Stop()
         {
             //if(recevingThread!=null && recevingThread.IsAlive)

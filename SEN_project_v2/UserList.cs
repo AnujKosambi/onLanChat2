@@ -28,7 +28,7 @@ namespace SEN_project_v2
             {
                 string localPath = "";
                 string[] ip_parts = user.ip.ToString().Split('.');
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (!System.IO.Directory.Exists(localPath + ip_parts[i])) ;
                     System.IO.Directory.CreateDirectory(localPath + ip_parts[i]);

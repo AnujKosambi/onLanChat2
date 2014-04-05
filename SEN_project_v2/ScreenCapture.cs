@@ -85,6 +85,21 @@ public class ScreenCapture : System.MarshalByRefObject
 
         return ms.GetBuffer();
     }
+    public Bitmap GetRectBitmapBytes(int left,int right,int width,int height)
+    {
+        Size DesktopBitmapSize = GetDesktopBitmapSize();
+        Graphics Graphic = Graphics.FromHwnd(GetDesktopWindow());
+        Bitmap MemImage = new Bitmap(width,height, Graphic);
+        Graphics MemGraphic = Graphics.FromImage(MemImage);
+        IntPtr dc1 = Graphic.GetHdc();
+        IntPtr dc2 = MemGraphic.GetHdc();
+        BitBlt(dc2, 0, 0,width,height, dc1, left, right, SRCCOPY);
+        Graphic.ReleaseHdc(dc1);
+        MemGraphic.ReleaseHdc(dc2);
+        Graphic.Dispose();
+        MemGraphic.Dispose();
+        return MemImage;
+    }
     public byte[] GetWindowBitmapBytes(String title)
     {
         IntPtr hWnd = FindWindow(null, title);

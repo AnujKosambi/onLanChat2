@@ -23,15 +23,22 @@ namespace SEN_project_v2
     {
         XMLClient xmlClient;
         XMLClient.Message message;
-        public SentMessage(IPAddress ip, string message, string time,XMLClient client)
+        public SentMessage(IPAddress ip, string message, string time,XMLClient client,int index)
         {
-            InitializeComponent();
-            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(message));
+            try
+            {
+                InitializeComponent();
+                MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(message));
 
-            Message.Document = (FlowDocument)XamlReader.Load(ms);
-          //  Message.Text = message;
-            Time.Text = time;
-            this.xmlClient = client;
+                Message.Document = Conversation.TransformImages((FlowDocument)XamlReader.Load(ms), ip, index);
+                //  Message.Text = message;
+                Time.Text = time;
+                this.xmlClient = client;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Error "+e.Message);
+            }
         }
  
         public void SetMessage(XMLClient.Message m)

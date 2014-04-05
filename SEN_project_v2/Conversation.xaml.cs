@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
+using System.IO;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -39,6 +40,46 @@ namespace SEN_project_v2
             Draw();
            
         }
+        public static FlowDocument TransformImages(FlowDocument flowDocument,IPAddress ip,int index)
+        {
+            FlowDocument img_flowDocument = flowDocument;
+            Type inlineType;
+            InlineUIContainer uic;
+            System.Windows.Controls.Image replacementImage;
+            int count = 0;
+            
+            foreach (Block b in flowDocument.Blocks)
+            {
+
+                foreach (Inline i in ((Paragraph)b).Inlines)
+                {
+
+                    inlineType = i.GetType();
+                    if (inlineType == typeof(InlineUIContainer))
+                    {
+                        uic = ((InlineUIContainer)i);
+
+
+                        if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                        {
+                            replacementImage = (System.Windows.Controls.Image)uic.Child;
+                            
+                            string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index+"."+count + ".jpg";
+                       
+                            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+                            replacementImage.Source = bitmapImage;
+                            replacementImage.Height = bitmapImage.Height;
+                            replacementImage.Width = bitmapImage.Width;
+                            count++;
+
+                        }
+                    }
+                }
+            }
+          
+            return img_flowDocument;
+        }
+               
         public void Redraw()
         {
             MessagePanel.Children.Clear();
@@ -54,13 +95,14 @@ namespace SEN_project_v2
                 {
                     if (m.self)
                     {
-                        ReceMessage s = new ReceMessage(ip, m.value, m.time.ToString("hh:mm"),client);
+                        
+                        ReceMessage s = new ReceMessage(ip, m.value, m.time.ToString("hh:mm"),client,m.index);
                         s.SetMessage(m);
                         MessagePanel.Children.Add(s);
                     }
                     else
                     {
-                        SentMessage s = new SentMessage(ip, m.value, m.time.ToString("hh:mm"), client);
+                        SentMessage s = new SentMessage(ip, m.value, m.time.ToString("hh:mm"), client,m.index);
                         s.SetMessage(m);
                         MessagePanel.Children.Add(s);
                     }
