@@ -339,6 +339,7 @@
     <Resource Include="Images\rectangle_darkwhite_96x30.png" />
     <Resource Include="Images\waiting.gif" />
     <Resource Include="Images\FolderIcon.png" />
+    <Resource Include="Images\File.png" />
     <Content Include="OnLanChat.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
