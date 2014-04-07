@@ -129,6 +129,7 @@ namespace SEN_project_v2
             if(left==0)
             {
                 udp.SendMessageTo(UDP.ExitCall,myip);
+                
                 window.videoConf.Dispatcher.Invoke((Action)(() =>
                    {
                        window.videoConf._stack.Children.Remove(window.videoConf.vp[myip]);

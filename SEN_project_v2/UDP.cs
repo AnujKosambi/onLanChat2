@@ -42,6 +42,10 @@ namespace SEN_project_v2
         public const string RemoveMember = "<#Remove#>";
         public const string Remote = "<#Remote#>";
         public const string RRemote = "<\\#Remote#>";
+
+        public const string Sharing = "<#Sharing#>";
+        
+
         public const string EndRemote = "<XEndX>";
         public const string Mouse = "<#M#>";
         public const string Keyboard = "<#K#>";
@@ -129,7 +133,7 @@ namespace SEN_project_v2
                         continue;
                     }
                     receviedRConnect(recevied, splits);
-         
+
                 }
 
                 else if (stringData.StartsWith(Disconnect))
@@ -143,12 +147,12 @@ namespace SEN_project_v2
 
                 else if (stringData.StartsWith(Videocall))
                 {
-                    window.Dispatcher.Invoke((Action)(() => { if(window.videoConf==null) window.CreateVideoConf(recevied.Address); }));
+                    window.Dispatcher.Invoke((Action)(() => { window.CreateVideoConf(recevied.Address); }));
 
                 }
                 else if (stringData.StartsWith(RVideocall))
                 {
-
+                    if(window.videoConf!=null)
                     receviedRVoiceCall(recevied);
                 }
                 else if (stringData.StartsWith(AddMember))
@@ -180,16 +184,17 @@ namespace SEN_project_v2
                             window.videoConf.statusLabel.Content = "Room Created Successfully With (" + window.videoConf.requestedUsers.Count + ")Members ...:D";
 
                     }));
-                }else if(stringData.StartsWith(ExitCall))
+                }
+                else if (stringData.StartsWith(ExitCall))
                 {
-                    if(window.waiting!=null)
+                    if (window.waiting != null)
                     {
                         window.waiting.Dispatcher.Invoke((Action)(() =>
                         {
                             window.waiting.Close();
                         }));
                     }
-                    if(window.videoConf!=null)
+                    if (window.videoConf != null)
                     {
                         window.videoConf.Dispatcher.Invoke((Action)(() =>
                         {
@@ -204,7 +209,8 @@ namespace SEN_project_v2
                 #region Remote
                 else if (stringData.StartsWith(Remote))
                 {
-                    window.Dispatcher.Invoke((Action)(() => { 
+                    window.Dispatcher.Invoke((Action)(() =>
+                    {
                         window.RequestRemote(recevied.Address);
                     }));
                 }
@@ -212,35 +218,35 @@ namespace SEN_project_v2
                 {
                     window.remote.Dispatcher.Invoke((Action)(() =>
                     {
-                      //  window.remote.Screen._Mode = VideoPreview.Mode.InCall;
+                        //  window.remote.Screen._Mode = VideoPreview.Mode.InCall;
                     }));
                 }
-                else if(stringData.StartsWith(Mouse))
+                else if (stringData.StartsWith(Mouse))
                 {
-                    if (window.remote!=null)
+                    if (window.remote != null)
                     {
-                       string[] splits = stringData.Split(new String[] { Mouse, Breaker }, StringSplitOptions.RemoveEmptyEntries);
-                       if (splits.Length == 3)
-                       {
-                           SEN_project_v2.Remote.MouseFlag = Convert.ToInt32(splits[0]);
-                           SEN_project_v2.Remote.mousePos.X = Convert.ToInt32(splits[1]);
-                           SEN_project_v2.Remote.mousePos.Y= Convert.ToInt32(splits[2]);
+                        string[] splits = stringData.Split(new String[] { Mouse, Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                        if (splits.Length == 3)
+                        {
+                            SEN_project_v2.Remote.MouseFlag = Convert.ToInt32(splits[0]);
+                            SEN_project_v2.Remote.mousePos.X = Convert.ToInt32(splits[1]);
+                            SEN_project_v2.Remote.mousePos.Y = Convert.ToInt32(splits[2]);
 
-                       }
-                       else { }
+                        }
+                        else { }
                     }
 
                 }
-                else if(stringData.StartsWith(Keyboard))
+                else if (stringData.StartsWith(Keyboard))
                 {
                     if (window.remote != null)
                     {
                         string[] splits = stringData.Split(new String[] { Keyboard, Breaker }, StringSplitOptions.RemoveEmptyEntries);
                         if (splits.Length == 2)
                         {
-                            Remote.KeyStatus ks= new Remote.KeyStatus();
-                            ks.code=(SEN_project_v2.Remote.Keys)Convert.ToByte(splits[0]);
-                            ks.Flag=Convert.ToByte(splits[1]);
+                            Remote.KeyStatus ks = new Remote.KeyStatus();
+                            ks.code = (SEN_project_v2.Remote.Keys)Convert.ToByte(splits[0]);
+                            ks.Flag = Convert.ToByte(splits[1]);
                             window.remote.waiting.Add(ks);
 
                         }
@@ -250,7 +256,7 @@ namespace SEN_project_v2
                 else if (stringData.StartsWith(EndRemote))
                 {
                     window.remote.StopSending();
-                    
+
                 }
                 #endregion
 
@@ -259,17 +265,20 @@ namespace SEN_project_v2
                 {
                     String[] splits = stringData.Split(new String[] { Message }, StringSplitOptions.RemoveEmptyEntries);
                     receviedMessage(recevied, splits);
-                 
+
 
 
                 }
                 else if (stringData.StartsWith(RMessage))
                 {
                     window.nicon.ShowBalloonTip(5, "Message was opened", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
-
                 }
-              #endregion
+                #endregion
+                else if (stringData.StartsWith(Sharing))
+                {
 
+                    MainWindow.tcp.SendFile("Sharing.xml", recevied.Address,2);
+                }
             }
 
 
@@ -298,15 +307,16 @@ namespace SEN_project_v2
                         list[i] = new User(IPAddress.Parse("127.0.0." + i), "FakeUser" + i,"FakeGroup"+i/5);
                         User user = list[i];
 #endif
-            if (UserList.Add(user))
-                window.Dispatcher.Invoke((Action)(() =>
+            
+            if (UserList.Add(user)| UserList.Get(recevied.Address).IsOffline )
+                 window.Dispatcher.Invoke((Action)(() =>
                 {
                     //this.window.AddToUserList(user.CreateView(),splits[1]);
                     window.AddUserToTree(user);
+                    UserList.Get(recevied.Address).IsOffline = false;
                 }));
-#if Fake
-                    }
-#endif
+
+   
 
 
         }
@@ -317,11 +327,13 @@ namespace SEN_project_v2
             {
                 user.hostIP = IPAddress.Parse(splits[2]);
             }
-            if (UserList.Add(user))
+            if (UserList.Add(user)|UserList.Get(recevied.Address).IsOffline  )
                 window.Dispatcher.Invoke((Action)(() =>
                 {
                     
+
                     window.AddUserToTree(user);
+                    UserList.Get(recevied.Address).IsOffline = false;
                 }));
 
         }
@@ -365,6 +377,7 @@ namespace SEN_project_v2
         }
         private void receviedRVoiceCall(IPEndPoint recevied)
         {
+            
             foreach (IPAddress ip in window.videoConf.Users)
             {
                 SendMessageTo(AddMember + recevied.Address + AddMember, ip);

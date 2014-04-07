@@ -96,6 +96,12 @@ namespace SEN_project_v2
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
 
+        private void sharing_Click(object sender, RoutedEventArgs e)
+        {
+            Sharing sharing = new Sharing(u_ip);
+            sharing.Show();
+        }
+
    
     }
 }

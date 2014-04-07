@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
 
 
@@ -18,14 +18,15 @@
             </RadialGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="85"/>
+            <RowDefinition/>
+            <RowDefinition Height="7" />
+            <RowDefinition Height="186" />
             <RowDefinition Height="30" />
 
         </Grid.RowDefinitions>
-        <Label HorizontalAlignment="Center" FontFamily="Segoe UI Semibold" Name="Header">Nick</Label>
+        <Image Grid.Row="0" Height="75" Width="75" HorizontalAlignment="Left" Margin="5"/>
+        <Label HorizontalAlignment="Center" FontFamily="Segoe UI Semibold" Name="Header"  FontSize="36">Nick</Label>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
             <StackPanel   Name="MessagePanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Loaded="MessagePanel_Loaded" >
@@ -33,7 +34,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <GridSplitter Grid.Row="2"  HorizontalAlignment="Stretch" Foreground="Black"  >
+        <GridSplitter Grid.Row="2"  HorizontalAlignment="Stretch" Foreground="Black" Margin="0,0,0,3"  >
             <GridSplitter.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0.51"/>
@@ -44,8 +45,16 @@
                 </LinearGradientBrush>
             </GridSplitter.Background>
         </GridSplitter>
-        <TextBox Grid.Row="3" Margin="5" Name="SendBox"  />
-        <Button Grid.Row="4" Content="Send"  Click="Button_Click" Height="25" Width="200"/>
+        <RichTextBox Grid.Row="3" Margin="5" Name="SendBox"  >
+            <RichTextBox.Background>
+                <RadialGradientBrush RadiusY="1">
+                    <GradientStop Color="#4C642E2E" Offset="1"/>
+                    <GradientStop Color="#4CFFFFFF"/>
+                </RadialGradientBrush>
+            </RichTextBox.Background>
+        </RichTextBox>
+        <Button Grid.Row="4" Content="Send"  Click="Button_Click" Margin="300,2.5"/>
+        
 
 
 

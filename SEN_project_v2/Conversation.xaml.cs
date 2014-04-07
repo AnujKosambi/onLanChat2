@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
 using System.IO;
+using System.Windows.Markup;
 namespace SEN_project_v2
 {
     /// <summary>
@@ -26,6 +27,7 @@ namespace SEN_project_v2
         XMLClient client;
         IPAddress ip;
         public UDP udp;
+       
         public Conversation(IPAddress sender)
         {
             InitializeComponent();
@@ -50,28 +52,30 @@ namespace SEN_project_v2
             
             foreach (Block b in flowDocument.Blocks)
             {
-
-                foreach (Inline i in ((Paragraph)b).Inlines)
+                if (b is Paragraph)
                 {
-
-                    inlineType = i.GetType();
-                    if (inlineType == typeof(InlineUIContainer))
+                    foreach (Inline i in ((Paragraph)b).Inlines)
                     {
-                        uic = ((InlineUIContainer)i);
 
-
-                        if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                        inlineType = i.GetType();
+                        if (inlineType == typeof(InlineUIContainer))
                         {
-                            replacementImage = (System.Windows.Controls.Image)uic.Child;
-                            
-                            string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index+"."+count + ".jpg";
-                       
-                            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
-                            replacementImage.Source = bitmapImage;
-                            replacementImage.Height = bitmapImage.Height;
-                            replacementImage.Width = bitmapImage.Width;
-                            count++;
+                            uic = ((InlineUIContainer)i);
 
+
+                            if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                            {
+                                replacementImage = (System.Windows.Controls.Image)uic.Child;
+
+                                string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
+
+                                BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+                                replacementImage.Source = bitmapImage;
+                                replacementImage.Height = bitmapImage.Height;
+                                replacementImage.Width = bitmapImage.Width;
+                                count++;
+
+                            }
                         }
                     }
                 }
@@ -111,10 +115,80 @@ namespace SEN_project_v2
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(udp!=null)
-            udp.SendMessageTo(UDP.Message + SendBox.Text+UDP.Message, ip);
-            MessagePanel.UpdateLayout();
-            this.UpdateLayout();
+            MemoryStream stream = new MemoryStream();
+
+            using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create(stream))
+            {
+                XamlWriter.Save(MTransformImages(SendBox.Document, ip), writer);
+            }
+
+            Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
+
+            UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
+            udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage).ToArray(), ip);
+            stream.Close();
         }
+        public FlowDocument MTransformImages(FlowDocument flowDocument, IPAddress ip)
+        {
+            FlowDocument img_flowDocument = flowDocument;
+            Type inlineType;
+            InlineUIContainer uic;
+            System.Windows.Controls.Image replacementImage;
+            List<string> files = new List<string>();
+            int count = 0;
+            int index = UserList.xml[ip].CountMessages;
+            foreach (Block b in flowDocument.Blocks)
+            {
+                if (b is Paragraph)
+                {
+                    foreach (Inline i in ((Paragraph)b).Inlines)
+                    {
+
+                        inlineType = i.GetType();
+                        if (inlineType == typeof(InlineUIContainer))
+                        {
+                            uic = ((InlineUIContainer)i);
+
+
+                            if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
+                            {
+                                replacementImage = (System.Windows.Controls.Image)uic.Child;
+                                setImages(files, ip, count, index, replacementImage);
+
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            List<IPAddress> ips = new List<IPAddress>();
+            ips.Add(ip);
+            MainWindow.tcp.SendFiles(files, ips, 1);
+            return img_flowDocument;
+        }
+        private void setImages(List<string> files, IPAddress ip, int count, int index, Image replacementImage)
+        {
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
+            string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
+            FileStream stream = new FileStream(Path, FileMode.Create);
+            encoder.Save(stream);
+            stream.Close();
+            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+            replacementImage.Source = bitmapImage;
+            replacementImage.Height = bitmapImage.Height;
+            replacementImage.Width = bitmapImage.Width;
+
+
+            files.Add(Path);
+            count++;
+
+        }
+
     }
+
 }

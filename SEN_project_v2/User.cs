@@ -16,7 +16,7 @@ namespace SEN_project_v2
         public string groupName="";
         public IPAddress hostIP;
          public UserView userView;
-
+         public Boolean IsOffline = false;
         public User(IPAddress _ip, string _nick)
         {
             this.ip = _ip;

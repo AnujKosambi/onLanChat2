@@ -256,7 +256,7 @@ namespace SEN_project_v2
         {
           if(IsHost==true)
           {
-              foreach(IPAddress ip in  Users)
+              foreach(IPAddress ip in requestedUsers)
               {
                   udp.SendMessageTo(UDP.ExitCall, ip);
               }
@@ -265,6 +265,9 @@ namespace SEN_project_v2
                 audio.sourceStream.StopRecording();
             videoDevice.Stop();
             rtpClient.Dispose();
+
+            _stack.Children.RemoveRange(0, _stack.Children.Count);
+            mParent.videoConf = null;
         }
 
 

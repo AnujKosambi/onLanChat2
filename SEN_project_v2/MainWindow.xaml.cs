@@ -34,7 +34,7 @@ namespace SEN_project_v2
         static Registry reg;
         public RTPClient rtpClient;
         public VideoConf videoConf;
-        public TCP tcp;
+        public static TCP tcp;
         private List<string> selectedFiles;
         public static List<IPAddress> hostIPS;
         public System.Windows.Forms.NotifyIcon nicon;
@@ -89,6 +89,7 @@ namespace SEN_project_v2
         public MainWindow()
         {
             InitializeComponent();
+            titleBar.SetWindow(this);
          //   ThemeManager.ApplyTheme(this, "BureauBlack");
             tcp = new TCP();
        //     MainWindow.icon = new NotifyIcon();
@@ -98,8 +99,10 @@ namespace SEN_project_v2
             nicon.Visible = true;
             nicon.Click += nicon_Click;
             System.Windows.Forms.ContextMenu cmenu = new  System.Windows.Forms.ContextMenu();
+
             cmenu.MenuItems.Add("Exit");
             cmenu.MenuItems[0].Click+=(a,b)=>{
+                nicon.Dispose();
                 this.Close();
             };
             nicon.ContextMenu = cmenu;
@@ -119,7 +122,8 @@ namespace SEN_project_v2
             hostIPS = new List<IPAddress>();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {   foreach (var x in ni.GetIPProperties().UnicastAddresses)
-                {if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                if (x.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                     {
                         hostIPS.Add(x.Address);
                         System.Diagnostics.Debug.WriteLine(x.Address);
@@ -174,8 +178,9 @@ namespace SEN_project_v2
             Grid g = new Grid();
             g.Width = 400;
             Style Headstyle = new System.Windows.Style();
-            Headstyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri("rectangle_blue_154x48.png", 
-                UriKind.Relative))) { Opacity = 0.75 }));
+            Headstyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri(
+            "pack://application:,,,/Images/rectangle_blue_154x48.png", 
+                UriKind.Absolute))) { Opacity = 0.60 }));
             g.Style = Headstyle;
             Label b = new Label() { Content = groupName, Foreground = System.Windows.Media.Brushes.White};
             b.Background = System.Windows.Media.Brushes.Transparent;
@@ -250,6 +255,12 @@ namespace SEN_project_v2
         }
         public void AddUserToTree(User user)
         {
+            if (ogroupLists.ContainsKey(user.groupName) && o_index[user.groupName].ContainsKey(user.ip))
+            {
+                RemoveUserFromOffline(user);
+            }
+           user.IsOffline = false;
+            
             if (!groupLists.ContainsKey(user.groupName))
                 groupLists.Add(user.groupName, CreateNewGroup(user.groupName,Groups));
             _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
@@ -265,6 +276,9 @@ namespace SEN_project_v2
                 if(listView[user.groupName].Items.Count==0)
                 {
                     Groups.Items.Remove(groupLists[user.groupName]);
+                    groupLists.Remove(user.groupName);
+                    listView.Remove(user.groupName);
+                    _index.Remove(user.groupName);
                     NoGroup--;
                 }
                 NoMembers--;
@@ -277,6 +291,8 @@ namespace SEN_project_v2
         }
         public void AddUserToOffile(User user)
         {
+            user.IsOffline = true;
+
             if (!ogroupLists.ContainsKey(user.groupName))
                 ogroupLists.Add(user.groupName, CreateNewGroup(user.groupName, OfflineGroups));
             o_index[user.groupName].Add(user.ip, o_index[user.groupName].Keys.Count);
@@ -284,7 +300,23 @@ namespace SEN_project_v2
         }
         public void RemoveUserFromOffline(User user)
         {
-
+            
+            try
+            {
+                olistView[user.groupName].Items.RemoveAt(o_index[user.groupName][user.ip]);
+                o_index[user.groupName].Remove(user.ip);
+                if (olistView[user.groupName].Items.Count == 0)
+                {
+                    OfflineGroups.Items.Remove(ogroupLists[user.groupName]);
+                    ogroupLists.Remove(user.groupName);
+                    olistView.Remove(user.groupName);
+                    o_index.Remove(user.groupName);
+                }
+            }
+            catch(Exception e) {
+                MessageBox.Show("RemoveUserFromOffine" + e.Message);
+            }
+       
         }
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -607,6 +639,7 @@ namespace SEN_project_v2
            
        
         }
+
         public  FlowDocument TransformImages(FlowDocument flowDocument,IPAddress ip)
         {
             FlowDocument img_flowDocument = flowDocument;
@@ -632,25 +665,16 @@ namespace SEN_project_v2
                             if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
                             {
                                 replacementImage = (System.Windows.Controls.Image)uic.Child;
-                                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
-                                string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
-                                FileStream stream = new FileStream(Path, FileMode.Create);
-                                encoder.Save(stream);
-                                stream.Close();
-                                BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
-                                replacementImage.Source = bitmapImage;
-                                replacementImage.Height = bitmapImage.Height;
-                                replacementImage.Width = bitmapImage.Width;
-
-
-                                files.Add(Path);
-                                count++;
+                                setImages(files, ip, count, index, replacementImage);
 
 
                             }
                         }
                     }
+                }
+                else
+                {
+                   
                 }
             }
             List<IPAddress> ips= new List<IPAddress>();
@@ -658,7 +682,24 @@ namespace SEN_project_v2
             tcp.SendFiles(files, ips,1);
             return img_flowDocument;
         }
-               
+        private void setImages(List<string> files, IPAddress ip, int count,int index, Image replacementImage)
+        {
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
+            string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
+            FileStream stream = new FileStream(Path, FileMode.Create);
+            encoder.Save(stream);
+            stream.Close();
+            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+            replacementImage.Source = bitmapImage;
+            replacementImage.Height = bitmapImage.Height;
+            replacementImage.Width = bitmapImage.Width;
+
+
+            files.Add(Path);
+            count++;
+
+        }
 
         private string TransformImageTo64String(FlowDocument flowDocument)
         {
@@ -744,7 +785,7 @@ namespace SEN_project_v2
             snippingWindow.Show();
         }
 
-
+      
 
    
         

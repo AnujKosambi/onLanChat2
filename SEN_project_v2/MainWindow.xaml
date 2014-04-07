@@ -10,6 +10,56 @@
         <Style x:Key="header" TargetType="{x:Type GridViewColumnHeader}"   >
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
+        <Style TargetType="Border" x:Key="OffLinestyle" >
+            <Style.Resources>
+                <LinearGradientBrush x:Key="BackBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#A5EF3132" Offset="0.1" />
+                    <GradientStop Color="#A5B21414" Offset="0.9" />
+                </LinearGradientBrush>
+            </Style.Resources>
+            <Setter Property="Background" Value="{StaticResource BackBrush}"/>
+        </Style>
+        <Style TargetType="Border" x:Key="OnLineSyle"  >
+            <Style.Resources>
+                <LinearGradientBrush x:Key="oBackBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#7F65EF31" Offset="0.1" />
+                    <GradientStop Color="#7F2A740E" Offset="0.9" />
+                </LinearGradientBrush>
+            </Style.Resources>
+            <Setter Property="Background" Value="{StaticResource oBackBrush}"/>
+        </Style>
+        <DataTemplate x:Key="onLine">
+            <Border Style="{StaticResource OnLineSyle}" Height="24">
+                <TextBlock Text="{Binding}" 
+                        Margin="4 0"
+                        VerticalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="12" 
+                        FontWeight="SemiBold"
+                        Width="{Binding
+                        RelativeSource={RelativeSource
+                        Mode=FindAncestor,
+                        AncestorType={x:Type Expander}},
+                        Path=ActualWidth}"
+                        TextWrapping="Wrap"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="offline">
+            <Border Style="{StaticResource OffLinestyle}" Height="24">
+                <TextBlock Text="{Binding}" 
+                        Margin="4 0"
+                        VerticalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="12" 
+                        FontWeight="SemiBold"
+                        Width="{Binding
+                        RelativeSource={RelativeSource
+                        Mode=FindAncestor,
+                        AncestorType={x:Type Expander}},
+                        Path=ActualWidth}"
+                        TextWrapping="Wrap"/>
+            </Border>
+        </DataTemplate>
     </Window.Resources>
     <Window.Background>
         <RadialGradientBrush RadiusY="0.75" Center="0.5,0">
@@ -23,42 +73,15 @@
     <Window.BindingGroup>
         <BindingGroup/>
     </Window.BindingGroup>
-
     <Grid>
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
-
+          <local:TitleBar x:Name="titleBar" />
 
         <Button Content=" x " HorizontalAlignment="Right" Visibility="Visible" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,2,7,0" Click="Button_Click" VerticalAlignment="Top" Foreground="White" Background="#FFE82B2B"/>
-        <!--
-        <ListView x:Name="_listView" Margin="5,30,5,46"   RenderTransformOrigin="-3.353,-1.007" BorderThickness="1" BorderBrush="#FF162C55" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
-            <ListView.Background>
-                <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
-                    <GradientStop Color="#7F4F4646" Offset="0.987"/>
-                    <GradientStop Color="#7FFFFFFF"/>
-                    <GradientStop Color="#7F888282" Offset="0.665"/>
-                </RadialGradientBrush>
-            </ListView.Background>
+      
 
-            <ListView.View >
-                <GridView ColumnHeaderContainerStyle="{StaticResource header}" >
-                    <GridViewColumn Width="1000">
-
-
-
-                    </GridViewColumn>
-
-                </GridView >
-            </ListView.View>
-
-        </ListView>-->
-        <Label Content="On-Lan Chat" Margin="0,0,0,0"
-               VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16" FontFamily="Segoe UI Semibold">
-            <Label.Effect>
-                <DropShadowEffect Direction="0" Color="#FF898989" ShadowDepth="2"/>
-            </Label.Effect>
-        </Label>
         <Grid Margin="5,30,5,46" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="283*"/>
@@ -67,45 +90,49 @@
                 <RowDefinition Height="36"/>
 
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*">
-                        
+
                     </ColumnDefinition>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel    >
-                    <StackPanel.Effect>
-                        <DropShadowEffect Color="#FF7A7A7A"/>
-                    </StackPanel.Effect>
-                    <StackPanel.Background>
-                        <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
-                            <GradientStop Color="#7F4F4646" Offset="0.987"/>
-                            <GradientStop Color="#7FFFFFFF"/>
-                            <GradientStop Color="#7F888282" Offset="0.665"/>
-                        </RadialGradientBrush>
-                    </StackPanel.Background>
-                    <Expander Header="On-line" BorderThickness="0">
-                    <TreeView Name="Groups" RenderTransformOrigin="-3.353,-1.007"
-                   
+                <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                    <StackPanel    >
+                        <StackPanel.Effect>
+                            <DropShadowEffect Color="#FF7A7A7A"/>
+                        </StackPanel.Effect>
+                        <StackPanel.Background>
+                            <RadialGradientBrush Opacity="0.7" RadiusX="10" RadiusY="1" Center="0.5,0.75">
+                                <GradientStop Color="#7F4F4646" Offset="0.987"/>
+                                <GradientStop Color="#7FFFFFFF"/>
+                                <GradientStop Color="#7F888282" Offset="0.665"/>
+                            </RadialGradientBrush>
+                        </StackPanel.Background>
+                        <Expander  HeaderTemplate="{StaticResource onLine}" BorderThickness="0" IsExpanded="True" Header="On-line" FontFamily="Segoe UI Semibold" FontWeight="Bold">
+
+
+                            <TreeView Name="Groups" RenderTransformOrigin="-3.353,-1.007"
+                
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True" Background="{x:Null}"  >
-                </TreeView>
-                </Expander>
-                <Expander Header="Off-line" BorderThickness="0">
-                    <TreeView Name="OfflineGroups" RenderTransformOrigin="-3.353,-1.007"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True" Background="{x:Null}" BorderThickness="0"  >
+                            </TreeView>
+                        </Expander>
+                        <Expander Header="Off-line" HeaderTemplate="{StaticResource offline}"  BorderThickness="0">
+                            <TreeView Name="OfflineGroups" RenderTransformOrigin="-3.353,-1.007"
                     
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True" Background="{x:Null}"  >
 
-                    </TreeView>
-                </Expander>
-                </StackPanel>
+                            </TreeView>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
                 <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                     <Label Content="Member"  Background="{x:Null}" Height="23" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
@@ -117,7 +144,7 @@
                     <Button Content="Select All" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
                     <Button Content="Snipping" VerticalAlignment="Top"  Height="25" Name="Snipping" Click="Snipping_Click"/>
                 </StackPanel>
-              
+
             </Grid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
                 <GridSplitter.Background>

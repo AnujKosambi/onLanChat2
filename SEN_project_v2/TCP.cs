@@ -40,6 +40,15 @@ namespace SEN_project_v2
         {
                 SendFiles(list, ips, 0);
         }
+        public void SendFile(string file,IPAddress ip,int flag)
+        {
+            List<string> files = new List<string>();
+            files.Add(file);
+            List<IPAddress> ips = new List<IPAddress>();
+            ips.Add(ip);
+            SendFiles(files, ips,flag);
+        }
+
         public void SendFiles(List<string> list, List<IPAddress> ips,int Flags)
         {
             //  files = list;

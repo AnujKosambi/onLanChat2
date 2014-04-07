@@ -18,7 +18,7 @@ namespace SEN_project_v2
         List<Thread> Threads;
         List<TcpClient> Clients;
         Thread recievingThread;
-        
+        TcpClient currentClient;
         public TCPServer()
         {
             Clients = new List<TcpClient>();
@@ -31,15 +31,21 @@ namespace SEN_project_v2
         {
             Listner = new TcpListener((int)MainWindow.Ports.TCP);
             Listner.Start();
-            while(true)
+            try
             {
-                TcpClient client = Listner.AcceptTcpClient();
-              
-                Clients.Add(client);
-                Thread thread = new Thread((ThreadStart)delegate { tcpReceving_proc(client); });
-                Threads.Add(thread);
-                thread.Start();
-                System.Diagnostics.Debug.WriteLine("Recieving Thread is Started ...");
+                while (true)
+                {
+                    currentClient = Listner.AcceptTcpClient();
+                    TcpClient client = currentClient;
+                    Clients.Add(client);
+                    Thread thread = new Thread((ThreadStart)delegate { tcpReceving_proc(client); });
+                    Threads.Add(thread);
+                    thread.Start();
+                    System.Diagnostics.Debug.WriteLine("Recieving Thread is Started ...");
+                }
+            }catch(ThreadAbortException e)
+            {
+              //  System.Windows.MessageBox.Show(e.Message);
             }
         }
         public void tcpReceving_proc(TcpClient Client)
@@ -101,12 +107,16 @@ namespace SEN_project_v2
                             break;
                         }
                     }
-                    else
+                    else if(Flag==1)
                     {
                         FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + UserList.xml[ip].CountMessages+"."+
                             string.Join(".",filename.Split('.').Skip(1).ToArray());
                     }
-                   using (FileStream fileIO = File.Open(FileName,FileMode.CreateNew))
+                    else if(Flag==2)
+                    {
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + filename;
+                    }
+                   using (FileStream fileIO = File.Open(FileName,FileMode.Create))
                    // FileStream fileIO = File.Create(FileName);
                     {
                         int l = buffer.Length;
@@ -147,8 +157,13 @@ namespace SEN_project_v2
 
         public void Stop()
         {
+            if(Listner!=null)
+            {
+                Listner.Stop();
+            }
             if(recievingThread!=null && recievingThread.IsAlive)
             {
+                recievingThread.Interrupt();
                 recievingThread.Abort();
             }
 
