@@ -31,10 +31,12 @@ namespace SEN_project_v2
         public static Dictionary<string, List<string>> childs;
         public static Dictionary<CheckBox, string> sharedFiles;
         public static Dictionary<string, string> VirtualName;
+        public XmlDocument sharingDoc;
         SecurityPW security = null;
 
         public Settings()
         {
+            
             InitializeComponent();
             sharedFiles = new Dictionary<CheckBox,string>();
             VirtualName = new Dictionary<string, string>();
@@ -287,7 +289,7 @@ namespace SEN_project_v2
             Appearance.IsExpanded = false;
             Conference.IsExpanded = false;
             BlockedUsersList.IsExpanded = false;
-            ListDirectory(SharedFiles, "H:\\");
+            ListDirectory(SharedFiles, "C:\\Users\\AnujKosambi\\Documents\\Visual Studio 2013\\Projects\\SEN_project_v2\\");
 
         }
         private void ListDirectory(System.Windows.Controls.TreeView treeview, String path)
@@ -304,7 +306,7 @@ namespace SEN_project_v2
             int checkIndex = 1;
             
             TreeViewItem directoryNode1 = new System.Windows.Controls.TreeViewItem();
-            directoryNode1.Items.Add(new TreeViewItem());
+            directoryNode1.Items.Add(new TreeViewItem() { Height=0});
             
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
@@ -315,8 +317,9 @@ namespace SEN_project_v2
            
             sp.Children.Add(new Image() { Source = BitmapFrame.Create(new Uri("pack://application:,,,/Images/FolderIcon.png")) ,Width=16,Height=16});
             sp.Children.Add(cb);
-            cb.Checked += (sender, e) => {
-                string vname = "";
+            cb.Checked += (sender, e) =>{
+#region Check
+                                             string vname = "";
                 bool ok = false;
 
                 if ((((directoryNode1.Parent as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked.Value == false)
@@ -362,12 +365,14 @@ namespace SEN_project_v2
                         }
                     }
                 }
-            };
+#endregion uncheck
+                                         };
            
             
-            cb.Unchecked += (sender, e) => {
+            cb.Unchecked += (sender, e) =>{
+#region Uncheck
 
-            foreach (TreeViewItem item in directoryNode1.Items)
+             foreach (TreeViewItem item in directoryNode1.Items)
             {
                 if (item.HasHeader)
                 {
@@ -386,9 +391,9 @@ namespace SEN_project_v2
                 VirtualName.Remove(directoryInfo.FullName);
 
             }
+#endregion 
             };
-      
-
+   #region addingFiles
             directoryNode1.Expanded += (sender, e) =>
             {
          
@@ -411,17 +416,80 @@ namespace SEN_project_v2
                 }
 
             };
-            
+            #endregion
 
 
-         
+
+
 
             return directoryNode1;
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
         {
+            sharingDoc = new XmlDocument();
 
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + "\\Sharing.xml";
+            if (!System.IO.File.Exists(path))
+            {
+                #region Making Document
+                XmlWriter xmlWriter = XmlWriter.Create(path);
+                xmlWriter.WriteStartDocument();
+                xmlWriter.WriteStartElement("Sharing");
+                xmlWriter.WriteStartElement("Size");
+                xmlWriter.WriteCData("0");
+                xmlWriter.WriteEndElement();
+                xmlWriter.WriteStartElement("Folders");
+                xmlWriter.WriteEndElement();
+                xmlWriter.WriteEndDocument();
+                xmlWriter.Close();
+                #endregion
+
+            }
+            sharingDoc.Load(path);
+            foreach (string folder in VirtualName.Keys)
+            {
+               AddFolder(GetFolderRoot(), new DirectoryInfo(folder));
+            }
+        }
+
+        private XmlNode GetFolderRoot()
+        {
+
+            return sharingDoc.SelectSingleNode("//Sharing//Folders");
+        }
+
+        private XmlNode AddFolder(XmlNode parent,DirectoryInfo  folderinfo)
+        {   string path=AppDomain.CurrentDomain.BaseDirectory +  "\\Sharing.xml";
+
+      
+            XmlElement folder = sharingDoc.CreateElement("Folder");
+            if (parent == GetFolderRoot())
+            {
+                folder.SetAttribute("Path", folderinfo.FullName);
+                folder.SetAttribute("name", VirtualName[folderinfo.FullName]);
+            }
+            else
+                folder.SetAttribute("name", folderinfo.Name);
+            GetFolderRoot().AppendChild(folder);
+        
+            parent.AppendChild(folder);
+            foreach(DirectoryInfo directory in folderinfo.GetDirectories())
+            {
+                AddFolder(folder, directory);
+            }
+            foreach(FileInfo file in folderinfo.GetFiles())
+            {
+                XmlElement fileE = sharingDoc.CreateElement("File");
+                fileE.SetAttribute("name", file.Name);
+                fileE.SetAttribute("path", file.FullName);
+                fileE.SetAttribute("type", file.Extension);
+                fileE.SetAttribute("size",""+file.Length);
+                folder.AppendChild(fileE);
+            }
+
+            sharingDoc.Save(path);
+            return folder;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿//#define UDP
+﻿#define UDP
 #if UDP
-#define UDPConnection
+//#define UDPConnection
 #endif
 //#define Fake
 ///<Debug>
@@ -76,7 +76,7 @@ namespace SEN_project_v2
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
             sendingClient.Send(Encoding.ASCII.GetBytes(value), value.Length);
-#if UDP
+#if UDPConnection
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 #endif
         }
@@ -103,9 +103,9 @@ namespace SEN_project_v2
 
 
                 string stringData = Encoding.ASCII.GetString(data);
-#if UDPConnection
+
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
-#endif   
+
 
 
                 #region Connection
