@@ -19,11 +19,12 @@ namespace SEN_project_v2
         List<TcpClient> Clients;
         Thread recievingThread;
         TcpClient currentClient;
+        Dictionary<string, string> folderPath;
         public TCPServer()
         {
             Clients = new List<TcpClient>();
             Threads = new List< Thread>();
-
+            folderPath = new Dictionary<string, string>();
             recievingThread = new Thread(new ThreadStart(recievingThread_proc));
             recievingThread.Start();
         }
@@ -48,6 +49,7 @@ namespace SEN_project_v2
               //  System.Windows.MessageBox.Show(e.Message);
             }
         }
+        
         public void tcpReceving_proc(TcpClient Client)
         {
 
@@ -62,24 +64,36 @@ namespace SEN_project_v2
                 {
                     Int64 bytesReceived = 0;
                     ProgressBar progress = UserList.Get(ip).userView.Progressbar;
-                    string filename;
+                    
+                    string filename="";
                     int count;
                     var buffer = new byte[1024 * 8];
-                    readStream.Read(buffer, 0, 8);
-                    Int64 numberOfBytes = BitConverter.ToInt64(buffer, 0);
+                    byte isDir=(byte)readStream.ReadByte();
 
-                    readStream.Read(buffer, 0, 4);
-                    int stringLength = BitConverter.ToInt32(buffer, 0);
-                    readStream.Read(buffer, 0, stringLength);
-                    filename = Encoding.ASCII.GetString(buffer,0,stringLength);
+                    int Flag=0;
+                     Int64 numberOfBytes =0;
+              
+                        readStream.Read(buffer, 0, 8);
+                        numberOfBytes = BitConverter.ToInt64(buffer, 0);
 
-                    int Flag;
-                    readStream.Read(buffer, 0, 4);
-                    Flag = BitConverter.ToInt32(buffer,0);
-
-                    System.Diagnostics.Debug.WriteLine(numberOfBytes);
-                    String FileName = filename;
-                  
+                        readStream.Read(buffer, 0, 4);
+                        int stringLength = BitConverter.ToInt32(buffer, 0);
+                        readStream.Read(buffer, 0, stringLength);
+                        filename = Encoding.ASCII.GetString(buffer, 0, stringLength);
+                        string Path="";
+                        if (isDir == 0xD)
+                        {
+                            readStream.Read(buffer, 0, 4);
+                            int pathLength = BitConverter.ToInt32(buffer, 0);
+                            readStream.Read(buffer, 0, pathLength);
+                            Path = Encoding.ASCII.GetString(buffer, 0, pathLength);
+                        }
+                        readStream.Read(buffer, 0, 4);
+                        Flag = BitConverter.ToInt32(buffer, 0);
+                    
+               //         System.Diagnostics.Debug.WriteLine(numberOfBytes);
+                        String FileName = filename;
+                    
                     if (Flag == 0)
                     {
 
@@ -90,11 +104,14 @@ namespace SEN_project_v2
                             progress.Maximum = numberOfBytes / (1024 * 8);
                         }));
                         Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
+                        saveFile.Filter = "("+filename.Split('.').Last()+") Files|*." + filename.Split('.').Last() + "";
                         saveFile.Title = filename;
+                        saveFile.FileName = filename;
                         if (saveFile.ShowDialog().Value == true)
                         {
 
                             FileName = saveFile.FileName;
+                           
 
                         }
                         else
@@ -116,6 +133,18 @@ namespace SEN_project_v2
                     {
                         FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + filename;
                     }
+                    else if(Flag==3)
+                    {
+                        progress.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            progress.Value = 0;
+                            progress.Visibility = System.Windows.Visibility.Visible;
+                            progress.Maximum = numberOfBytes / (1024 * 8);
+                        }));
+                        if (isDir == 0xD)
+                            FileName = Path + "\\" + filename;
+                    }
+                   
                    using (FileStream fileIO = File.Open(FileName,FileMode.Create))
                    // FileStream fileIO = File.Create(FileName);
                     {
@@ -130,7 +159,7 @@ namespace SEN_project_v2
                    //         }));
                             
 
-                                progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
                                     new DispatcherOperationCallback(delegate { progress.Value++; return null; }), null);
                      //       progress.Dispatcher.Invoke((()=> {progress.Value++; progress.UpdateLayout()}));
                             bytesReceived += count;
@@ -146,6 +175,7 @@ namespace SEN_project_v2
                     }));
 
                 }
+               
                 readStream.Close();
                 Clients.Remove(Client);
                 Client.Close();

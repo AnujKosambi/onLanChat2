@@ -36,39 +36,53 @@ namespace SEN_project_v2
             Clients = new List< TcpClient>();
             server = new TCPServer();
         }
+        
         public void SendFiles(List<string> list,List<IPAddress> ips)
         {
                 SendFiles(list, ips, 0);
         }
         public void SendFile(string file,IPAddress ip,int flag)
         {
+            SendFileToFolder(file, "",ip, flag);
+        }
+        public void SendFileToFolder(string file,string path, IPAddress ip, int flag)
+        {
             List<string> files = new List<string>();
             files.Add(file);
             List<IPAddress> ips = new List<IPAddress>();
             ips.Add(ip);
-            SendFiles(files, ips,flag);
+            SendFiles(files, ips, flag,path);
         }
-
         public void SendFiles(List<string> list, List<IPAddress> ips,int Flags)
         {
-            //  files = list;
-            //      this.ips = ips;
+            SendFiles(list, ips, Flags, "");
+        }
+        public void SendFiles(List<string> list, List<IPAddress> ips,int Flags,string path)
+        {
+            List<string> files=new List<string>();
+            List<string> Dir = new List<string>();
+            files=list.Where(x => Directory.Exists(x) == false).ToList();
+            Dir = list.Where(x => Directory.Exists(x) == true).ToList();
+
             foreach (IPAddress ip in ips)
             {
-                // if (Clients.Keys.Contains(ip))
-                //      Clients.Remove(ip);
-                //      Clients.Add(ip, new TcpClient());
-                //      if (SendingThreads.ContainsKey(ip))
-                //         SendingThreads.Remove(ip);
-                TcpClient tcpClient = new TcpClient();
+                 TcpClient tcpClient = new TcpClient();
+
                 tcpClient.Connect(ip, (int)MainWindow.Ports.TCP);
                 List<string> newList = list;
-                Thread thread = new Thread((ThreadStart)delegate { fileSending_proc(newList, tcpClient,Flags); });
+                
+
+                Thread thread = new Thread((ThreadStart)delegate { fileSending_proc(files, tcpClient, Flags, path); });
                 SendingThreads.Add(thread);
                 thread.Start();
+                foreach(string dir in Dir)
+                {
+                    MainWindow.udp.SendMessageTo(UDP.SendDir + dir, ip);
+                }
 
             }
         }
+ 
     /*
         public  void tcpReceving_proc()
         {
@@ -135,10 +149,11 @@ namespace SEN_project_v2
             }
         }
         */
-        private void fileSending_proc(List<string> files,TcpClient tcpClient,int Flag)
+        private void fileSending_proc(List<string> files,TcpClient tcpClient,int Flag,string Path)
         {
             //foreach (IPAddress ip in ips)
             //{
+            
                 TcpClient tcpSendingClient = tcpClient;
                if (tcpSendingClient.Connected)
                 {
@@ -147,7 +162,23 @@ namespace SEN_project_v2
                     List<String> newList = new List<string>(files);
                     foreach (string file in newList)
                     {
-                       
+                      
+                        Byte isDir;
+
+                        if (Flag==3)
+                        {
+                            
+                           stream.WriteByte(0xD);
+                            isDir=0xD;
+                        }
+                        else{
+                        stream.WriteByte(0xF);
+                            isDir=0xF;
+                        }
+                        if (!File.Exists(file))
+                            stream.Close();
+//                        Thread.Sleep(3000);
+
                         using (FileStream fileIO = File.OpenRead(file))
                         {
                             Byte[] length = BitConverter.GetBytes(fileIO.Length);
@@ -155,7 +186,11 @@ namespace SEN_project_v2
                             string fileNames=file.Split('\\').Last();
                             stream.Write(BitConverter.GetBytes(fileNames.Length),0,4);
                             stream.Write(Encoding.ASCII.GetBytes(fileNames), 0, fileNames.Length);
-                         
+                             if(isDir==0xD)
+                            {
+                                stream.Write(BitConverter.GetBytes(Path.Length), 0, 4);
+                                stream.Write(Encoding.ASCII.GetBytes(Path), 0, Path.Length);
+                            }
                             stream.Write(BitConverter.GetBytes(Flag), 0, 4);
                             Int64 byteSent = 0;
                             var buffer = new byte[1024 * 8];

@@ -93,7 +93,8 @@ namespace SEN_project_v2
          //   ThemeManager.ApplyTheme(this, "BureauBlack");
             tcp = new TCP();
        //     MainWindow.icon = new NotifyIcon();
-            nicon = new System.Windows.Forms.NotifyIcon();
+            nicon = App.nicon;
+            
             nicon.Text = "OnLanChat";
             nicon.Icon = new System.Drawing.Icon("OnLanChat.ico");
             nicon.Visible = true;
@@ -700,18 +701,6 @@ namespace SEN_project_v2
             count++;
 
         }
-
-        private string TransformImageTo64String(FlowDocument flowDocument)
-        {
-            TextRange documentTextRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
-            using (MemoryStream ms = new MemoryStream())
-            {
-                documentTextRange.Save(ms, DataFormats.XamlPackage);
-                ms.Position = 0;
-                return Convert.ToBase64String(ms.ToArray());
-            }
-        }
-    
 
         private void sendBox_TextChanged(object sender, TextChangedEventArgs e)
         {

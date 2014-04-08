@@ -10,24 +10,18 @@
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="153*" />
+            <RowDefinition Height="287*" />
 
 
-            <RowDefinition Height="145*"/>
+            <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" >
             <TreeView Name="FolderView" Margin="5" Background="#25FFFFFF"/>
-           
+
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="34.61" />
-            </Grid.RowDefinitions >
-            <StackPanel>
 
-            </StackPanel>
-            <Button Grid.Row="1" Content="Download" HorizontalAlignment="Center" Width="75" VerticalAlignment="Stretch" Margin="5"/>
+            <Button Name="Download"  Grid.Row="1" Content="Download" HorizontalAlignment="Center" Width="75" VerticalAlignment="Stretch" Margin="5" Click="Download_Click" />
         </Grid>
     </Grid>
 </Window>

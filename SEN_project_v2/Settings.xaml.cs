@@ -66,6 +66,9 @@ namespace SEN_project_v2
                 Camera.Text = settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText;
                 Microphone.Text = settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText;
                 String colour = settings.SelectSingleNode("UserProfile/Appearance/Colour").InnerText;
+
+               
+
                 Color color = (Color)ColorConverter.ConvertFromString(colour);
                 ColorPicker.SelectedColor = color;
                 BrushConverter bc = new BrushConverter();
@@ -100,6 +103,43 @@ namespace SEN_project_v2
 
                 }
             }
+            if(File.Exists("Sharing.xml"))
+            {
+                loadSharedFolders();
+            }
+        }
+        private void loadSharedFolders()
+        {
+            if (sharingDoc == null)
+            {
+                sharingDoc = new XmlDocument();
+                sharingDoc.Load("Sharing.xml");
+            }
+             foreach(XmlNode folder in  GetFolderRoot().SelectNodes("Folder"))
+             {
+
+                 VirtualName.Add(folder.Attributes.GetNamedItem("Path").Value, folder.Attributes.GetNamedItem("name").Value);
+                 loadList(folder);
+                 
+             }
+        }
+
+        private void loadList(XmlNode node)
+        {
+            DirectoryInfo info=new DirectoryInfo(node.Attributes.GetNamedItem("Path").Value);
+            if(!childs.ContainsKey(info.FullName))
+            childs.Add(info.FullName, new List<string>());
+            if(childs.ContainsKey(info.Parent.FullName))
+                childs[info.Parent.FullName].Add(info.FullName);
+            foreach(XmlNode child in node.ChildNodes)
+            {
+                if (child.Name == "Folder")
+                {
+                    loadList(child);
+                }
+
+            }
+
         }
         private void loadUser()
         {
@@ -289,7 +329,7 @@ namespace SEN_project_v2
             Appearance.IsExpanded = false;
             Conference.IsExpanded = false;
             BlockedUsersList.IsExpanded = false;
-            ListDirectory(SharedFiles, "C:\\Users\\AnujKosambi\\Documents\\Visual Studio 2013\\Projects\\SEN_project_v2\\");
+            ListDirectory(SharedFiles, "H:\\");
 
         }
         private void ListDirectory(System.Windows.Controls.TreeView treeview, String path)
@@ -304,7 +344,7 @@ namespace SEN_project_v2
         private  TreeViewItem CreateDirectoryNode(DirectoryInfo directoryInfo,bool isSelected)
         {
             int checkIndex = 1;
-            
+         
             TreeViewItem directoryNode1 = new System.Windows.Controls.TreeViewItem();
             directoryNode1.Items.Add(new TreeViewItem() { Height=0});
             
@@ -321,7 +361,7 @@ namespace SEN_project_v2
 #region Check
                                              string vname = "";
                 bool ok = false;
-
+                if(!VirtualName.ContainsKey(directoryInfo.FullName))
                 if ((((directoryNode1.Parent as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked.Value == false)
                 {
                     VirtualDirectory vd = new VirtualDirectory(directoryNode1.Name, ref vname, ref ok);
@@ -343,13 +383,13 @@ namespace SEN_project_v2
                             childs.Add(directoryInfo.FullName, new List<string>());
 
                         }
-                        foreach (TreeViewItem item in directoryNode1.Items)
-                        {
-                            if (item.HasHeader)
-                            {
-                                ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = true;
-                            }
-                        }
+                        //foreach (TreeViewItem item in directoryNode1.Items)
+                        //{
+                        //    if (item.HasHeader)
+                        //    {
+                        //        ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = true;
+                        //    }
+                        //}
                     }
                 }
                 else
@@ -357,15 +397,15 @@ namespace SEN_project_v2
                     childs[(string)directoryInfo.Parent.FullName].Add(directoryInfo.FullName);
                     childs.Add(directoryInfo.FullName, new List<string>());
                     System.Diagnostics.Debug.WriteLine(string.Join(":", childs[(string)directoryInfo.Parent.FullName].ToArray()));
-                    foreach (TreeViewItem item in directoryNode1.Items)
-                    {
-                        if (item.HasHeader)
-                        {
-                            ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
-                        }
-                    }
+                    //foreach (TreeViewItem item in directoryNode1.Items)
+                    //{
+                    //    if (item.HasHeader)
+                    //    {
+                    //        ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
+                    //    }
+                    //}
                 }
-#endregion uncheck
+#endregion 
                                          };
            
             
@@ -406,7 +446,8 @@ namespace SEN_project_v2
                             int index = directoryNode1.Items.Count;
 
                             directoryNode1.Items.Insert(index, CreateDirectoryNode(directory, cb.IsChecked.Value));
-                            (((directoryNode1.Items[index] as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = cb.IsChecked.Value;
+                            (((directoryNode1.Items[index] as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox)
+                                .IsChecked = childs.ContainsKey(directory.FullName);
                         }
                         catch (Exception ex)
                         {
@@ -430,8 +471,11 @@ namespace SEN_project_v2
             sharingDoc = new XmlDocument();
 
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + "\\Sharing.xml";
-            if (!System.IO.File.Exists(path))
+            if (System.IO.File.Exists(path))
             {
+                System.IO.File.Delete(path);
+
+            }  
                 #region Making Document
                 XmlWriter xmlWriter = XmlWriter.Create(path);
                 xmlWriter.WriteStartDocument();
@@ -445,7 +489,7 @@ namespace SEN_project_v2
                 xmlWriter.Close();
                 #endregion
 
-            }
+            
             sharingDoc.Load(path);
             foreach (string folder in VirtualName.Keys)
             {
@@ -470,11 +514,14 @@ namespace SEN_project_v2
                 folder.SetAttribute("name", VirtualName[folderinfo.FullName]);
             }
             else
+            {
                 folder.SetAttribute("name", folderinfo.Name);
+                folder.SetAttribute("Path", folderinfo.FullName);
+            }
             GetFolderRoot().AppendChild(folder);
         
             parent.AppendChild(folder);
-            foreach(DirectoryInfo directory in folderinfo.GetDirectories())
+            foreach(DirectoryInfo directory in childs[folderinfo.FullName].Select(x=>new DirectoryInfo(x)) )
             {
                 AddFolder(folder, directory);
             }
@@ -482,7 +529,7 @@ namespace SEN_project_v2
             {
                 XmlElement fileE = sharingDoc.CreateElement("File");
                 fileE.SetAttribute("name", file.Name);
-                fileE.SetAttribute("path", file.FullName);
+                fileE.SetAttribute("Path", file.FullName);
                 fileE.SetAttribute("type", file.Extension);
                 fileE.SetAttribute("size",""+file.Length);
                 folder.AppendChild(fileE);

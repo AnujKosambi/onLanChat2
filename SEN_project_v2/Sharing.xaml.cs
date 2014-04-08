@@ -24,9 +24,11 @@ namespace SEN_project_v2
         private IPAddress ip;
         string path;
         public XmlDocument sharingDoc;
+        public List<String> listFiles;
         public Sharing(IPAddress ip)
         {
             InitializeComponent();
+            listFiles = new List<string>();
             this.ip = ip;
 
         }
@@ -82,33 +84,35 @@ namespace SEN_project_v2
             cb.Checked += (sender, e) =>
             {
                 #region Check
-                          
+                listFiles.Add(dir.Attributes.GetNamedItem("Path").Value);
                 {
-
+                    /*
                     foreach (TreeViewItem item in directoryNode1.Items)
                     {
                         if (item.HasHeader)
                         {
                             ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
                         }
-                    }
+                    }*/
                 }
-                #endregion uncheck
+                #endregion 
+                System.Diagnostics.Debug.WriteLine(string.Join(":", listFiles.ToArray()));
             };
 
 
             cb.Unchecked += (sender, e) =>
             {
                 #region Uncheck
-
+                listFiles.Remove(dir.Attributes.GetNamedItem("Path").Value);
+                /*
                 foreach (TreeViewItem item in directoryNode1.Items)
                 {
                     if (item.HasHeader)
                     {
                         ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
                     }
-                }
-
+                }*/
+                System.Diagnostics.Debug.WriteLine(string.Join(":", listFiles.ToArray()));
                 #endregion
             };
 
@@ -126,7 +130,7 @@ namespace SEN_project_v2
                             int index = directoryNode1.Items.Count;
 
                             directoryNode1.Items.Insert(index, CreateDirectoryNode(directory, cb.IsChecked.Value));
-                            (((directoryNode1.Items[index] as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = cb.IsChecked.Value;
+                         //   (((directoryNode1.Items[index] as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = cb.IsChecked.Value;
                         }
                         catch (Exception ex)
                         {
@@ -145,5 +149,14 @@ namespace SEN_project_v2
             return directoryNode1;
 
         }
+
+        private void Download_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (string filepath in listFiles)
+                MainWindow.udp.SendMessageTo(UDP.SendFile + filepath, ip);
+            
+        }
+
+     
     }
 }

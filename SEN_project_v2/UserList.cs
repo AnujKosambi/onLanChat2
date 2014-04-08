@@ -13,6 +13,7 @@ namespace SEN_project_v2
         static Dictionary<System.Net.IPAddress,int> indexOf=new Dictionary<System.Net.IPAddress,int>();
         public static Dictionary<System.Net.IPAddress, string> GroupList = new Dictionary<System.Net.IPAddress, string>();
         public static Dictionary<System.Net.IPAddress, XMLClient> xml = new Dictionary<System.Net.IPAddress, XMLClient>();
+        public static Dictionary<System.Net.IPAddress, Conversation> conversation = new Dictionary<System.Net.IPAddress,Conversation>();
         public static void ClearAllList()
         {
             Users.Clear();
@@ -40,6 +41,7 @@ namespace SEN_project_v2
                 indexOf.Add(user.ip, Users.IndexOf(user));
                 GroupList.Add(user.ip, user.groupName);
                 xml.Add(user.ip, new XMLClient(user.ip));
+                
                 return true;
             }
             return false;
@@ -81,6 +83,7 @@ namespace SEN_project_v2
                 indexOf.Remove(ip);
                 GroupList.Remove(ip);
                 xml.Remove(ip);
+                
             }
             catch { }            
         }

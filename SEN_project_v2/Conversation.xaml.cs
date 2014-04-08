@@ -27,13 +27,17 @@ namespace SEN_project_v2
         XMLClient client;
         IPAddress ip;
         public UDP udp;
-       
+        public string path;
         public Conversation(IPAddress sender)
         {
             InitializeComponent();
             client = UserList.xml[sender];
             ip = sender;
-           
+            path = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + "Pic.png";
+            if(File.Exists(path))
+            {
+                ProfilePic.Source = new BitmapImage(new Uri(path));
+            }
         }
         int messIndex = 0;
         int timeIndex=1;
@@ -127,6 +131,7 @@ namespace SEN_project_v2
             UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
             udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage).ToArray(), ip);
             stream.Close();
+            this.Redraw();
         }
         public FlowDocument MTransformImages(FlowDocument flowDocument, IPAddress ip)
         {
@@ -187,6 +192,26 @@ namespace SEN_project_v2
             files.Add(Path);
             count++;
 
+        }
+
+        private void DeleteAll_Click(object sender, RoutedEventArgs e)
+        {
+            messages = client.fetchMessages();
+            foreach (XMLClient.Message m in messages)
+            {
+                UserList.xml[ip].deleteMessage(m);
+            }
+            this.Redraw();
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            this.Redraw();
+        }
+
+        private void UpdatePic_Click(object sender, RoutedEventArgs e)
+        {
+            udp.SendMessageTo(UDP.UpdatePic, ip);
         }
 
     }

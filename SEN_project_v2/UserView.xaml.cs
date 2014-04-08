@@ -80,16 +80,29 @@ namespace SEN_project_v2
         private void openChat_Click(object sender, RoutedEventArgs e)
         {
             Window w = new Window();
-            Conversation conver = new Conversation(u_ip) { udp = MainWindow.udp };
-            w.Content = conver;
-            conver.Header.Content= u_nick;
+            Conversation conver =  new Conversation(u_ip) { udp = MainWindow.udp };
+            if (UserList.conversation.ContainsKey(u_ip))
+                UserList.conversation.Remove(u_ip);
+            UserList.conversation.Add(u_ip, conver);
+            w.Closing+=(a,b)=>{
+               
+                UserList.conversation.Remove(u_ip);
+            };
+            conver.udp = MainWindow.udp;
+            //w.WindowStyle = WindowStyle.None;
+            //w.AllowsTransparency = true;
 
+            w.Content = conver;
+            //w.Background = System.Windows.Media.Brushes.Transparent;
+            conver.Nick.Content = u_nick+" ("+u_ip.ToString()+") "; conver.Group.Content = UserList.GroupList[u_ip];
+            //w.BorderThickness = new Thickness(25);
             w.SizeToContent = SizeToContent.WidthAndHeight;
-            w.Title = u_nick;
+            w.Title = "Conversation";
             w.Show();
-            w.MinWidth = 400;
-            w.MinHeight = 400;
+            w.MinWidth = 600;
+            w.MinHeight = 500;
             w.MaxWidth = 700;
+            w.MaxHeight = 700;
             if (UserList.xml[u_ip].UnreadMessages > 0)
                 MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
             UserList.xml[u_ip].UnreadMessages = 0;

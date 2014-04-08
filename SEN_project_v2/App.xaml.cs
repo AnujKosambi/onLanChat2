@@ -12,5 +12,13 @@ namespace SEN_project_v2
     /// </summary>
     public partial class App : Application
     {
+        public static System.Windows.Forms.NotifyIcon nicon;
+        public App(
+            )
+        {
+            nicon = new System.Windows.Forms.NotifyIcon();
+
+        }
+
     }
 }

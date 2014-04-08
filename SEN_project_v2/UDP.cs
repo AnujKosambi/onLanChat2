@@ -20,6 +20,8 @@ using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using Microsoft.Win32;
+
 namespace SEN_project_v2
 {
     public class UDP
@@ -44,7 +46,11 @@ namespace SEN_project_v2
         public const string RRemote = "<\\#Remote#>";
 
         public const string Sharing = "<#Sharing#>";
-        
+        public const string SendFile = "<#SendFile#>";
+        public const string SendDir = "<#SendDir#>";
+        public const string RSendDir = "<#RSendDir#>";
+        public const string MakeFolder = "<#MakeFolder#>";
+        public const string UpdatePic = "<#UpdatePic#>";
 
         public const string EndRemote = "<XEndX>";
         public const string Mouse = "<#M#>";
@@ -276,8 +282,48 @@ namespace SEN_project_v2
                 #endregion
                 else if (stringData.StartsWith(Sharing))
                 {
-
+                    Thread.Sleep(1000);
                     MainWindow.tcp.SendFile("Sharing.xml", recevied.Address,2);
+                }
+                else if(stringData.StartsWith(SendFile))
+                {
+                    string[] splits = stringData.Split(new String[] { SendFile }, StringSplitOptions.RemoveEmptyEntries);
+                    MainWindow.tcp.SendFile(splits[0], recevied.Address,0);
+                }
+                else if(stringData.StartsWith(SendDir)){
+
+                     string[] splits = stringData.Split(new String[] { SendDir,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.RestoreDirectory=true;
+                    bool? result = saveFileDialog.ShowDialog();
+                    saveFileDialog.Title = splits[0];
+
+                    if (result.Value == true)
+                    {
+                        System.IO.File.Delete(saveFileDialog.FileName);
+                        System.IO.Directory.CreateDirectory(saveFileDialog.FileName);
+
+                        SendMessageTo(RSendDir + saveFileDialog.FileName+Breaker+ splits[0], recevied.Address);
+                    }
+
+                }
+                else if (stringData.StartsWith(RSendDir))
+                {
+                     string[] splits = stringData.Split(new String[] { RSendDir,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                    System.IO.DirectoryInfo dir=new System.IO.DirectoryInfo(splits[1]);
+                    if(dir.Exists){
+                        foreach(var file in dir.GetFiles())
+                     MainWindow.tcp.SendFileToFolder(file.FullName, splits[0], recevied.Address, 3);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invaild Dir");
+                    }
+                }
+                else if(stringData.StartsWith(UpdatePic))
+                {  string picpath=AppDomain.CurrentDomain.BaseDirectory + "\\Pic.png";
+                   MainWindow.tcp.SendFile(picpath, recevied.Address, 2);
                 }
             }
 
@@ -301,13 +347,14 @@ namespace SEN_project_v2
 #if Fake
                     User[] list=new User[25];
 
-                    for (int i = 0; i < 25;i++ )
+                    for (int i = 0; i < 25; i++)
                     {
 
-                        list[i] = new User(IPAddress.Parse("127.0.0." + i), "FakeUser" + i,"FakeGroup"+i/5);
+                        list[i] = new User(IPAddress.Parse("127.0.0." + i), "FakeUser" + i, "FakeGroup" + i / 5);
                         User user = list[i];
+                    
 #endif
-            
+ #if !Fake
             if (UserList.Add(user)| UserList.Get(recevied.Address).IsOffline )
                  window.Dispatcher.Invoke((Action)(() =>
                 {
@@ -315,7 +362,12 @@ namespace SEN_project_v2
                     window.AddUserToTree(user);
                     UserList.Get(recevied.Address).IsOffline = false;
                 }));
+#endif
 
+#if Fake
+                        if (UserList.Add(user))window.Dispatcher.Invoke((Action)(() =>{window.AddUserToTree(user);}));
+                    }
+#endif
    
 
 
@@ -367,7 +419,17 @@ namespace SEN_project_v2
             {
 
                // MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
-                window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+                try
+                {
+                    window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+                    UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        UserList.conversation[recevied.Address].Redraw();
+                    }));
+                }catch(Exception e)
+                {
+
+                }
                 UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0]);
                 UserView uv= UserList.Get(recevied.Address).userView;
                 uv.Dispatcher.BeginInvoke((Action)(() => {
