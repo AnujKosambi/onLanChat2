@@ -1,4 +1,4 @@
-﻿#define UDP
+﻿//#define UDP
 #if UDP
 //#define UDPConnection
 #endif
@@ -37,11 +37,16 @@ namespace SEN_project_v2
         public const string Message = "<#Message#>";
         public const string RMessage = "<#RMessage#>";
 
-        public const string Videocall = "<#VideoCall>";
-        public const string RVideocall = "<\\#VideoCall>";
+        public const string Videocall = "<#VideoCall#>";
+        public const string RVideocall = "<\\#VideoCall#>";
+        public const string Audiocall = "<#Audiocall#>";
+        public const string RAudiocall = "<\\#Audiocall#>";
+        public const string ExitCallA = "<#ExitCallA#>";
         public const string ExitCall = "<#ExitCall#>";
         public const string AddMember = "<#Add#>"; /// Format <#Add#>+"UserIP"
         public const string RemoveMember = "<#Remove#>";
+        public const string AddMemberA = "<#AddA#>"; /// Format <#Add#>+"UserIP"
+        public const string RemoveMemberA = "<#RemoveA#>";
         public const string Remote = "<#Remote#>";
         public const string RRemote = "<\\#Remote#>";
 
@@ -212,6 +217,68 @@ namespace SEN_project_v2
 
                 #endregion
 
+                #region AudioCall Connection
+
+                else if (stringData.StartsWith(Audiocall))
+                {
+                    window.Dispatcher.Invoke((Action)(() => { window.CreateAudioConf(recevied.Address); }));
+
+                }
+                else if (stringData.StartsWith(RAudiocall))
+                {
+                    if (window.audioConf != null)
+                        receviedRAudioCall(recevied);
+                }
+                else if (stringData.StartsWith(AddMemberA))
+                {
+                    string[] splits = stringData.Split(new String[] { AddMemberA }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length > 0)
+                    {
+                        if (window.audioConf == null)
+                        {
+                            window.Dispatcher.Invoke((Action)(() => { window.CreateAudioConf(recevied.Address); }));
+                        }
+                        window.audioConf.Dispatcher.Invoke((Action)(() =>
+                        {
+                           window.audioConf.AddUser(IPAddress.Parse(splits[0]));
+                            window.audioConf.MakeUserPreview(IPAddress.Parse(splits[0]), AudioPreview.Mode.InCall);
+                        }));
+                    }
+
+
+                }
+                else if (stringData.StartsWith(RemoveMemberA))
+                {
+                    window.audioConf.Dispatcher.Invoke((Action)(() =>
+                    {
+                        window.audioConf.requestedUsers.Remove(recevied.Address);
+                        window.audioConf._stack.Children.Remove(window.audioConf.vp[recevied.Address]);
+                        window.audioConf.statusLabel.Content = UserList.Get(recevied.Address).nick + " can't Join :(";
+                        if (window.audioConf.Users.Count == window.audioConf.requestedUsers.Count)
+                            window.audioConf.statusLabel.Content = "Room Created Successfully With (" + window.audioConf.requestedUsers.Count + ")Members ...:D";
+
+                    }));
+                }
+                else if (stringData.StartsWith(ExitCallA))
+                {
+                    if (window.waiting != null)
+                    {
+                        window.waiting.Dispatcher.Invoke((Action)(() =>
+                        {
+                            window.waiting.Close();
+                        }));
+                    }
+                    if (window.audioConf != null)
+                    {
+                        window.audioConf.Dispatcher.Invoke((Action)(() =>
+                        {
+                            window.audioConf.Close();
+                        }));
+                    }
+
+                }
+
+                #endregion
                 #region Remote
                 else if (stringData.StartsWith(Remote))
                 {
@@ -437,6 +504,27 @@ namespace SEN_project_v2
                 }));
             }
         }
+        private void receviedRAudioCall(IPEndPoint recevied)
+        {
+            
+            foreach (IPAddress ip in window.audioConf.Users)
+            {
+                SendMessageTo(AddMemberA + recevied.Address + AddMemberA, ip);
+            }
+            foreach (IPAddress ip in window.audioConf.Users)
+            {
+                SendMessageTo(AddMemberA + ip.ToString() + AddMemberA, recevied.Address);
+            }
+            window.audioConf.Users.Add(recevied.Address);
+            window.audioConf.Dispatcher.Invoke((Action)(() =>
+            {
+                window.audioConf.vp[recevied.Address]._Mode = AudioPreview.Mode.InCall;
+                if (window.audioConf.Users.Count == window.audioConf.requestedUsers.Count)
+                    window.audioConf.statusLabel.Content = "Room Created Successfully...";
+
+            }));
+        }
+        
         private void receviedRVoiceCall(IPEndPoint recevied)
         {
             

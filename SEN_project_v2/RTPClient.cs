@@ -26,6 +26,8 @@ namespace SEN_project_v2
         public Dictionary<IPAddress, System.IO.MemoryStream> sBuffer;
         public Dictionary<IPAddress, System.IO.MemoryStream> rBuffer;
         public Dictionary<IPAddress, VideoPreview> vpList;
+        public Dictionary<IPAddress, AudioPreview> apList;
+        private Dictionary<IPAddress, WaveFileWriter> waveWriters;
         private Image image;
         private int port;
         ///
@@ -68,6 +70,21 @@ namespace SEN_project_v2
             //rtpSendClient = new UdpClient();
             //rtpReceClient = new UdpClient((int)MainWindow.Ports.RTP);
         }
+        public RTPClient(IPEndPoint multiCastIP,Dictionary<IPAddress, AudioPreview> apList, String cname, String name)
+        {
+            UnhandledExceptionHandler.Register();
+            this.ipe = multiCastIP;
+            this.image = null;
+            this.vpList = null;
+            this.apList = apList;
+            rtpSession = new RtpSession(ipe, new RtpParticipant(cname, name), true, true);
+
+            System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
+            rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.JPEG, null, 0, 1);
+            waveWriters = new Dictionary<IPAddress, WaveFileWriter>();
+            EvetnBinding();
+         
+        }
         public RTPClient(IPEndPoint multiCastIP, Image image, String cname, String name)
         {
             UnhandledExceptionHandler.Register();
@@ -78,7 +95,8 @@ namespace SEN_project_v2
 
             System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
             rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.JPEG, null, 0, 1);
-
+            waveWriters=new Dictionary<IPAddress,WaveFileWriter>();
+             
             EvetnBinding();
           }
         private void EvetnBinding()
@@ -96,6 +114,7 @@ namespace SEN_project_v2
             waveProvider.DiscardOnBufferOverflow = true;
             waveOut = new DirectSoundOut();
             waveOut.Init(waveProvider);
+         //   waveOut.Volume = VideoConf.vol;
         }
         void RtpEvents_RtpStreamAdded(object sender, RtpEvents.RtpStreamEventArgs ea)
         {
@@ -111,7 +130,7 @@ namespace SEN_project_v2
 
             System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
           window.Dispatcher.Invoke((Action)(() => {
-              if (image == null)
+              if (image == null && vpList!=null)
               {
                   System.IO.MemoryStream ms = new System.IO.MemoryStream(ea.Frame.Buffer);
                   int sizeBytes = 0;
@@ -140,9 +159,42 @@ namespace SEN_project_v2
                           waveOut.Play();
 
                   }
-              }else
+              }else if(vpList==null && image!=null)
               {
                   image.Source = GetImage(ea.Frame.Buffer).Source;
+              }
+              else if (vpList == null && image == null)
+              {
+                  System.IO.MemoryStream ms = new System.IO.MemoryStream(ea.Frame.Buffer);
+                  
+                  Byte[] audio = new Byte[ms.Length ];
+                  ms.Read(audio, 0, audio.Length);
+                  if (ea.RtpStream.FramesReceived > 10)
+                      waveProvider.AddSamples(audio, 0, audio.Length);
+          //        if (waveOut.PlaybackState != PlaybackState.Playing)
+                      waveOut.Play();
+                  string[] hostIPS = ea.RtpStream.Properties.CName.Split('#');
+                  foreach (var ip in hostIPS)
+                  {
+                      IPAddress IP=IPAddress.Parse(ip);
+                      if (apList.ContainsKey(IP))
+                      {
+                        if(apList[IP].canRecord)
+                        {
+                            string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + IP.ToString().Replace('.', '\\').ToString() + "\\" + DateTime.Now.ToString("yy.MM.dd.HH.mm.ss.ffff") + ".wav";
+                            if (!waveWriters.ContainsKey(IP))
+                                waveWriters.Add(IP,new WaveFileWriter(Path, AudioConf.audio.sourceStream.WaveFormat));
+
+                            waveWriters[IP].WriteData(audio, 0, audio.Length);
+                            waveWriters[IP].Flush();
+                            
+                        }
+                        else
+                        {
+
+                        }
+                      }
+                  }
               }
                 
          }));
@@ -175,6 +227,10 @@ namespace SEN_project_v2
             RtpEvents.RtpParticipantRemoved -= RtpParticipantRemoved;
             RtpEvents.RtpStreamAdded -= RtpEvents_RtpStreamAdded;
             RtpEvents.RtpStreamRemoved -= RtpEvents_RtpStreamRemoved;
+            foreach(var wave in waveWriters.Values)
+            {
+                wave.Close();
+            }
             if (rtpSession != null)
             {
                 rtpSession.Dispose();

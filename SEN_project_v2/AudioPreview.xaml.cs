@@ -17,22 +17,25 @@ namespace SEN_project_v2
     /// <summary>
     /// Interaction logic for VideoPreview.xaml
     /// </summary>
-    public partial class VideoPreview : UserControl
+    public partial class AudioPreview : UserControl
     {
         public Boolean isRemote=false;
+        
         public System.Net.IPAddress myip;
         public UDP udp=MainWindow.udp;
         public System.Net.IPAddress hostIP;
         private int left = 20;
         DispatcherTimer timer;     
         public MainWindow window;
-        public VideoPreview()
+        public bool canRecord=false;
+        public AudioPreview()
         {
             InitializeComponent();
+            
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = new TimeSpan(0, 0, 1);
-            
+           
         
         }
 
@@ -68,7 +71,7 @@ namespace SEN_project_v2
             }
         }
 
-        public VideoPreview(Mode mode,System.Net.IPAddress hostIP)
+        public AudioPreview(Mode mode,System.Net.IPAddress hostIP)
         {
             InitializeComponent();
             this.hostIP = hostIP;
@@ -79,7 +82,7 @@ namespace SEN_project_v2
             SetVisibility(mode);
             _Mode = mode;
         }
-        public VideoPreview(Mode mode, System.Net.IPAddress hostIP,Boolean isRemote)
+        public AudioPreview(Mode mode, System.Net.IPAddress hostIP, Boolean isRemote)
         {
             this.isRemote = isRemote;
             InitializeComponent();
@@ -98,14 +101,17 @@ namespace SEN_project_v2
             {
                 time_left.Visibility = Visibility.Visible;
             }
-            else  if (mode == Mode.InCall)
+            else if (mode == Mode.InCall)
+            {
                 prev.Visibility = Visibility.Visible;
+                Record.Visibility = Visibility.Visible;
+            }
             else if (mode == Mode.Request)
             {
                 accept.Visibility = Visibility.Visible;
                 decline.Visibility = Visibility.Visible;
-                prev.Visibility = Visibility.Visible; 
-              
+                prev.Visibility = Visibility.Visible;
+
             }
         }
         public void StartWaiting()
@@ -120,6 +126,7 @@ namespace SEN_project_v2
             accept.Visibility = Visibility.Hidden;
             decline.Visibility = Visibility.Hidden;
             time_left.Visibility = Visibility.Hidden;
+            Record.Visibility = Visibility.Hidden;
         }
         void timer_Tick(object sender, EventArgs e)
         {
@@ -127,11 +134,11 @@ namespace SEN_project_v2
             time_left.Content = --left;
             if(left==0)
             {
-                udp.SendMessageTo(UDP.ExitCall,myip);
-                
-                window.videoConf.Dispatcher.Invoke((Action)(() =>
+                udp.SendMessageTo(UDP.ExitCallA,myip);
+                if (window.audioConf != null) 
+                window.audioConf.Dispatcher.Invoke((Action)(() =>
                    {
-                       window.videoConf._stack.Children.Remove(window.videoConf.vp[myip]);
+                       window.audioConf._stack.Children.Remove(window.audioConf.vp[myip]);
                    }));
             }
 
@@ -140,55 +147,56 @@ namespace SEN_project_v2
         private void accept_Click(object sender, RoutedEventArgs e)
         {
             _Mode = Mode.InCall;
-            if (!isRemote)
-            {
-                udp.SendMessageTo(UDP.RVideocall+hostIP, hostIP);
-                VideoConf videoConf = new VideoConf(window, hostIP);
-                window.videoConf = videoConf;
-                if (videoConf.SetVideoSources())
+          
+                udp.SendMessageTo(UDP.RAudiocall+ hostIP, hostIP);
+                AudioConf audioConf = new AudioConf(window, hostIP);
+                window.audioConf = audioConf;
+                if (AudioConf.audio.sources.Count>0)
                 {
-                    videoConf.Show();
-                    videoConf.statusLabel.Content = "Connected to Host ...";
-                    videoConf.AddUser(hostIP);
-                    videoConf.MakeUserPreview(hostIP, VideoPreview.Mode.InCall);
+                    audioConf.Show();
+                    audioConf.statusLabel.Content = "Connected to Host ...";
+                    audioConf.AddUser(hostIP);
+                    audioConf.MakeUserPreview(hostIP, AudioPreview.Mode.InCall);
                         
                 }
                 else
                 {
                     _Mode = Mode.InCall;
-                    udp.SendMessageTo(UDP.RemoveMember, hostIP);
+                    udp.SendMessageTo(UDP.RemoveMemberA, hostIP);
                 }
                 window.Dispatcher.Invoke((Action)(() =>
                 {
 
                     window.waiting.Close();
                 }));
-            }else
-            {
-                udp.SendMessageTo(UDP.RRemote, hostIP);
-                window.Dispatcher.Invoke((Action)(() =>
-                {
-                    window.remote = new Remote(window, hostIP);
-                    window.remote.StartSending();
-                    window.remoteWin.Close();
-                    window.Remote.Content = "Stop Remote";
-                }));
-            }
+            
 
         }
 
         private void decline_Click(object sender, RoutedEventArgs e)
         {
             _Mode = Mode.InCall;
-            if (isRemote)
-            {
-                window.remoteWin.Close();
-            }
-            else
-            {
-                udp.SendMessageTo(UDP.RemoveMember, hostIP);
+         
+            
+                udp.SendMessageTo(UDP.RemoveMemberA, hostIP);
                 window.waiting.Close();
+            
+        }
+
+        public void Record_Click(object sender, RoutedEventArgs e)
+        {
+            this.canRecord = !canRecord;
+            if(this.canRecord==false)
+            {
+                Record.Content = "Record";
+                
             }
+            else if(this.canRecord==true)
+            {
+                Record.Content = "Stop";
+                
+            }
+            
         }
     }
 }

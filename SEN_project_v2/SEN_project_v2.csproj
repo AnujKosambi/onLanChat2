@@ -120,6 +120,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AudioConf.xaml.cs">
+      <DependentUpon>AudioConf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,9 @@
     <Compile Include="VideoConf.xaml.cs">
       <DependentUpon>VideoConf.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AudioPreview.xaml.cs">
+      <DependentUpon>AudioPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoPreview.xaml.cs">
       <DependentUpon>VideoPreview.xaml</DependentUpon>
     </Compile>
@@ -168,6 +174,10 @@
       <DependentUpon>VirtualDirectory.xaml</DependentUpon>
     </Compile>
     <Compile Include="XMLClient.cs" />
+    <Page Include="AudioConf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Conversation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -223,6 +233,10 @@
     <Page Include="VideoConf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="VideoPreview.xaml">
       <SubType>Designer</SubType>

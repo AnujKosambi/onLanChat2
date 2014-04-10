@@ -33,7 +33,7 @@ namespace SEN_project_v2
         public static Dictionary<string, string> VirtualName;
         public XmlDocument sharingDoc;
         SecurityPW security = null;
-
+        public static Color backcolor;
         public Settings()
         {
             
@@ -231,8 +231,15 @@ namespace SEN_project_v2
                 String colour = xd.SelectSingleNode("UserProfile/Appearance/Colour").InnerText;
                 Color color = (Color)ColorConverter.ConvertFromString(colour);
                 ColorPicker.SelectedColor = color;
-                BrushConverter bc = new BrushConverter();
-                this.Background = (Brush)bc.ConvertFrom(colour);
+                backcolor = color;
+            
+                RadialGradientBrush rgb = new RadialGradientBrush();
+                rgb.RadiusY = 0.75;
+                Point p = new Point(0.5, 0);
+                rgb.Center = p;
+                rgb.GradientStops.Add(new GradientStop((Color)color, 1));
+                rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
+                this.Background = rgb;
                 xd.Save("UserSettings.xml");
 
             }
@@ -280,6 +287,7 @@ namespace SEN_project_v2
                     PasswordBox.IsEnabled = false;
                 }
             }
+
 
         }
    
@@ -447,7 +455,7 @@ namespace SEN_project_v2
 
                             directoryNode1.Items.Insert(index, CreateDirectoryNode(directory, cb.IsChecked.Value));
                             (((directoryNode1.Items[index] as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox)
-                                .IsChecked = childs.ContainsKey(directory.FullName);
+                                .IsChecked = childs.ContainsKey(directory.FullName)|isSelected;
                         }
                         catch (Exception ex)
                         {

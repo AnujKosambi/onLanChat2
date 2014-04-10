@@ -18,8 +18,6 @@ using System.Threading;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
 using AForge.Video;
-using AForge.Video.VFW;
-using AForge.Video.FFMPEG;
 using NAudio.Wave;
 using System.Runtime.InteropServices;
 namespace SEN_project_v2
@@ -40,6 +38,7 @@ namespace SEN_project_v2
         private ScreenCapture sc = new ScreenCapture();
         public RTPClient rtpClient;
         private Audio audio;
+        public static float vol=0;
         /// <summary>
         /// Video Devices
         /// </summary>
@@ -73,12 +72,12 @@ namespace SEN_project_v2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < audio.sources.Count;i++ )
+         /*   for (int i = 0; i < audio.sources.Count;i++ )
                 AudioSources.Items.Add(audio.sources.ElementAt(i).ProductName);
             if (audio.sources.Count > 0)
             {
                 AudioSources.SelectedIndex = 0;
-            }
+            }*/
             timer = new System.Windows.Forms.Timer();
             timer.Tick += timer_Tick;
             timer.Interval = 500;
@@ -188,11 +187,14 @@ namespace SEN_project_v2
                 //writer.Open("test.avi", 640,480);
                 //writer.FrameRate =20;
                 //writer.Quality = 0;
+                System.Xml.XmlDocument document = new System.Xml.XmlDocument();
+                document.Load(AppDomain.CurrentDomain.BaseDirectory+"\\UserSettings.xml");
+                System.Xml.XmlNode camera = document.SelectSingleNode("UserProfile/Conference/Camera");
+                System.Xml.XmlNode Microphone = document.SelectSingleNode("UserProfile/Conference/Microphone");
 
-           
-           
-
-                audio.init(AudioSources.SelectedIndex);
+                List<string> productName= audio.sources.Select(x => x.ProductName).ToList();
+             //   AudioSources.SelectedIndex = productName.FindIndex(x => x == Microphone.InnerText);
+                audio.init(productName.FindIndex(x => x == Microphone.InnerText));
              //   waveWriter = new WaveFileWriter("test.wav",audio.sourceStream.WaveFormat);
                 
                  videoDevice.NewFrame += capture_NewFrame;
@@ -270,6 +272,19 @@ namespace SEN_project_v2
             mParent.videoConf = null;
         }
 
+        
+
+        private void Mute_Click(object sender, RoutedEventArgs e)
+        {
+            vol = 0;
+            Volumn.Value = 0;
+        }
+
+        private void Volumn_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            vol = (float)Volumn.Value;
+        }
+
 
     }
     class Audio
@@ -284,7 +299,7 @@ namespace SEN_project_v2
              for (int i = 0; i < WaveIn.DeviceCount; i++)
             {
                 sources.Add(WaveIn.GetCapabilities(i));
-                
+                System.Diagnostics.Debug.WriteLine(WaveIn.GetCapabilities(i).ProductName);
             }
             
             
@@ -296,11 +311,12 @@ namespace SEN_project_v2
 
             
                 sourceStream = new WaveIn();
+                
                 sourceStream.DeviceNumber = deviceNumber;
                 sourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(deviceNumber).Channels);
                 sourceStream.RecordingStopped += sourceStream_RecordingStopped;
                 sourceStream.DataAvailable += sourceStream_DataAvailable;
-
+                
             }
         }
         void sourceStream_DataAvailable(object sender, WaveInEventArgs e)

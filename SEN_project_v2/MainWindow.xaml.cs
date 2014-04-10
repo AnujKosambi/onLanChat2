@@ -34,6 +34,7 @@ namespace SEN_project_v2
         static Registry reg;
         public RTPClient rtpClient;
         public VideoConf videoConf;
+        public AudioConf audioConf;
         public static TCP tcp;
         private List<string> selectedFiles;
         public static List<IPAddress> hostIPS;
@@ -42,7 +43,7 @@ namespace SEN_project_v2
         public Window waiting;
         public Window remoteWin;
         public Remote remote;
-        
+    
         private int nomem;
         private int nosel;
         private int nogro;
@@ -496,6 +497,38 @@ namespace SEN_project_v2
             vp.window = this;
             waiting.Content = vp;
             waiting.Width = 250; waiting.Height=250;
+            waiting.WindowStyle = WindowStyle.None;
+            vp.udp = udp;
+            waiting.Show();
+
+        }
+        private void audioConfB_Click(object sender, RoutedEventArgs e)
+        {
+            audioConf = new AudioConf(this, hostIP);
+            audioConf.IsHost = true;
+            audioConf.Show();
+            audioConf.statusLabel.Content = "Waiting For Users's Responses...";
+            foreach (IPAddress ip in audioConf.requestedUsers)
+            {
+                audioConf.MakeUserPreview(ip, AudioPreview.Mode.Watting);
+            }
+            audioConf.Start();
+            
+        }
+        public void CreateAudioConf(IPAddress host)
+        {
+            waiting = new Window();
+            waiting.BorderThickness = new Thickness(0, 0, 0, 0);
+            waiting.AllowsTransparency = true;
+            waiting.Topmost = true;
+            waiting.HorizontalAlignment = HorizontalAlignment.Center;
+            waiting.VerticalAlignment = VerticalAlignment.Center;
+
+            AudioPreview vp = new AudioPreview(AudioPreview.Mode.Request, host);
+            vp.Nick = UserList.Get(host).nick;
+            vp.window = this;
+            waiting.Content = vp;
+            waiting.Width = 250; waiting.Height = 250;
             waiting.WindowStyle = WindowStyle.None;
             vp.udp = udp;
             waiting.Show();

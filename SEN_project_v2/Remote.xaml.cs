@@ -227,7 +227,7 @@ namespace SEN_project_v2
             {
                 MouseFlag &= ~2;
             }
-
+            
 
             MainWindow.udp.SendMessageTo(UDP.Mouse + MouseFlag + UDP.Breaker +(mousePos.X-Location.X) + UDP.Breaker + (mousePos.Y-Location.Y), remoteIP);
           //  System.Diagnostics.Debug.WriteLine(Convert.ToString(wParam.ToInt32(),16) + " " + mousePos.X + " " + mousePos.Y);

@@ -60,6 +60,7 @@
                         TextWrapping="Wrap"/>
             </Border>
         </DataTemplate>
+
     </Window.Resources>
     <Window.Background>
         <RadialGradientBrush RadiusY="0.75" Center="0.5,0">
@@ -77,10 +78,10 @@
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
-          <local:TitleBar x:Name="titleBar" />
+        <local:TitleBar x:Name="titleBar" />
 
         <Button Content=" x " HorizontalAlignment="Right" Visibility="Visible" FontWeight="Bold" FontSize="13" BorderThickness="0" Height="23"  Width="28" Margin="0,2,7,0" Click="Button_Click" VerticalAlignment="Top" Foreground="White" Background="#FFE82B2B"/>
-      
+
 
         <Grid Margin="5,30,5,46" >
             <Grid.RowDefinitions>
@@ -135,14 +136,15 @@
                 </ScrollViewer>
                 <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
                     <Label Content="Member"  Background="{x:Null}" Height="23" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
-                    <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Members"  Background="{x:Null}"  FontFamily="Segoe UI Semibold" FontWeight="Bold" />
                     <Label Content="Groups"  Background="{x:Null}" Height="25" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
-                    <Label Content="0" HorizontalAlignment="Center" Name="l_Group"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Group"  Background="{x:Null}"  FontFamily="Segoe UI Semibold" FontWeight="Bold" />
                     <Label Content="Selected"  Background="{x:Null}" Height="25" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
-                    <Label Content="0" HorizontalAlignment="Center" Name="l_Selected"  Background="{x:Null}"  FontFamily="Segoe WP Semibold" FontWeight="Bold" />
+                    <Label Content="0" HorizontalAlignment="Center" Name="l_Selected"  Background="{x:Null}"  FontFamily="Segoe UI Semibold" FontWeight="Bold" />
                     <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
                     <Button Content="Select All" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
                     <Button Content="Snipping" VerticalAlignment="Top"  Height="25" Name="Snipping" Click="Snipping_Click"/>
+                    <Button  Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"   Height="25" Click="Button_Click_1" FontFamily="Segoe UI Semibold" />
                 </StackPanel>
 
             </Grid>
@@ -185,10 +187,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="5"  Width="116"/>
-            <Button Grid.Column="1" Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Click="Button_Click_1" FontFamily="Segoe UI Semibold"  Width="112" Margin="5"/>
+            <Button Grid.Column="0" x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="5,0,0,5"  />
+            <Button Grid.Column="1" x:Name="audioConfB"  Content="AudioConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="audioConfB_Click" FontFamily="Segoe UI Semibold" Margin="5,0,0,5" />
             <Button Grid.Column="2" x:Name="SendB" Content="Send" VerticalAlignment="Bottom"  Click="SendB_Click" Margin="5"/>
             <Button Grid.Column="3" x:Name="Remote" Content="Remote" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="109" Click="Remote_Click" Margin="5" />
+           
 
         </Grid>
     </Grid>

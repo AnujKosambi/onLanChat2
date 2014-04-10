@@ -11,14 +11,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 namespace SEN_project_v2
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
+    
     public partial class UserView : UserControl
     {
+        public List<NetworkStream> stream;
+        public Dictionary<string, int> lenght;
+        public Dictionary<string, ProgressBar> ProgressBars;
         public string u_nick{
             get {
                 return (string)ul_Nick.Content;
@@ -27,6 +33,18 @@ namespace SEN_project_v2
                 ul_Nick.Content=(string)value;
             }
         }
+        public string u_machine
+        {
+            get
+            {
+                return (string)ul_machine.Content;
+            }
+            set
+            {
+                ul_machine.Content = (string)value;
+            }
+        }
+
         public System.Net.IPAddress u_ip
         {
             get
@@ -53,6 +71,9 @@ namespace SEN_project_v2
 
         public UserView()
         {
+            stream = new List<NetworkStream>();
+            lenght = new Dictionary<string, int>();
+            ProgressBars = new Dictionary<string, ProgressBar>();
             InitializeComponent();
             Progressbar.Visibility = Visibility.Hidden;
             //this.openChat.Content = UserList.xml[u_ip].UnreadMessages;

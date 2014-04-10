@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="SEN_project_v2.AudioPreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="208" d:DesignHeight="208"  Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" BorderBrush="{x:Null}">
+    <UserControl.Effect>
+        <DropShadowEffect BlurRadius="5" Opacity="0.7" ShadowDepth="5"/>
+    </UserControl.Effect>
+    <UserControl.Background>
+        <ImageBrush ImageSource="Images/user-frame.png" Opacity="0.6">
+            <ImageBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ImageBrush.RelativeTransform>
+        </ImageBrush>
+    </UserControl.Background>
+    <Grid Margin="0,0,0,0" >
+
+
+        <Image  Name="prev" Margin="12,13,12,26" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="Images/user-icon.png" Stretch="Fill" />
+
+
+
+        <Label  Name="_Nick" Content="Nick" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="14"/>
+        <Label Name="time_left" Foreground="White" Content="20" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50" FontWeight="Bold"/>
+        <Button Name="accept" Content="Accept" HorizontalAlignment="Left" Margin="10,0,0,30" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Click="accept_Click" Width="93" Height="28.5"/>
+        <Button Name="decline" Content="Decline" HorizontalAlignment="Right" Margin="0,0,10,30" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Width="90" Height="28.5" Click="decline_Click"/>
+        <Button Name="Record" Content="Record" HorizontalAlignment="Center"  Margin="10,152.5,10,29.5" Width="200" Height="28.5" Click="Record_Click" />
+    </Grid>
+</UserControl>
