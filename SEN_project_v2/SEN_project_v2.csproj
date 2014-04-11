@@ -92,6 +92,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="system.windows.controls.layout.toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -354,6 +355,9 @@
     <Resource Include="Images\waiting.gif" />
     <Resource Include="Images\FolderIcon.png" />
     <Resource Include="Images\File.png" />
+    <Resource Include="Images\rectangle_mediumblue_154x48.png" />
+    <Resource Include="Images\rectangle_lightgrey_154x48.png" />
+    <Resource Include="Images\rectangle_darkpink_154x48.png" />
     <Content Include="OnLanChat.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

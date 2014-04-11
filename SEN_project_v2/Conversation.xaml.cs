@@ -30,6 +30,7 @@ namespace SEN_project_v2
         public string path;
         public Conversation(IPAddress sender)
         {
+            this.Background = MainWindow.brushColor;
             InitializeComponent();
             client = UserList.xml[sender];
             ip = sender;

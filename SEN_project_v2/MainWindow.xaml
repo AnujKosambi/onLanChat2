@@ -6,7 +6,36 @@
         Title="OnLanChat" Height="522.141" Width="522" Loaded="Window_Loaded" Closing="Window_Closing" OpacityMask="#FFFFFFFF" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" BorderThickness="25" Icon="OnLanChat.ico" WindowStyle="None" AllowsTransparency="True" AllowDrop="True" StateChanged="Window_StateChanged">
 
     <Window.Resources>
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Style.Resources>
+                <ImageBrush x:Key="BackBrush" ImageSource="/Images/rectangle_darkwhite_96x30.png"/>
 
+
+                <LinearGradientBrush x:Key="oBackBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#7F65EF31" Offset="0.1" />
+                    <GradientStop Color="#7F2A740E" Offset="0.9" />
+                </LinearGradientBrush>
+
+                <ImageBrush x:Key="BackBrushOn" ImageSource="/Images/rectangle_lightgrey_154x48.png" Opacity="1" />
+            </Style.Resources>
+
+            <Setter Property="Background" Value="{StaticResource BackBrush}" />
+            <Style.Triggers>
+
+
+                <!-- Style for the selecting item -->
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="LightCyan">
+          
+
+                    </Setter>
+                   
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <!-- Style for the item when the mouse is over -->
+
+            </Style.Triggers>
+        </Style>
         <Style x:Key="header" TargetType="{x:Type GridViewColumnHeader}"   >
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
@@ -99,7 +128,7 @@
                     </ColumnDefinition>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel    >
                         <StackPanel.Effect>
                             <DropShadowEffect Color="#FF7A7A7A"/>
@@ -144,7 +173,7 @@
                     <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
                     <Button Content="Select All" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
                     <Button Content="Snipping" VerticalAlignment="Top"  Height="25" Name="Snipping" Click="Snipping_Click"/>
-                    <Button  Content="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"   Height="25" Click="Button_Click_1" FontFamily="Segoe UI Semibold" />
+                    <Button  Content="Settings" Name="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"   Height="25" Click="Button_Click_1" FontFamily="Segoe UI Semibold" />
                 </StackPanel>
 
             </Grid>
@@ -161,7 +190,7 @@
                 
                 Name="sendBox" Grid.Row="2"  HorizontalAlignment="Stretch" Width="Auto"
                       VerticalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold" AcceptsTab="True" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" 
-                    AllowDrop="True"  GotFocus="sendBox_GotFocus"  IsDocumentEnabled="True"    >
+                    AllowDrop="True"   IsDocumentEnabled="True" GotFocus="sendBox_GotFocus" GotMouseCapture="sendBox_GotMouseCapture"     >
                 <RichTextBox.Background>
                     <RadialGradientBrush RadiusY="1">
                         <GradientStop Color="#4C642E2E" Offset="1"/>
@@ -190,8 +219,8 @@
             <Button Grid.Column="0" x:Name="VideoConfB"  Content="VideoConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="VideoConfB_Click" FontFamily="Segoe UI Semibold" Margin="5,0,0,5"  />
             <Button Grid.Column="1" x:Name="audioConfB"  Content="AudioConference" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="audioConfB_Click" FontFamily="Segoe UI Semibold" Margin="5,0,0,5" />
             <Button Grid.Column="2" x:Name="SendB" Content="Send" VerticalAlignment="Bottom"  Click="SendB_Click" Margin="5"/>
-            <Button Grid.Column="3" x:Name="Remote" Content="Remote" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="109" Click="Remote_Click" Margin="5" />
-           
+            <Button Grid.Column="3" x:Name="Remote" Content="Remote" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="109" Click="Remote_Click" Margin="5"  />
+
 
         </Grid>
     </Grid>

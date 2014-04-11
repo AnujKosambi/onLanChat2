@@ -32,6 +32,7 @@ namespace SEN_project_v2
         public static Point Location;
         public static int verticalOffset;
         public  List<KeyStatus> waiting;
+        public MainWindow mainWindow;
         public struct KeyStatus
         {
           public  Keys code;
@@ -39,6 +40,7 @@ namespace SEN_project_v2
         }
         public Remote(Window parent,IPAddress ip)
         {
+            this.Background = MainWindow.brushColor;
             InitializeComponent();
             Dictionary<IPAddress,VideoPreview> vplist=new Dictionary<IPAddress,VideoPreview>();
             waiting = new List<KeyStatus>();
@@ -55,7 +57,7 @@ namespace SEN_project_v2
             timer.Tick += timer_Tick;
             mousekeyTimer.Interval = 10;
             mousekeyTimer.Tick += mousekeyTimer_Tick;
-          
+            mainWindow = parent as MainWindow;
         }
 
         void Remote_LocationChanged(object sender, EventArgs e)
@@ -171,6 +173,8 @@ namespace SEN_project_v2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            mainWindow.IsEnabled = true;
+            
             if (mousekeyTimer != null)
                 mousekeyTimer.Stop();
             if (timer != null)

@@ -147,6 +147,7 @@ namespace SEN_project_v2
             if (UserList.xml[u_ip].UnreadMessages > 0)
                 MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
             UserList.xml[u_ip].UnreadMessages = 0;
+            
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
 

@@ -35,7 +35,10 @@ namespace SEN_project_v2
         BitmapImage bi = new BitmapImage();
         public AudioConf(MainWindow parent, IPAddress host)
         {
+            parent.audioConfB.IsEnabled = false;
             InitializeComponent();
+            this.Background = MainWindow.brushColor;
+       
             this.host = host;
             this.udp = MainWindow.udp;
             mParent = parent;
@@ -164,6 +167,7 @@ namespace SEN_project_v2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            mParent.audioConfB.IsEnabled = true;
             if (IsHost == true)
             {
                 foreach (IPAddress ip in requestedUsers)

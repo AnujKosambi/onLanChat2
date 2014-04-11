@@ -48,13 +48,16 @@ namespace SEN_project_v2
         BitmapImage bi = new BitmapImage();
         public VideoConf(MainWindow parent, IPAddress host)
         {
+            parent.VideoConfB.IsEnabled = false;
+            InitializeComponent();
+            this.Background = MainWindow.brushColor;
             this.host = host;
             this.udp = MainWindow.udp;
             mParent = parent;
             Users = new List<IPAddress>();
             vp = new Dictionary<IPAddress, VideoPreview>();
             requestedUsers = UserList.Selected.Where(x => MainWindow.hostIPS.Contains(x) == false).ToList();
-            InitializeComponent();
+      
             if (mParent.rtpClient != null)
                 mParent.rtpClient.Dispose();
             
@@ -104,7 +107,6 @@ namespace SEN_project_v2
         {
           
         }
-
         public void AddUser(IPAddress ip)
         {
             Users.Add(ip);
@@ -123,7 +125,6 @@ namespace SEN_project_v2
             _stack.Children.Add(vp[ip]);
             _stack.SizeChanged += _stack_SizeChanged;
         }
-
         void _stack_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ((StackPanel)_stack).InvalidateVisual();
@@ -134,7 +135,6 @@ namespace SEN_project_v2
                 
             }
         }
-
         void VideoConf_SizeChanged(object sender, SizeChangedEventArgs e)
         {
     
@@ -266,6 +266,7 @@ namespace SEN_project_v2
 
             _stack.Children.RemoveRange(0, _stack.Children.Count);
             mParent.videoConf = null;
+            mParent.VideoConfB.IsEnabled = true;
         }
 
         

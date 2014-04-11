@@ -16,8 +16,10 @@
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" >
-            <TreeView Name="FolderView" Margin="5" Background="#25FFFFFF"/>
-
+            
+            <TreeView Name="FolderView" Margin="5" Background="#25FFFFFF">
+               
+            </TreeView>
         </Grid>
         <Grid Grid.Row="1">
 

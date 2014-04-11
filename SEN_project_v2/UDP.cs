@@ -2,7 +2,7 @@
 #if UDP
 //#define UDPConnection
 #endif
-//#define Fake
+#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -487,14 +487,20 @@ namespace SEN_project_v2
             {
 
                // MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
+                window.Dispatcher.BeginInvoke((Action)(() =>
+                {
+
+                   ( window.groupLists[UserList.Get(recevied.Address).groupName].Header as System.Windows.Controls.Grid).Background =
+                        new ImageBrush(new BitmapImage(new Uri(
+            "pack://application:,,,/Images/rectangle_mediumblue_154x48.png", 
+                UriKind.Absolute))) {  };
+                    System.Diagnostics.Debug.WriteLine(window.groupLists[UserList.Get(recevied.Address).groupName]);
+                }));
+                
                 try
                 {
                     window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
-                    window.Dispatcher.BeginInvoke((Action)(() => {
-                    window.groupLists[UserList.Get(recevied.Address).groupName].Background = new ImageBrush(new BitmapImage(new Uri(
-            "pack://application:,,,/Images/rectangle_darkwhite_154x48.png",
-                UriKind.Absolute))) { Opacity = 0.60 };
-                    }));
+                
                     UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
                     {
                         UserList.conversation[recevied.Address].Redraw();

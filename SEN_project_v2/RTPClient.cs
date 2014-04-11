@@ -227,6 +227,7 @@ namespace SEN_project_v2
             RtpEvents.RtpParticipantRemoved -= RtpParticipantRemoved;
             RtpEvents.RtpStreamAdded -= RtpEvents_RtpStreamAdded;
             RtpEvents.RtpStreamRemoved -= RtpEvents_RtpStreamRemoved;
+            if(waveWriters!=null)
             foreach(var wave in waveWriters.Values)
             {
                 wave.Close();

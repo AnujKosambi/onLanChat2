@@ -45,7 +45,7 @@ namespace SEN_project_v2
         private int nomem;
         private int nosel;
         private int nogro;
-
+        public static RadialGradientBrush brushColor;
         private int NoMembers
         {
             set
@@ -88,6 +88,20 @@ namespace SEN_project_v2
         public MainWindow()
         {
             InitializeComponent();
+            System.Xml.XmlDocument xd = new System.Xml.XmlDocument();
+            xd.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+         
+            String colour = xd.SelectSingleNode("UserProfile/Appearance/Colour").InnerText;
+            Color color = (Color)ColorConverter.ConvertFromString(colour);
+            RadialGradientBrush rgb = new RadialGradientBrush();
+            rgb.RadiusY = 0.75;
+            Point p = new Point(0.5, 0);
+            rgb.Center = p;
+            rgb.GradientStops.Add(new GradientStop(color, 1));
+            rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
+            brushColor = rgb;
+            this.Background = rgb;
+
             titleBar.SetWindow(this);
          //   ThemeManager.ApplyTheme(this, "BureauBlack");
             tcp = new TCP();
@@ -176,6 +190,7 @@ namespace SEN_project_v2
             //// Header
             node.FocusVisualStyle = focus;
             Grid g = new Grid();
+            
             g.Width = 400;
             Style Headstyle = new System.Windows.Style();
             Headstyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri(
@@ -201,12 +216,14 @@ namespace SEN_project_v2
             node.Header = g;
           
             ListView userOfGroup = new ListView();
+            
             userOfGroup.SelectionChanged+=userOfGroup_SelectionChanged;
             Style itemStyle = new Style(typeof(ListViewItem));
             itemStyle.Setters.Add(new Setter(BackgroundProperty,
                 new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/rectangle_darkwhite_96x30.png", UriKind.Absolute))) { Opacity = 0.75 }));
             itemStyle.Setters.Add(new Setter(HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
-            userOfGroup.ItemContainerStyle = itemStyle;
+
+            userOfGroup.ItemContainerStyle = (Style) Resources["ListViewItemStyle"];
            
             GridView grid = new GridView();
 
@@ -264,7 +281,9 @@ namespace SEN_project_v2
             if (!groupLists.ContainsKey(user.groupName))
                 groupLists.Add(user.groupName, CreateNewGroup(user.groupName,Groups));
             _index[user.groupName].Add(user.ip, _index[user.groupName].Keys.Count);
+            
             listView[user.groupName].Items.Insert(_index[user.groupName][user.ip], user.CreateView());
+           
             NoMembers++;
         }
         public void RemoveUserFromTree(User user)
@@ -534,6 +553,7 @@ namespace SEN_project_v2
         }
         private void Remote_Click(object sender, RoutedEventArgs e)
         {
+
             if (Remote.Content.Equals("Stop Remote"))
             {
                 remote.StopSending();
@@ -544,14 +564,21 @@ namespace SEN_project_v2
             }
             else
             {
-                if (UserList.Selected.Count > 0)
+                
+                if (UserList.Selected.Count == 1)
                 {
-                    remote = new Remote(this, UserList.Selected.First());
-                    remote.Show();
-                    remote.Start();
+                    if (!MainWindow.hostIPS.Contains(UserList.Selected.First()))
+                    {
+                        remote = new Remote(this, UserList.Selected.First());
+                        remote.Show();
+                        remote.Start();
+                        Remote.IsEnabled = false;
+                    }
+                    else
+                        MessageBox.Show("You can't remotly access you..!");
                 }
                 else
-                    MessageBox.Show("Select At least One User...");
+                    MessageBox.Show("Select Excatly One User...");
             }
         }
         public void RequestRemote(IPAddress host)
@@ -582,7 +609,7 @@ namespace SEN_project_v2
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Settings setting = new Settings();
+            Settings setting = new Settings(this);
             setting.Show();
         }
 
@@ -738,11 +765,7 @@ namespace SEN_project_v2
            
         }
 
-        private void sendBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-           // sendBox.Selection.Select(sendBox.Document.ContentStart, sendBox.Document.ContentEnd);
-
-        }
+       
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
@@ -803,6 +826,16 @@ namespace SEN_project_v2
         {
             snippingWindow = new Snipping();
             snippingWindow.Show();
+        }
+
+        private void sendBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            sendBox.SelectAll();
+        }
+
+        private void sendBox_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            sendBox.SelectAll();
         }
 
       

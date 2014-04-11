@@ -45,8 +45,8 @@
         <ScrollViewer HorizontalAlignment="Stretch"   Grid.Row="2" Width="Auto" Grid.RowSpan="3" VerticalAlignment="Stretch" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
             <ScrollViewer.Background>
                 <RadialGradientBrush RadiusY="1" Center="0.5,1">
-                    <GradientStop Color="#FF918B8B" Offset="1"/>
-                    <GradientStop Color="#7FC5C0C0"/>
+                    <GradientStop Color="#00918B8B" Offset="1"/>
+                    <GradientStop Color="#FFC5C0C0"/>
                 </RadialGradientBrush>
             </ScrollViewer.Background>
             <Grid>

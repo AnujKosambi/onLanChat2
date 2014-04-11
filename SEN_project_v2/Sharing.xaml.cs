@@ -27,10 +27,13 @@ namespace SEN_project_v2
         public List<String> listFiles;
         public Sharing(IPAddress ip)
         {
+           
             InitializeComponent();
+            this.Background = MainWindow.brushColor;
             listFiles = new List<string>();
             this.ip = ip;
 
+            this.Title = UserList.Get(ip).nick + " Sharing";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -51,12 +54,13 @@ namespace SEN_project_v2
                 MessageBox.Show("Problem in Fetching File");
             else
             {
-                MessageBox.Show("Loaded");
+              //  MessageBox.Show("Loaded");
                 sharingDoc = new XmlDocument();
                 sharingDoc.Load(path);
-                TreeViewItem tvi = CreateDirectoryNode(GetFolderRoot().SelectSingleNode("Folder"), false);
+                foreach(XmlNode node in GetFolderRoot().SelectNodes("Folder"))
+                {  TreeViewItem tvi = CreateDirectoryNode(node, false);
                 FolderView.Items.Add(tvi);
-
+                }
             }
         }
         private XmlNode GetFolderRoot()
