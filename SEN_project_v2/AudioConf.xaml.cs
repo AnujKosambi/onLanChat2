@@ -152,8 +152,8 @@ namespace SEN_project_v2
                 document.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
                 System.Xml.XmlNode Microphone = document.SelectSingleNode("UserProfile/Conference/Microphone");
 
-        //        List<string> productName = audio.sources.Select(x => x.ProductName).ToList();
-                //   AudioSources.SelectedIndex = productName.FindIndex(x => x == Microphone.InnerText);
+                List<string> productName = audio.sources.Select(x => x.ProductName).ToList();
+                AudioSources.SelectedIndex = productName.FindIndex(x => x == Microphone.InnerText);
                 audio.init(AudioSources.SelectedIndex);
                 //   waveWriter = new WaveFileWriter("test.wav",audio.sourceStream.WaveFormat);
                 timer.Start();

@@ -87,14 +87,10 @@ namespace SEN_project_v2
         public bool SetVideoSources()
         {
             infos = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach (FilterInfo info in infos)
+            
+            if (infos.Count > 0)
             {
-                VideoSources.Items.Add(info.Name);
-
-            }
-            if (VideoSources.Items.Count > 0)
-            {
-                VideoSources.SelectedIndex = 0;
+               // VideoSources.SelectedIndex = 0;
                 return true;
             }
             else

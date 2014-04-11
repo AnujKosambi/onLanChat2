@@ -11,7 +11,11 @@
             <ColumnDefinition Width="247*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ProgressBar VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="340" Name="Progressbar"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Horizontal" Name="StackProgress" Width="340">
+            <!--<ProgressBar VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="340" Name="Progressbar"/>-->
+        </StackPanel>
+        </ScrollViewer>
         <WrapPanel Height="31" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.ColumnSpan="2"   >
             <Button x:Name="sharing" Height="20" Width="20" VerticalAlignment="Center" Margin="2" BorderBrush="{x:Null}"  AllowDrop="True" Foreground="White" Click="sharing_Click">
                 <Button.Background>

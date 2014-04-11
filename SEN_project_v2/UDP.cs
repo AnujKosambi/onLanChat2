@@ -1,4 +1,4 @@
-﻿//#define UDP
+﻿#define UDP
 #if UDP
 //#define UDPConnection
 #endif
@@ -349,8 +349,9 @@ namespace SEN_project_v2
                 #endregion
                 else if (stringData.StartsWith(Sharing))
                 {
-                    Thread.Sleep(1000);
-                    MainWindow.tcp.SendFile("Sharing.xml", recevied.Address,2);
+                    string path = AppDomain.CurrentDomain.BaseDirectory + "\\Sharing.xml";
+                    MainWindow.tcp.SendFile(path, recevied.Address, 2);
+               
                 }
                 else if(stringData.StartsWith(SendFile))
                 {
@@ -489,6 +490,11 @@ namespace SEN_project_v2
                 try
                 {
                     window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+                    window.Dispatcher.BeginInvoke((Action)(() => {
+                    window.groupLists[UserList.Get(recevied.Address).groupName].Background = new ImageBrush(new BitmapImage(new Uri(
+            "pack://application:,,,/Images/rectangle_darkwhite_154x48.png",
+                UriKind.Absolute))) { Opacity = 0.60 };
+                    }));
                     UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
                     {
                         UserList.conversation[recevied.Address].Redraw();

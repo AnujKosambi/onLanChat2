@@ -22,9 +22,9 @@ namespace SEN_project_v2
     
     public partial class UserView : UserControl
     {
-        public List<NetworkStream> stream;
-        public Dictionary<string, int> lenght;
-        public Dictionary<string, ProgressBar> ProgressBars;
+    //    public Dictionary<string,NetworkStream> stream;
+        public Dictionary<NetworkStream, long> lenght;
+        public Dictionary<NetworkStream, ProgressBar> ProgressBars;
         public string u_nick{
             get {
                 return (string)ul_Nick.Content;
@@ -71,11 +71,12 @@ namespace SEN_project_v2
 
         public UserView()
         {
-            stream = new List<NetworkStream>();
-            lenght = new Dictionary<string, int>();
-            ProgressBars = new Dictionary<string, ProgressBar>();
+          
+            lenght = new Dictionary<NetworkStream, long>();
+            ProgressBars = new Dictionary<NetworkStream, ProgressBar>();
             InitializeComponent();
-            Progressbar.Visibility = Visibility.Hidden;
+            
+           // Progressbar.Visibility = Visibility.Hidden;
             //this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
 
@@ -97,7 +98,26 @@ namespace SEN_project_v2
             //else
             //    UserList.SelectedUsers.Remove(u_ip);
         }
+        public void AddProgressBar(NetworkStream stream)
+        {
+           
+            
+            ProgressBar prog = new ProgressBar();
+            
+            prog.VerticalAlignment = VerticalAlignment.Stretch;
+            prog.HorizontalAlignment = HorizontalAlignment.Stretch;
+         
+            prog.Width =150;
+            ProgressBars.Add(stream, prog);
+            StackProgress.Children.Add(prog);
+            
+        }
+        public void RemoveProgressBar(NetworkStream stream)
+        {
+            StackProgress.Children.Remove(ProgressBars[stream]);
+            ProgressBars.Remove(stream);
 
+        }
         private void openChat_Click(object sender, RoutedEventArgs e)
         {
             Window w = new Window();

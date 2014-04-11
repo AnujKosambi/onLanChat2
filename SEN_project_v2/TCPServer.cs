@@ -40,6 +40,8 @@ namespace SEN_project_v2
                     TcpClient client = currentClient;
                     Clients.Add(client);
                     Thread thread = new Thread((ThreadStart)delegate { tcpReceving_proc(client); });
+                    thread.Priority = ThreadPriority.AboveNormal;
+                   
                     Threads.Add(thread);
                     thread.Start();
                     System.Diagnostics.Debug.WriteLine("Recieving Thread is Started ...");
@@ -57,46 +59,65 @@ namespace SEN_project_v2
                 IPAddress ip = ((IPEndPoint)tcpRecevingClient.Client.RemoteEndPoint).Address;
              
                 NetworkStream readStream = tcpRecevingClient.GetStream();
-
+                
                 var filesCount = new Byte[4];
                 readStream.Read(filesCount, 0, 4);
                 for (int i = 0; i < BitConverter.ToInt32(filesCount, 0); i++)
                 {
                     Int64 bytesReceived = 0;
-                    ProgressBar progress = UserList.Get(ip).userView.Progressbar;
-                    
+                
+          
                     string filename="";
                     int count;
                     var buffer = new byte[1024 * 8];
                     byte isDir=(byte)readStream.ReadByte();
 
                     int Flag=0;
-                     Int64 numberOfBytes =0;
+                    Int64 numberOfBytes =0;
               
-                        readStream.Read(buffer, 0, 8);
-                        numberOfBytes = BitConverter.ToInt64(buffer, 0);
+                    readStream.Read(buffer, 0, 8);
+                    numberOfBytes = BitConverter.ToInt64(buffer, 0);
 
-                        readStream.Read(buffer, 0, 4);
-                        int stringLength = BitConverter.ToInt32(buffer, 0);
-                        readStream.Read(buffer, 0, stringLength);
-                        filename = Encoding.ASCII.GetString(buffer, 0, stringLength);
-                        string Path="";
-                        if (isDir == 0xD)
-                        {
-                            readStream.Read(buffer, 0, 4);
-                            int pathLength = BitConverter.ToInt32(buffer, 0);
-                            readStream.Read(buffer, 0, pathLength);
-                            Path = Encoding.ASCII.GetString(buffer, 0, pathLength);
-                        }
-                        readStream.Read(buffer, 0, 4);
-                        Flag = BitConverter.ToInt32(buffer, 0);
+                    readStream.Read(buffer, 0, 4);
+                    int stringLength = BitConverter.ToInt32(buffer, 0);
+                    readStream.Read(buffer, 0, stringLength);
+                    filename = Encoding.ASCII.GetString(buffer, 0, stringLength);
+                    string Path="";
+                    if (isDir == 0xD)
+                    {
+                    readStream.Read(buffer, 0, 4);
+                    int pathLength = BitConverter.ToInt32(buffer, 0);
+                    readStream.Read(buffer, 0, pathLength);
+                    Path = Encoding.ASCII.GetString(buffer, 0, pathLength);
+                    }
+                    readStream.Read(buffer, 0, 4);
+                    Flag = BitConverter.ToInt32(buffer, 0);
                     
                //         System.Diagnostics.Debug.WriteLine(numberOfBytes);
-                        String FileName = filename;
-                    
+                    String FileName = filename;
+                    ProgressBar progress = null;
+                     UserView view=null;
+                    if (Flag != 2)
+                    {
+                        view = UserList.Get(ip).userView;
+                        view.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            view.AddProgressBar(readStream);
+                        }));
+
+                        //Thread.Sleep(1000);
+                        {
+                            int temp = 0;
+                            while (!view.ProgressBars.ContainsKey(readStream) && temp++ < 10) Thread.Sleep(100);
+                        }
+
+                       
+
+                        progress = UserList.Get(ip).userView.ProgressBars[readStream];
+                    }
                     if (Flag == 0)
                     {
-
+                        
                         progress.Dispatcher.BeginInvoke((Action)(() =>
                         {
                             progress.Value = 0;
@@ -152,15 +173,15 @@ namespace SEN_project_v2
                         while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, l)) > 0)
                         {
                             fileIO.Write(buffer, 0, count);
-                   //         progress.Dispatcher.BeginInvoke((Action)(() =>
-                          //  {
-                                //progress.Value++;
-                              //  progress.UpdateLayout();
-                   //         }));
-                            
+                            //progress.Dispatcher.BeginInvoke((Action)(() =>
+                            //{
+                            //    progress.Value++;
+                            //    progress.UpdateLayout();
+                            //}));
 
-                                progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
-                                    new DispatcherOperationCallback(delegate { progress.Value++; return null; }), null);
+                            if(Flag!=2)
+                            progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
+                                new DispatcherOperationCallback(delegate { progress.Value++; return null; }), null);
                      //       progress.Dispatcher.Invoke((()=> {progress.Value++; progress.UpdateLayout()}));
                             bytesReceived += count;
                             if ((numberOfBytes - bytesReceived) < buffer.Length)
@@ -169,13 +190,16 @@ namespace SEN_project_v2
                         }
                         fileIO.Close();
                     }
+                   if (Flag != 2)
                     progress.Dispatcher.BeginInvoke((Action)(() =>
                     {
                         progress.Visibility = System.Windows.Visibility.Hidden;
+                        view.RemoveProgressBar(readStream);
+
                     }));
 
                 }
-               
+                
                 readStream.Close();
                 Clients.Remove(Client);
                 Client.Close();

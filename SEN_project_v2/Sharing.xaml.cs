@@ -38,9 +38,11 @@ namespace SEN_project_v2
             path = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + "Sharing.xml";
             if (File.Exists(path))
                 File.Delete(path);
+       //     UserList.Get(ip).userView.Dispatcher.BeginInvoke((Action)(() => {
             udp.SendMessageTo(UDP.Sharing, ip);
+       //     }));
             int i = 0;
-            while (!File.Exists(path) && i++ < 10 * 10)
+            while (!File.Exists(path) && i++ < 100)
             {
                 System.Threading.Thread.Sleep(100);
 

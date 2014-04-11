@@ -21,9 +21,7 @@ using System.Windows.Markup;
 using System.IO;
 namespace SEN_project_v2
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public const int REFRESH_INTERVAL = 5;
@@ -149,7 +147,7 @@ namespace SEN_project_v2
 
         #region UI Stuffs
         
-        private Dictionary<string, TreeViewItem> groupLists;
+        public Dictionary<string, TreeViewItem> groupLists;
         private Dictionary<string, ListView> listView;
         private Dictionary<string, Dictionary<System.Net.IPAddress,int>> _index;
         
@@ -157,7 +155,7 @@ namespace SEN_project_v2
         private Dictionary<string, ListView> olistView;
         private Dictionary<string, Dictionary<System.Net.IPAddress, int>> o_index;
         private TreeViewItem CreateNewGroup(string groupName,TreeView groups)
-        {
+        {   
             TreeViewItem node = new TreeViewItem();
             Dictionary<string, ListView> listViewDic;
             if(groups==Groups)
