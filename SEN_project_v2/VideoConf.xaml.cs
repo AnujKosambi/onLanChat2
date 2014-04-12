@@ -48,8 +48,10 @@ namespace SEN_project_v2
         BitmapImage bi = new BitmapImage();
         public VideoConf(MainWindow parent, IPAddress host)
         {
+
             parent.VideoConfB.IsEnabled = false;
             InitializeComponent();
+            
             this.Background = MainWindow.brushColor;
             this.host = host;
             this.udp = MainWindow.udp;
@@ -83,8 +85,8 @@ namespace SEN_project_v2
             }*/
             timer = new System.Windows.Forms.Timer();
             timer.Tick += timer_Tick;
-            timer.Interval = 500;
-           // timer.Start();
+            timer.Interval = 7000;
+           
         
         }
         public bool SetVideoSources()
@@ -94,6 +96,8 @@ namespace SEN_project_v2
             if (infos.Count > 0)
             {
                // VideoSources.SelectedIndex = 0;
+              
+              
                 return true;
             }
             else
@@ -105,6 +109,10 @@ namespace SEN_project_v2
         }
         private void timer_Tick(object sender, EventArgs e)
         {
+            if(audio.listBytes!=null)
+            {
+                audio.listBytes.Clear();
+            }
           
         }
         public void AddUser(IPAddress ip)
@@ -174,18 +182,31 @@ namespace SEN_project_v2
                 videoDevice.Stop();
                 audio.sourceStream.StopRecording();
                //writer.Close();
-               waveWriter.Close();
+             //  timer.Stop();
+               started = 0;
             }
             else
             {
+              //  timer.Start();
+                System.Xml.XmlDocument xd = new System.Xml.XmlDocument();
+                xd.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+                string camera = xd.SelectSingleNode("UserProfile/Conference/Camera").InnerText;
+                int index = 0;
+                FilterInfo cameraInfo=infos[0];;
+                foreach (FilterInfo info in infos)
+                {
+                    if (info.Name.Equals(camera))
+                        cameraInfo = info;
 
-                videoDevice = new VideoCaptureDevice(infos[VideoSources.SelectedIndex].MonikerString) { DesiredFrameRate = 20 };
+                }
+                videoDevice = new VideoCaptureDevice(cameraInfo.MonikerString) { DesiredFrameRate = 20 };
+                    
                 //writer.Open("test.avi", 640,480);
                 //writer.FrameRate =20;
                 //writer.Quality = 0;
                 System.Xml.XmlDocument document = new System.Xml.XmlDocument();
                 document.Load(AppDomain.CurrentDomain.BaseDirectory+"\\UserSettings.xml");
-                System.Xml.XmlNode camera = document.SelectSingleNode("UserProfile/Conference/Camera");
+               // System.Xml.XmlNode camera = document.SelectSingleNode("UserProfile/Conference/Camera");
                 System.Xml.XmlNode Microphone = document.SelectSingleNode("UserProfile/Conference/Microphone");
 
                 List<string> productName= audio.sources.Select(x => x.ProductName).ToList();
@@ -197,20 +218,26 @@ namespace SEN_project_v2
                  audio.sourceStream.StartRecording();
                 videoDevice.Start();
                 b_start.Content = "Stop";
+                audio.listBytes.Clear();
             }
         }
 
-
+        int started= 0;
 
         void capture_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            if (started == 0)
+                audio.listBytes.Clear();
+            started++;
             System.IO.MemoryStream ms=new System.IO.MemoryStream();
            // for (int i = 0; i < 10;i++ )
            //     writer.AddFrame(eventArgs.Frame);
             eventArgs.Frame.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             Byte[] b = ms.GetBuffer();
+            
                        
             System.IO.MemoryStream withSize = new System.IO.MemoryStream();
+              
             Byte[] length = new Byte[4];
             for (int i = 0; i < 4; i++)
             {
@@ -219,10 +246,11 @@ namespace SEN_project_v2
             }
             withSize.Write(length, 0, 4);
             withSize.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
-            if (audio != null && audio.listBytes.Count > 0)
+            if (audio != null && audio.listBytes.Count >1024)
             {
 
                 int oldsize = audio.listBytes.Count;
+                
                 withSize.Write(audio.listBytes.ToArray(), 0, oldsize);
             //    waveWriter.WriteData(audio.listBytes.ToArray(), 0, audio.listBytes.Count);
                 
@@ -275,11 +303,27 @@ namespace SEN_project_v2
         {
             vol = 0;
             Volumn.Value = 0;
+            if (rtpClient != null)
+            rtpClient.waveOut.Volume = vol;
         }
 
         private void Volumn_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             vol = (float)Volumn.Value;
+            if(rtpClient!=null)
+            rtpClient.waveOut.Volume = vol;
+        }
+
+        private void AddMember_Click(object sender, RoutedEventArgs e)
+        {
+            AddMembers adm = new AddMembers(this);
+            adm.Show();
+
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+          new Settings(mParent).Show();
         }
 
 
@@ -310,7 +354,7 @@ namespace SEN_project_v2
                 sourceStream = new WaveIn();
                 
                 sourceStream.DeviceNumber = deviceNumber;
-                sourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(deviceNumber).Channels);
+                sourceStream.WaveFormat = new WaveFormat(8000, 16, 1);//44100, WaveIn.GetCapabilities(deviceNumber).Channels);
                 sourceStream.RecordingStopped += sourceStream_RecordingStopped;
                 sourceStream.DataAvailable += sourceStream_DataAvailable;
                 

@@ -35,12 +35,11 @@
             <!-- SERVER FRAME-->
             <Label Content=": Status" Grid.Column="2" HorizontalAlignment="Right" Margin="0,7.05,5,0" VerticalAlignment="Top" Height="26" Width="48"/>
             <Label Name="statusLabel" Grid.Column="2" Content="Creating..." HorizontalAlignment="Right" Margin="0,25,5,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Height="31" />
-            <ComboBox Name="AudioSources" Grid.Column="2" HorizontalAlignment="Right" Margin="0,60,5,0" VerticalAlignment="Top" Width="168" Height="22"/>
             <!-- <ComboBox Name="AudioSources" Grid.Column="2" HorizontalAlignment="Right" Margin="0,87,5,0" VerticalAlignment="Top" Width="168" Height="22"/> -->
             <Slider  Name="Volumn" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,87,46,0"  Width="125" Maximum="1" Value="0.5" />
-
+            <Button Content="Add Member" Name="AddMember" Grid.Column="2" HorizontalAlignment="Right" Margin="0,62,6,0" VerticalAlignment="Top" Width="168" Height="20" Click="AddMember_Click" IsEnabled="False"/>
             <Button Name="b_start" Content="Start" Grid.Column="2" HorizontalAlignment="Right" Margin="0,114,6,0" VerticalAlignment="Top" Width="168" Height="20" Click="Button_Click"/>
-            <Button Content="Setings" Grid.Column="2" HorizontalAlignment="Right" Margin="0,139,6,0" VerticalAlignment="Top" Width="168" Height="20" Click="Button_Click"/>
+            <Button Name="SettingB"  Content="Setings" Grid.Column="2" HorizontalAlignment="Right" Margin="0,139,6,0" VerticalAlignment="Top" Width="168" Height="20" Click="SettingB_Click"/>
             <Button Name="Mute" Content="Mute" Grid.Column="2" HorizontalAlignment="Right" Margin="0,87,6,0" VerticalAlignment="Top" Width="40" Height="20" />
         </Grid>
         <ScrollViewer HorizontalAlignment="Stretch"   Grid.Row="2" Width="Auto" Grid.RowSpan="3" VerticalAlignment="Stretch" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >

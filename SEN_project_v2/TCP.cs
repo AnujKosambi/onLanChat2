@@ -153,40 +153,44 @@ namespace SEN_project_v2
         {
             //foreach (IPAddress ip in ips)
             //{
-            
+            try
+            {
+                FileStream fileIO = null;  ;
                 TcpClient tcpSendingClient = tcpClient;
-               if (tcpSendingClient.Connected)
+                if (tcpSendingClient.Connected)
                 {
                     NetworkStream stream = tcpSendingClient.GetStream();
                     stream.Write(BitConverter.GetBytes(files.Count), 0, 4);
                     List<String> newList = new List<string>(files);
                     foreach (string file in newList)
                     {
-                      
+                        
+
                         Byte isDir;
 
-                        if (Flag==3)
+                        if (Flag == 3)
                         {
-                            
-                           stream.WriteByte(0xD);
-                            isDir=0xD;
+
+                            stream.WriteByte(0xD);
+                            isDir = 0xD;
                         }
-                        else{
-                        stream.WriteByte(0xF);
-                            isDir=0xF;
+                        else
+                        {
+                            stream.WriteByte(0xF);
+                            isDir = 0xF;
                         }
                         if (!File.Exists(file))
                             stream.Close();
-//                        Thread.Sleep(3000);
+                        //                        Thread.Sleep(3000);
 
-                        using (FileStream fileIO = File.OpenRead(file))
+                        using (fileIO = File.OpenRead(file))
                         {
                             Byte[] length = BitConverter.GetBytes(fileIO.Length);
                             stream.Write(length, 0, 8);
-                            string fileNames=file.Split('\\').Last();
-                            stream.Write(BitConverter.GetBytes(fileNames.Length),0,4);
+                            string fileNames = file.Split('\\').Last();
+                            stream.Write(BitConverter.GetBytes(fileNames.Length), 0, 4);
                             stream.Write(Encoding.ASCII.GetBytes(fileNames), 0, fileNames.Length);
-                             if(isDir==0xD)
+                            if (isDir == 0xD)
                             {
                                 stream.Write(BitConverter.GetBytes(Path.Length), 0, 4);
                                 stream.Write(Encoding.ASCII.GetBytes(Path), 0, Path.Length);
@@ -200,26 +204,41 @@ namespace SEN_project_v2
 
                                 while ((count = fileIO.Read(buffer, 0, buffer.Length)) > 0)
                                 {
-                                stream.Write(buffer, 0, count);
-                              
+                                    stream.Write(buffer, 0, count);
+
                                 }
                             }
                             catch (Exception e)
                             {
+                                fileIO.Flush();
+                                fileIO.Close();
                                 System.Windows.Forms.MessageBox.Show(e.Message, "Error in sending File",
                                     System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
 
                             }
-                            fileIO.Close();
+                            
+                            
+                         //  fileIO.Flush();
+                         //   fileIO.Close();
+                           // Thread.Sleep(1000);
+                         //   int readCount = fileIO.EndRead(asyncResult);
                         }
                     }
-          
+
                 }
-               tcpClient.Close();
-               Clients.Remove(tcpClient);
-               SendingThreads.Remove(System.Threading.Thread.CurrentThread);
-               System.Threading.Thread.CurrentThread.Abort();
-            //}
+                int readCount;
+             
+                tcpClient.Close();
+                Clients.Remove(tcpClient);
+                SendingThreads.Remove(System.Threading.Thread.CurrentThread);
+                System.Threading.Thread.CurrentThread.Abort();
+                //}
+            }catch(Exception e)
+            {
+
+             //   System.Windows.MessageBox.Show(e.Message);
+              //  System.Diagnostics.Debug.WriteLine(e.Message);
+            }
 
         }
 
@@ -243,5 +262,7 @@ namespace SEN_project_v2
             }
             server.Stop();
         }
+
+        public IAsyncResult asyncResult { get; set; }
     }
 }

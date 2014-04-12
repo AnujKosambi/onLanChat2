@@ -22,6 +22,7 @@ namespace SEN_project_v2
             indexOf.Clear();
             GroupList.Clear();
             xml.Clear();
+            UserOfGroup.Clear();
         }
         public static bool Add(User user)
         {

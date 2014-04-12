@@ -22,6 +22,7 @@ using NAudio.Wave;
 using System.Runtime.InteropServices;
 using System.Xml;
 using System.IO;
+using Microsoft.VisualBasic;
 using System.Management;
 namespace SEN_project_v2
 {
@@ -29,27 +30,32 @@ namespace SEN_project_v2
     public partial class Settings : Window
     {
         public static Dictionary<string, List<string>> childs;
-       // public static Dictionary<CheckBox, string> sharedFiles;
+        // public static Dictionary<CheckBox, string> sharedFiles;
         public static Dictionary<string, string> VirtualName;
         public XmlDocument sharingDoc;
         SecurityPW security = null;
         public static Color backcolor;
-        string mainPath = AppDomain.CurrentDomain.BaseDirectory+"\\";
+        string mainPath = AppDomain.CurrentDomain.BaseDirectory + "\\";
         MainWindow mw;
+       public static List<IPAddress> listOfBlock = new List<IPAddress>();
+     
+        
         public Settings(MainWindow mw)
         {
+          
             this.mw = mw;
             mw.Settings.IsEnabled = false;
             InitializeComponent();
-           // sharedFiles = new Dictionary<CheckBox,string>();
+            General.IsExpanded = true;
+            // sharedFiles = new Dictionary<CheckBox,string>();
             VirtualName = new Dictionary<string, string>();
             childs = new Dictionary<string, List<string>>();
-            loadUser();
-            if (File.Exists(mainPath+"UserSettings.xml") == true)
+           
+            if (File.Exists(mainPath + "UserSettings.xml") == true)
             {
                 String key = NickName.Text;
                 XmlDocument settings = new XmlDocument();
-                settings.Load(mainPath+"UserSettings.xml");
+                settings.Load(mainPath + "UserSettings.xml");
                 NickName.Text = settings.SelectSingleNode("UserProfile/General/NickName").InnerText;
                 GroupName.Text = settings.SelectSingleNode("UserProfile/General/GroupName").InnerText;
                 if (settings.SelectSingleNode("UserProfile/General/passwordenabled").InnerText == "yes")
@@ -66,11 +72,12 @@ namespace SEN_project_v2
                     ChangePassword.IsEnabled = false;
                     PasswordBox.IsEnabled = false;
                 }
-                Camera.Text = settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText;
-                Microphone.Text = settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText;
-              
+                Camera.SelectedItem = settings.SelectSingleNode("UserProfile/Conference/Camera").InnerText;
+                Microphone.SelectedItem = settings.SelectSingleNode("UserProfile/Conference/Microphone").InnerText;
+
                 pic_path.Text = settings.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText;
-                if (pic_path.Text != null & pic_path.Text!="")
+                AudioSave_path.Text = settings.SelectSingleNode("UserProfile/Conference/Audiosavepath").InnerText;
+                if (pic_path.Text != null & pic_path.Text != "")
                 {
                     try
                     {
@@ -101,7 +108,36 @@ namespace SEN_project_v2
                 rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString(colour), 1));
                 rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
                 this.Background = rgb;
+                if (settings.SelectSingleNode("UserProfile/BlockedList/Block_Games").InnerText == "Yes")
+                    Receive_Games.IsChecked = true;
+                else
+                    Receive_Games.IsChecked = false;
+                if (settings.SelectSingleNode("UserProfile/BlockedList/Block_Study").InnerText == "Yes")
+                    Receive_Study.IsChecked = true;
+                else
+                    Receive_Study.IsChecked = false;
+                if (settings.SelectSingleNode("UserProfile/BlockedList/Block_Others").InnerText == "Yes")
+                    Receive_others.IsChecked = true;
+                else
+                    Receive_others.IsChecked = false;
+                if (settings.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Games")
+                    Send_Games.IsChecked = true;
+                else if (settings.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Study")
+                    Send_Study.IsChecked = true;
+                else if (settings.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Others")
+                    Send_Others.IsChecked = true;
+                else
+                {
+                    Send_Games.IsChecked = false;
+                    Send_Study.IsChecked = false;
+                    Send_Others.IsChecked = false;
+                }
 
+                foreach (XmlNode user in settings.SelectNodes("UserProfile/BlockedList/Users/Blockeduser"))
+                {
+                    BlockedList.Items.Add(user.InnerText);
+                    listOfBlock.Add(IPAddress.Parse(user.InnerText));
+                }
 
             }
             else
@@ -119,9 +155,9 @@ namespace SEN_project_v2
 
                 ColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF6E6969");
 
-                   string strUri2 = "pack://application:,,,/Images/user-icon.png";
-                    Profile_pic.Source = new BitmapImage(new Uri(strUri2));
-                
+                string strUri2 = "pack://application:,,,/Images/user-icon.png";
+                Profile_pic.Source = new BitmapImage(new Uri(strUri2));
+
                 RadialGradientBrush rgb = new RadialGradientBrush();
                 rgb.RadiusY = 0.75;
                 Point p = new Point(0.5, 0);
@@ -148,10 +184,11 @@ namespace SEN_project_v2
                 GroupName.Items.Add(i);
 
             }
-            if(File.Exists("Sharing.xml"))
+            if (File.Exists("Sharing.xml"))
             {
                 loadSharedFolders();
             }
+            loadUser();
         }
 
         private void loadSharedFolders()
@@ -161,23 +198,24 @@ namespace SEN_project_v2
                 sharingDoc = new XmlDocument();
                 sharingDoc.Load("Sharing.xml");
             }
-             foreach(XmlNode folder in  GetFolderRoot().SelectNodes("Folder"))
-             {
+            foreach (XmlNode folder in GetFolderRoot().SelectNodes("Folder"))
+            {
 
-                 VirtualName.Add(folder.Attributes.GetNamedItem("Path").Value, folder.Attributes.GetNamedItem("name").Value);
-                 loadList(folder);
-                 
-             }
+                VirtualName.Add(folder.Attributes.GetNamedItem("Path").Value, folder.Attributes.GetNamedItem("name").Value);
+                loadList(folder);
+
+            }
         }
 
         private void loadList(XmlNode node)
         {
-            DirectoryInfo info=new DirectoryInfo(node.Attributes.GetNamedItem("Path").Value);
-            if(!childs.ContainsKey(info.FullName))
-            childs.Add(info.FullName, new List<string>());
-            if(childs.ContainsKey(info.Parent.FullName))
-                childs[info.Parent.FullName].Add(info.FullName);
-            foreach(XmlNode child in node.ChildNodes)
+            DirectoryInfo info = new DirectoryInfo(node.Attributes.GetNamedItem("Path").Value);
+            if (!childs.ContainsKey(info.FullName))
+                childs.Add(info.FullName, new List<string>());
+            if (info.Parent != null)
+                if (childs.ContainsKey(info.Parent.FullName))
+                    childs[info.Parent.FullName].Add(info.FullName);
+            foreach (XmlNode child in node.ChildNodes)
             {
                 if (child.Name == "Folder")
                 {
@@ -191,7 +229,10 @@ namespace SEN_project_v2
         {
             foreach (IPAddress ip in UserList.All)
             {
-                CompleteList.Items.Add(ip);
+                //foreach (var blocked in BlockedList.Items)
+               // {
+                CompleteList.Items.Add(ip.ToString());
+             //   }
             }
         }
         private void BlockedUsersList_Expanded(object sender, RoutedEventArgs e)
@@ -205,9 +246,9 @@ namespace SEN_project_v2
         public string storedpassword;
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(mainPath+"UserSettings.xml") == false)
+            if (File.Exists(mainPath + "UserSettings.xml") == false)
             {
-                XmlWriter xw = XmlWriter.Create(mainPath+"UserSettings.xml");
+                XmlWriter xw = XmlWriter.Create(mainPath + "UserSettings.xml");
                 #region XML Elements creation
                 xw.WriteStartElement("UserProfile");
 
@@ -241,17 +282,15 @@ namespace SEN_project_v2
                 xw.WriteEndElement();
 
                 xw.WriteStartElement("BlockedList");
-                xw.WriteStartElement("Send_Games");
+                xw.WriteStartElement("Send_Default");
                 xw.WriteEndElement();
-                xw.WriteStartElement("Send_Study");
+                xw.WriteStartElement("Block_Games");
                 xw.WriteEndElement();
-                xw.WriteStartElement("Send_Others");
+                xw.WriteStartElement("Block_Study");
                 xw.WriteEndElement();
-                xw.WriteStartElement("Receive_Games");
+                xw.WriteStartElement("Block_Others");
                 xw.WriteEndElement();
-                xw.WriteStartElement("Receive_Study");
-                xw.WriteEndElement();
-                xw.WriteStartElement("Receive_Others");
+                xw.WriteStartElement("Users");
                 xw.WriteEndElement();
                 xw.WriteEndElement();
 
@@ -277,6 +316,7 @@ namespace SEN_project_v2
                     PasswordBox.IsEnabled = false;
                 }
             }
+            Share_Click(null, null);
 
         }
 
@@ -289,7 +329,7 @@ namespace SEN_project_v2
         private void Write_to_XML()
         {
             XmlDocument xd = new XmlDocument();
-            xd.Load(mainPath+"UserSettings.xml");
+            xd.Load(mainPath + "UserSettings.xml");
             #region General
             xd.SelectSingleNode("UserProfile/General/NickName").InnerText = NickName.Text;
             xd.SelectSingleNode("UserProfile/General/GroupName").InnerText = GroupName.Text;
@@ -302,9 +342,9 @@ namespace SEN_project_v2
                 xd.SelectSingleNode("UserProfile/General/passwordenabled").InnerText = "no";
             }
             string key = NickName.Text;
-            //security = new SecurityPW();
-            //storedpassword = security.Encryptstring(PasswordBox.Password);
-            xd.SelectSingleNode("UserProfile/General/Password").InnerText = PasswordBox.Password;
+            security = new SecurityPW();
+            storedpassword = security.Encryptstring(PasswordBox.Password);
+            xd.SelectSingleNode("UserProfile/General/Password").InnerText = storedpassword;
             #endregion
             #region Confernce
             xd.SelectSingleNode("UserProfile/Conference/Camera").InnerText = Camera.Text;
@@ -333,75 +373,109 @@ namespace SEN_project_v2
             rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
             this.Background = rgb;
             mw.Background = rgb;
+            MainWindow.brushColor = rgb;
             //System.Diagnostics.Debug.WriteLine(pic_path.Text);
             xd.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText = pic_path.Text;
-            
+
 
             System.Diagnostics.Debug.WriteLine(xd.SelectSingleNode("UserProfile/Appearance/ProfilepicPath"));
             #endregion
-            #region Blocking Category
+            #region Blocking
+            #region Category
             if (Send_Games.IsChecked == true)
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Games").InnerText = "yes";
+                xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText = "Games";
             }
-            else
+            else if (Send_Study.IsChecked == true)
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Games").InnerText = "no";
+                xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText = "Study";
+            }
+            else if (Send_Others.IsChecked == true)
+            {
+                xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText = "Others";
+            }
 
-            }
-            if (Send_Study.IsChecked == true)
-            {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Study").InnerText = "yes";
-            }
-            else
-            {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Study").InnerText = "no";
-
-            }
-            if (Send_others.IsChecked == true)
-            {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Others").InnerText = "yes";
-            }
-            else
-            {
-                xd.SelectSingleNode("UserProfile/BlockedList/Send_Others").InnerText = "no";
-
-            }
             if (Receive_Games.IsChecked == true)
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Games").InnerText = "yes";
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Games").InnerText = "Yes";
             }
             else
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Games").InnerText = "no";
-
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Games").InnerText = "No";
             }
             if (Receive_Study.IsChecked == true)
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Study").InnerText = "yes";
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Study").InnerText = "Yes";
             }
             else
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Study").InnerText = "no";
-
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Study").InnerText = "No";
             }
             if (Receive_others.IsChecked == true)
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Others").InnerText = "yes";
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Others").InnerText = "Yes";
             }
             else
             {
-                xd.SelectSingleNode("UserProfile/BlockedList/Receive_Others").InnerText = "no";
-
+                xd.SelectSingleNode("UserProfile/BlockedList/Block_Others").InnerText = "No";
             }
+            #endregion
+            xd.Save("UserSettings.xml");
+            if (xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Games")
+                mw.change_category("Games");
+            else if (xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Study")
+                mw.change_category("Study");
+            else if (xd.SelectSingleNode("UserProfile/BlockedList/Send_Default").InnerText == "Others")
+                mw.change_category("Others");
+            #region IP
+            xd.SelectSingleNode("UserProfile/BlockedList/Users").RemoveAll();
+            foreach (var i in BlockedList.Items)
+            {
+                XmlElement xm = xd.CreateElement("Blockeduser");
+
+                xd.SelectSingleNode("UserProfile/BlockedList/Users").AppendChild(xm).InnerText = i.ToString() ;
+            }
+            #endregion
             #endregion
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml";
             xd.Save(path);
             //UserList.Get(MainWindow.hostIP).userView.u_nick = NickName.Text;
         }
+
+        //private string splitip(string a)
+        //{
+        //    string substring = "--";
+        //    int k = a.IndexOf(substring);
+        //    string res = a.Replace(a.Substring(0, k + 2), "");
+        //    return res;
+        //}
+        private string splitnick(string a)
+        {
+            string substring = "--";
+            int k = a.IndexOf(substring);
+            string res = a.Replace(a.Substring(k, a.Length - k), "");
+            return res;
+        }
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            //new ChangePassword().Show();
+            string old_pwd = Interaction.InputBox("Please give your old password", "Change password", "Old password");
+            XmlDocument xd = new XmlDocument();
+            SecurityPW sc = new SecurityPW();
+            xd.Load("UserSettings.xml");
+            string old_pssd = sc.Decryptstring(xd.SelectSingleNode("UserProfile/General/Password").InnerText);
+            if (old_pssd.Equals(old_pwd))
+            {
+                string new_pwd = Interaction.InputBox("Please give your new password", "Change password", "New password");
+                PasswordBox.Password = new_pwd;
+                xd.SelectSingleNode("UserProfile/General/Password").InnerText = sc.Encryptstring(new_pwd);
+                xd.Save("UserSettings.xml");
+            }
+            else
+            {
+                PasswordBox.IsEnabled = false;
+                System.Windows.MessageBox.Show("You entered wrong password!!");
+
+            }
         }
 
         private void PasswordCheck_Checked(object sender, RoutedEventArgs e)
@@ -412,9 +486,35 @@ namespace SEN_project_v2
 
         private void PasswordCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            PasswordBox.Password = "";
-            PasswordBox.IsEnabled = false;
-            ChangePassword.IsEnabled = false;
+            MessageBoxResult result = MessageBox.Show("Do you want remove password .??", "Alert", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (PasswordBox.Password != null || PasswordBox.Password != "")
+                {
+                    string old_pwd = Interaction.InputBox("Please give your old password", "Change password", "Old password");
+                    XmlDocument xd = new XmlDocument();
+                    SecurityPW sc = new SecurityPW();
+                    xd.Load("UserSettings.xml");
+                    string old_pssd = sc.Decryptstring(xd.SelectSingleNode("UserProfile/General/Password").InnerText);
+                    if (old_pssd == old_pwd)
+                    {
+                        PasswordBox.Password = "";
+                        PasswordBox.IsEnabled = false;
+                        ChangePassword.IsEnabled = false;
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("You entered wrong password!!");
+                        PasswordCheck.IsChecked = true;
+                        PasswordBox.IsEnabled = false;
+                    }
+                }
+            }
+            else
+            {
+                PasswordCheck.IsChecked = true;
+                PasswordBox.IsEnabled = false;
+            }
         }
 
         private void Recording_Unchecked(object sender, RoutedEventArgs e)
@@ -426,12 +526,6 @@ namespace SEN_project_v2
         {
 
         }
-
-        private void Generate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void FileSharing_Expanded(object sender, RoutedEventArgs e)
         {
             General.IsExpanded = false;
@@ -453,46 +547,47 @@ namespace SEN_project_v2
             ManagementObjectSearcher query = new ManagementObjectSearcher("SELECT * From Win32_LogicalDisk ");
             ManagementObjectCollection queryCollection = query.Get();
             return queryCollection;
-        } 
+        }
         private void ListDirectory(System.Windows.Controls.TreeView treeview)
         {
             treeview.Items.Clear();
-            
-          //  TreeViewItem tvi=CreateDirectoryNode(rootDirectoryInfo,false);
-           // treeview.Items.Add(tvi);
-            ManagementObjectCollection queryCollection = getDrives(); 
-             foreach ( ManagementObject mo in queryCollection)
-             {
-                 DirectoryInfo rootDirectoryInfo = new DirectoryInfo(mo["name"].ToString());
-                  TreeViewItem tvi=CreateDirectoryNode(rootDirectoryInfo.Root,false);
-                  treeview.Items.Add(tvi);
-             }
-            
+
+            //  TreeViewItem tvi=CreateDirectoryNode(rootDirectoryInfo,false);
+            // treeview.Items.Add(tvi);
+            ManagementObjectCollection queryCollection = getDrives();
+            foreach (ManagementObject mo in queryCollection)
+            {
+                DirectoryInfo rootDirectoryInfo = new DirectoryInfo(mo["name"].ToString());
+                TreeViewItem tvi = CreateDirectoryNode(rootDirectoryInfo.Root, false);
+                treeview.Items.Add(tvi);
+            }
+
         }
-        
-        private  TreeViewItem CreateDirectoryNode(DirectoryInfo directoryInfo,bool isSelected)
+
+        private TreeViewItem CreateDirectoryNode(DirectoryInfo directoryInfo, bool isSelected)
         {
             int checkIndex = 1;
-         
+
             TreeViewItem directoryNode1 = new System.Windows.Controls.TreeViewItem();
-            directoryNode1.Items.Add(new TreeViewItem() { Height=0});
-            
+            directoryNode1.Items.Add(new TreeViewItem() { Height = 0 });
+
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
             CheckBox cb = new CheckBox();
             cb.Margin = new Thickness(5, 0, 0, 0);
             cb.Content = directoryInfo.Name;
             directoryNode1.Header = sp;
-           
-            sp.Children.Add(new Image() { Source = BitmapFrame.Create(new Uri("pack://application:,,,/Images/FolderIcon.png")) ,Width=16,Height=16});
+
+            sp.Children.Add(new Image() { Source = BitmapFrame.Create(new Uri("pack://application:,,,/Images/FolderIcon.png")), Width = 16, Height = 16 });
             sp.Children.Add(cb);
-            cb.Checked += (sender, e) =>{
-#region Check
-                                             string vname = "";
+            cb.Checked += (sender, e) =>
+            {
+                #region Check
+                string vname = "";
                 bool ok = false;
-               // if(!VirtualName.ContainsKey(directoryInfo.FullName))
-                    //ERROR 
-                if (directoryInfo.FullName.Equals(directoryInfo.Root.FullName)||
+                // if(!VirtualName.ContainsKey(directoryInfo.FullName))
+
+                if (directoryInfo.FullName.Equals(directoryInfo.Root.FullName) ||
                     ((((directoryNode1.Parent as TreeViewItem).Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked.Value == false))
                 {
                     VirtualDirectory vd = new VirtualDirectory(directoryNode1.Name, ref vname, ref ok);
@@ -511,13 +606,13 @@ namespace SEN_project_v2
                         if (VirtualName.ContainsKey(directoryInfo.FullName))
                             VirtualName.Remove(directoryInfo.Name);
 
-                            VirtualName.Add(directoryInfo.FullName, vd.vname);
-                            if (childs.ContainsKey(directoryInfo.FullName))
-                        childs.Remove(directoryInfo.FullName);
-                            childs.Add(directoryInfo.FullName, new List<string>());
+                        VirtualName.Add(directoryInfo.FullName, vd.vname);
+                        if (childs.ContainsKey(directoryInfo.FullName))
+                            childs.Remove(directoryInfo.FullName);
+                        childs.Add(directoryInfo.FullName, new List<string>());
 
-                        
-                   
+
+
                     }
                 }
                 else
@@ -533,49 +628,50 @@ namespace SEN_project_v2
                     //    }
                     //}
                 }
-#endregion 
-                                         };
-           
-            
-            cb.Unchecked += (sender, e) =>{
-#region Uncheck
-
-             foreach (TreeViewItem item in directoryNode1.Items)
-            {
-                if (item.HasHeader)
-                {
-                    ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
-                }
-            }
-             if (!directoryInfo.FullName.Equals(directoryInfo.Root.FullName))
-             {
-                 if (childs.ContainsKey((string)directoryInfo.Parent.FullName))
-                 {
-                     childs[(string)directoryInfo.Parent.FullName].Remove(directoryInfo.FullName);
-                     childs.Remove(directoryInfo.FullName);
-                     System.Diagnostics.Debug.WriteLine(string.Join(":", childs[(string)directoryInfo.Parent.FullName].ToArray()));
-                 }
-                 else
-                 {
-                     childs.Remove(directoryInfo.FullName);
-                     VirtualName.Remove(directoryInfo.FullName);
-
-                 }
-             }
-             else
-             {
-                 childs.Remove(directoryInfo.FullName);
-                 VirtualName.Remove(directoryInfo.FullName);
-             }
-#endregion 
+                #endregion
             };
-   #region addingFiles
+
+
+            cb.Unchecked += (sender, e) =>
+            {
+                #region Uncheck
+
+                foreach (TreeViewItem item in directoryNode1.Items)
+                {
+                    if (item.HasHeader)
+                    {
+                        ((item.Header as StackPanel).Children[checkIndex] as CheckBox).IsChecked = false;
+                    }
+                }
+                if (!directoryInfo.FullName.Equals(directoryInfo.Root.FullName))
+                {
+                    if (childs.ContainsKey((string)directoryInfo.Parent.FullName))
+                    {
+                        childs[(string)directoryInfo.Parent.FullName].Remove(directoryInfo.FullName);
+                        childs.Remove(directoryInfo.FullName);
+                        System.Diagnostics.Debug.WriteLine(string.Join(":", childs[(string)directoryInfo.Parent.FullName].ToArray()));
+                    }
+                    else
+                    {
+                        childs.Remove(directoryInfo.FullName);
+                        VirtualName.Remove(directoryInfo.FullName);
+
+                    }
+                }
+                else
+                {
+                    childs.Remove(directoryInfo.FullName);
+                    VirtualName.Remove(directoryInfo.FullName);
+                }
+                #endregion
+            };
+            #region addingFiles
             directoryNode1.Expanded += (sender, e) =>
             {
-         
+
                 if (directoryNode1.Items.Count <= 1)
                 {
-                    
+
                     try
                     {
                         foreach (var directory in directoryInfo.GetDirectories())
@@ -619,25 +715,25 @@ namespace SEN_project_v2
             {
                 System.IO.File.Delete(path);
 
-            }  
-                #region Making Document
-                XmlWriter xmlWriter = XmlWriter.Create(path);
-                xmlWriter.WriteStartDocument();
-                xmlWriter.WriteStartElement("Sharing");
-                xmlWriter.WriteStartElement("Size");
-                xmlWriter.WriteCData("0");
-                xmlWriter.WriteEndElement();
-                xmlWriter.WriteStartElement("Folders");
-                xmlWriter.WriteEndElement();
-                xmlWriter.WriteEndDocument();
-                xmlWriter.Close();
-                #endregion
+            }
+            #region Making Document
+            XmlWriter xmlWriter = XmlWriter.Create(path);
+            xmlWriter.WriteStartDocument();
+            xmlWriter.WriteStartElement("Sharing");
+            xmlWriter.WriteStartElement("Size");
+            xmlWriter.WriteCData("0");
+            xmlWriter.WriteEndElement();
+            xmlWriter.WriteStartElement("Folders");
+            xmlWriter.WriteEndElement();
+            xmlWriter.WriteEndDocument();
+            xmlWriter.Close();
+            #endregion
 
-            
+
             sharingDoc.Load(path);
             foreach (string folder in VirtualName.Keys)
             {
-               AddFolder(GetFolderRoot(), new DirectoryInfo(folder));
+                AddFolder(GetFolderRoot(), new DirectoryInfo(folder));
             }
         }
         private XmlNode GetFolderRoot()
@@ -646,10 +742,11 @@ namespace SEN_project_v2
             return sharingDoc.SelectSingleNode("//Sharing//Folders");
         }
 
-        private XmlNode AddFolder(XmlNode parent,DirectoryInfo  folderinfo)
-        {   string path=AppDomain.CurrentDomain.BaseDirectory +  "\\Sharing.xml";
+        private XmlNode AddFolder(XmlNode parent, DirectoryInfo folderinfo)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\Sharing.xml";
 
-      
+
             XmlElement folder = sharingDoc.CreateElement("Folder");
             if (parent == GetFolderRoot())
             {
@@ -662,19 +759,19 @@ namespace SEN_project_v2
                 folder.SetAttribute("Path", folderinfo.FullName);
             }
             GetFolderRoot().AppendChild(folder);
-        
+
             parent.AppendChild(folder);
-            foreach(DirectoryInfo directory in childs[folderinfo.FullName].Select(x=>new DirectoryInfo(x)) )
+            foreach (DirectoryInfo directory in childs[folderinfo.FullName].Select(x => new DirectoryInfo(x)))
             {
                 AddFolder(folder, directory);
             }
-            foreach(FileInfo file in folderinfo.GetFiles())
+            foreach (FileInfo file in folderinfo.GetFiles())
             {
                 XmlElement fileE = sharingDoc.CreateElement("File");
                 fileE.SetAttribute("name", file.Name);
                 fileE.SetAttribute("Path", file.FullName);
                 fileE.SetAttribute("type", file.Extension);
-                fileE.SetAttribute("size",""+file.Length);
+                fileE.SetAttribute("size", "" + file.Length);
                 folder.AppendChild(fileE);
             }
 
@@ -706,7 +803,7 @@ namespace SEN_project_v2
                     Profile_pic.Source = imgSource;
                 }
             }
-        
+
         }
         private void toBlocked_Click(object sender, RoutedEventArgs e)
         {
@@ -716,12 +813,17 @@ namespace SEN_project_v2
         private void toComplete_Click(object sender, RoutedEventArgs e)
         {
             MoveListBoxItems(BlockedList, CompleteList);
+            
         }
 
         private void MoveListBoxItems(System.Windows.Controls.ListView source, System.Windows.Controls.ListView destination)
         {
             while (source.SelectedItems.Count > 0)
             {
+                if (source == BlockedList)
+                {
+                 listOfBlock.Remove(IPAddress.Parse(source.SelectedItems[0].ToString()));
+                }
                 destination.Items.Add(source.SelectedItems[0]);
                 source.Items.Remove(source.SelectedItems[0]);
             }
@@ -735,13 +837,13 @@ namespace SEN_project_v2
 
         private void RemoveProfilePic_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result= MessageBox.Show("Do you want remove profile pic .??", "Alert", MessageBoxButton.YesNo);
-            if(result==MessageBoxResult.Yes)
+            MessageBoxResult result = MessageBox.Show("Do you want remove profile pic .??", "Alert", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
             {
                 Profile_pic.Source = new BitmapImage(new Uri("pack://application:,,,/Images/user-icon.png"));
-                XmlDocument settings= new XmlDocument();
-                
-                settings.Load(AppDomain.CurrentDomain.BaseDirectory+"\\UserSettings.xml");
+                XmlDocument settings = new XmlDocument();
+
+                settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
 
                 settings.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText = "";
                 settings.Save(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");

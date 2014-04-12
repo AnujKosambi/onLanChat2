@@ -64,7 +64,7 @@ namespace SEN_project_v2
                     audioConf.MakeUserPreview(ip, AudioPreview.Mode.Watting);
                     MainWindow.udp.SendMessageTo(UDP.Audiocall, ip);
                 }
-                else if (audioConf != null)
+                else if (audioConf == null)
                 {
                     videoConf.MakeUserPreview(ip, VideoPreview.Mode.Watting);
                     MainWindow.udp.SendMessageTo(UDP.Videocall, ip);

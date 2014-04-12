@@ -73,6 +73,7 @@ namespace SEN_project_v2
         private List<String> blocked = new List<String>();
         #endregion
         string nickname, groupname;
+
         public UDP(int port)
         {
             if (port == (int)MainWindow.Ports.UDP)
@@ -99,6 +100,7 @@ namespace SEN_project_v2
                 nickname = Environment.MachineName;
                 groupname = Environment.MachineName;
             }
+            
             sendingClient = new UdpClient();
             rtpSendClient = new UdpClient();
             this.port = port;
@@ -113,14 +115,7 @@ namespace SEN_project_v2
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 #endif
         }
-        public void SendMessageTo(string value, IPAddress ip,string category)
-        {
-            sendingClient.Connect(new IPEndPoint(ip, port));
-            sendingClient.Send(Encoding.ASCII.GetBytes(category+UDP.Breaker+value), value.Length);
-#if UDPConnection
-            System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
-#endif
-        }
+
         public void SendMessageTo(Byte[] value, IPAddress ip, String category)
         {
             // Connects to the client ip and sends the message
@@ -155,22 +150,27 @@ namespace SEN_project_v2
 
 
                 string stringData = Encoding.ASCII.GetString(data);
-                settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+
+                //settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
-                int asdf = 0;
-                foreach (XmlNode user in settings.SelectNodes("UserProfile/BlockedList/Users/Blockeduser"))
+                if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml"))
                 {
-                    if (user.InnerText.Equals(recevied.Address.ToString()))
+                    settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+                    int asdf = 0;
+                    foreach (XmlNode user in settings.SelectNodes("UserProfile/BlockedList/Users/Blockeduser"))
                     {
-                        asdf = 100;
-                        break;
+                        if (user.InnerText.Equals(recevied.Address.ToString()))
+                        {
+                            asdf = 100;
+                            break;
+                        }
+                    }
+                    if (asdf == 100)
+                    {
+                        continue;
                     }
                 }
-                if(asdf==100)
-                {
-                    continue;
-                }
-
+                
                 
 
                 #region Connection
@@ -453,9 +453,9 @@ namespace SEN_project_v2
 
                 else if(stringData.StartsWith(MobileMouse))
                 {
-                    string[] splits = stringData.Split(new String[] { MobileMouse,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+              /*      string[] splits = stringData.Split(new String[] { MobileMouse,Breaker }, StringSplitOptions.RemoveEmptyEntries);
           //          if(splits.Length>1)
-                    SEN_project_v2.Remote.User32.SetCursorPos((int)Double.Parse(splits[0]),(int) Double.Parse(splits[1]));
+                    SEN_project_v2.Remote.User32.SetCursorPos((int)Double.Parse(splits[0]),(int) Double.Parse(splits[1]));*/
                 }
                 else if (stringData.StartsWith(Sharing))
                 {
@@ -500,7 +500,31 @@ namespace SEN_project_v2
                     }
                 }
                 else if(stringData.StartsWith(UpdatePic))
-                {  string picpath=AppDomain.CurrentDomain.BaseDirectory + "\\Pic.png";
+
+                {
+                    string picpath=AppDomain.CurrentDomain.BaseDirectory + "\\Pic.png";
+                    if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml") )
+                    {
+                        if (settings.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText != "")
+                        {
+                            System.IO.File.Delete(picpath);
+                            System.IO.File.Copy(settings.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText, picpath);
+                           // picpath = settings.SelectSingleNode("UserProfile/Appearance/ProfilepicPath").InnerText;
+                        }else
+                        {
+                            PngBitmapEncoder encoder = new PngBitmapEncoder();
+                            BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/Images/user-icon.png", UriKind.Absolute));
+                            encoder.Frames.Add(BitmapFrame.Create(image));
+                            using (System.IO.FileStream stream = System.IO.File.Create(picpath))
+                            {
+                                encoder.Save(stream);
+                                stream.Flush();
+                                stream.Close();
+                            }
+                        
+                        }
+                    }
+                    
                    MainWindow.tcp.SendFile(picpath, recevied.Address, 2);
                 }
             }
@@ -511,7 +535,14 @@ namespace SEN_project_v2
         {
             if (MainWindow.hostIPS.Contains(recevied.Address))
                 MainWindow.hostIP = recevied.Address;
-           
+
+            if (System.IO.File.Exists("UserSettings.xml") == true)
+            {
+
+                settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+                nickname = settings.SelectSingleNode("UserProfile/General/NickName").InnerText;
+                groupname = settings.SelectSingleNode("UserProfile/General/GroupName").InnerText;
+            }
             SendMessageTo(RConnect + nickname + UDP.Breaker + groupname, recevied.Address);
             
           //  SendMessageTo(RConnect + Environment.MachineName + Breaker + Environment.MachineName+Breaker+recevied.Address, recevied.Address);

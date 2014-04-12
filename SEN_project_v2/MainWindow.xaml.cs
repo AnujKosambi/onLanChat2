@@ -24,10 +24,10 @@ namespace SEN_project_v2
 
     public partial class MainWindow : Window
     {
-        public const int REFRESH_INTERVAL = 5;
+        public static  String category = "General";
 
+        public const int REFRESH_INTERVAL = 5;
         public static UDP udp;
-        
         Threads threads;
         static Registry reg;
         public RTPClient rtpClient;
@@ -89,19 +89,22 @@ namespace SEN_project_v2
         {
             InitializeComponent();
             System.Xml.XmlDocument xd = new System.Xml.XmlDocument();
-            xd.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
-         
-            String colour = xd.SelectSingleNode("UserProfile/Appearance/Colour").InnerText;
-            Color color = (Color)ColorConverter.ConvertFromString(colour);
-            RadialGradientBrush rgb = new RadialGradientBrush();
-            rgb.RadiusY = 0.75;
-            Point p = new Point(0.5, 0);
-            rgb.Center = p;
-            rgb.GradientStops.Add(new GradientStop(color, 1));
-            rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml"))
+            {
+                xd.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+
+                String colour = xd.SelectSingleNode("UserProfile/Appearance/Colour").InnerText;
+                Color color = (Color)ColorConverter.ConvertFromString(colour);
+                RadialGradientBrush rgb = new RadialGradientBrush();
+                rgb.RadiusY = 0.75;
+                Point p = new Point(0.5, 0);
+                rgb.Center = p;
+                rgb.GradientStops.Add(new GradientStop(color, 1));
+                rgb.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#BFFFFFFF"), 0));
+          
             brushColor = rgb;
             this.Background = rgb;
-
+            }
             titleBar.SetWindow(this);
          //   ThemeManager.ApplyTheme(this, "BureauBlack");
             tcp = new TCP();
@@ -131,6 +134,8 @@ namespace SEN_project_v2
             ogroupLists = new Dictionary<string, TreeViewItem>();
             olistView = new Dictionary<string, ListView>();
             o_index = new Dictionary<string, Dictionary<System.Net.IPAddress, int>>();
+            mobile_index = new Dictionary<IPAddress, int>();
+           
             selectedFiles = new List<string>();
             #region hostIP init
             hostIPS = new List<IPAddress>();
@@ -168,8 +173,12 @@ namespace SEN_project_v2
         private Dictionary<string, TreeViewItem> ogroupLists;
         private Dictionary<string, ListView> olistView;
         private Dictionary<string, Dictionary<System.Net.IPAddress, int>> o_index;
+
+        private Dictionary<IPAddress, int> mobile_index;
+        public static ImageBrush restoreImage;
         private TreeViewItem CreateNewGroup(string groupName,TreeView groups)
-        {   
+        {
+            
             TreeViewItem node = new TreeViewItem();
             Dictionary<string, ListView> listViewDic;
             if(groups==Groups)
@@ -193,9 +202,10 @@ namespace SEN_project_v2
             
             g.Width = 400;
             Style Headstyle = new System.Windows.Style();
-            Headstyle.Setters.Add(new Setter(BackgroundProperty, new ImageBrush(new BitmapImage(new Uri(
+            restoreImage= new ImageBrush(new BitmapImage(new Uri(
             "pack://application:,,,/Images/rectangle_blue_154x48.png", 
-                UriKind.Absolute))) { Opacity = 0.60 }));
+                UriKind.Absolute))) { Opacity = 0.60 };
+            Headstyle.Setters.Add(new Setter(BackgroundProperty, restoreImage));
             g.Style = Headstyle;
             Label b = new Label() { Content = groupName, Foreground = System.Windows.Media.Brushes.White};
             b.Background = System.Windows.Media.Brushes.Transparent;
@@ -272,6 +282,7 @@ namespace SEN_project_v2
         }
         public void AddUserToTree(User user)
         {
+          
             if (ogroupLists.ContainsKey(user.groupName) && o_index[user.groupName].ContainsKey(user.ip))
             {
                 RemoveUserFromOffline(user);
@@ -286,10 +297,12 @@ namespace SEN_project_v2
            
             NoMembers++;
         }
+
         public void RemoveUserFromTree(User user)
         {
             try
             {
+               
                 listView[user.groupName].Items.RemoveAt(_index[user.groupName][user.ip]);
                 _index[user.groupName].Remove(user.ip);
                 if(listView[user.groupName].Items.Count==0)
@@ -304,6 +317,7 @@ namespace SEN_project_v2
             }
             catch
             {
+                UserList.UserOfGroup.Remove(user.groupName);
                 AddUserToTree(user);
                  RemoveUserFromTree(user);
             }
@@ -337,6 +351,16 @@ namespace SEN_project_v2
             }
        
         }
+        public void AddUserToMobileTree(User user)
+        {
+           if(!mobile_index.ContainsKey(user.ip))
+           {
+               Mobile.Items.Insert(mobile_index.Count, user.CreateView());
+           }
+          
+         
+        }
+
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -407,14 +431,32 @@ namespace SEN_project_v2
         {
             public static IPEndPoint SEND = new IPEndPoint(IPAddress.Parse("255.255.255.255"), (int)Ports.UDP);
             public static IPEndPoint RECEIVE = new IPEndPoint(IPAddress.Any, (int)Ports.UDP);
-          
+           
             public static void Do()
             {
-                udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, BroadCasting.SEND.Address);
-                foreach(IPAddress ip in reg.Read())
+                string nickname, groupname;
+                if (File.Exists("UserSettings.xml") == true)
                 {
-                    udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, ip);
+                    System.Xml.XmlDocument xd = new System.Xml.XmlDocument();
+                    xd.Load("UserSettings.xml");
+                    nickname = xd.SelectSingleNode("UserProfile/General/NickName").InnerText;
+                    groupname = xd.SelectSingleNode("UserProfile/General/GroupName").InnerText;
+                    if(nickname==""  || nickname==null)
+                    {
+                        nickname = Environment.MachineName;
+                    }
                 }
+                else
+                {
+                    nickname = Environment.MachineName;
+                    groupname = Environment.MachineName;
+                }
+                udp.SendMessageTo(UDP.Connect + nickname + UDP.Breaker + groupname, BroadCasting.SEND.Address);
+                    foreach (IPAddress ip in reg.Read())
+                    {
+                        udp.SendMessageTo(UDP.Connect + nickname + UDP.Breaker + groupname, ip);
+                    }
+                
             }
             public static void Disconnect()
             {
@@ -446,7 +488,7 @@ namespace SEN_project_v2
 
                 return rkey.GetValueNames().Select(x => IPAddress.Parse(rkey.GetValue(x).ToString())).ToList();
                     
-                 
+        
                 }
                 catch(Exception e)
                 {
@@ -459,6 +501,7 @@ namespace SEN_project_v2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             if (remote != null)
             {
                 remote.StartSending();
@@ -476,6 +519,7 @@ namespace SEN_project_v2
             videoConf = new VideoConf(this,hostIP);
             
             videoConf.IsHost = true;
+            videoConf.AddMember.IsEnabled = true;
             if (videoConf.SetVideoSources())
             {
                 videoConf.Show();//  CreateVideoConf(null);
@@ -508,7 +552,7 @@ namespace SEN_project_v2
             waiting.Topmost = true;
             waiting.HorizontalAlignment = HorizontalAlignment.Center;
             waiting.VerticalAlignment = VerticalAlignment.Center;
-  
+            
             VideoPreview vp = new VideoPreview(VideoPreview.Mode.Request,host);
             vp.Nick = UserList.Get(host).nick;
             vp.window = this;
@@ -523,6 +567,7 @@ namespace SEN_project_v2
         {
             audioConf = new AudioConf(this, hostIP);
             audioConf.IsHost = true;
+            audioConf.AddMember.IsEnabled = true ;
             audioConf.Show();
             audioConf.statusLabel.Content = "Waiting For Users's Responses...";
             foreach (IPAddress ip in audioConf.requestedUsers)
@@ -682,8 +727,8 @@ namespace SEN_project_v2
                 
                 Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
               
-                UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
-                udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage) .ToArray(), ip);
+                UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage),category);
+                udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage) .ToArray(), ip,category);
                  stream.Close();
                 
             }
@@ -724,7 +769,7 @@ namespace SEN_project_v2
                             if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
                             {
                                 replacementImage = (System.Windows.Controls.Image)uic.Child;
-                                setImages(files, ip, count, index, replacementImage);
+                                 count=setImages(files, ip, count, index, replacementImage);
 
 
                             }
@@ -738,17 +783,26 @@ namespace SEN_project_v2
             }
             List<IPAddress> ips= new List<IPAddress>();
             ips.Add(ip);
-            tcp.SendFiles(files, ips,1);
+            foreach(IPAddress  ipa in ips)
+            foreach(string  file in files)
+            {
+                tcp.SendFile(file, ipa, 1);
+            }
             return img_flowDocument;
         }
-        private void setImages(List<string> files, IPAddress ip, int count,int index, Image replacementImage)
+        private int  setImages(List<string> files, IPAddress ip, int count,int index, Image replacementImage)
         {
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
             string Path = AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\') + "\\" + index + "." + count + ".jpg";
-            FileStream stream = new FileStream(Path, FileMode.Create);
-            encoder.Save(stream);
-            stream.Close();
+            using (FileStream stream = File.Create(Path))
+            {
+                encoder.Save(stream);
+                
+                stream.Flush();
+                stream.Close();
+                
+            }
             BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
             replacementImage.Source = bitmapImage;
             replacementImage.Height = bitmapImage.Height;
@@ -757,7 +811,7 @@ namespace SEN_project_v2
 
             files.Add(Path);
             count++;
-
+            return count;
         }
 
         private void sendBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -794,6 +848,7 @@ namespace SEN_project_v2
             listView.Clear();
             _index.Clear();
             selectedFiles.Clear();
+            
             hostIPS.Clear();
             foreach (System.Net.NetworkInformation.NetworkInterface ni in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
                 foreach (var x in ni.GetIPProperties().UnicastAddresses)
@@ -806,7 +861,7 @@ namespace SEN_project_v2
                 }
             UserList.ClearAllList();
             Groups.Items.Clear();
-            udp.SendMessageTo(UDP.Connect + Environment.MachineName + UDP.Breaker + Environment.MachineName, BroadCasting.SEND.Address);
+            BroadCasting.Do();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -822,6 +877,7 @@ namespace SEN_project_v2
             }
         }
         Snipping snippingWindow;
+        private IAsyncResult asynC;
         private void Snipping_Click(object sender, RoutedEventArgs e)
         {
             snippingWindow = new Snipping();
@@ -837,13 +893,42 @@ namespace SEN_project_v2
         {
             sendBox.SelectAll();
         }
+        ///////////////////////////////////////
+        private void categoryGames_Checked(object sender, RoutedEventArgs e)
+        {
+            // Handler for 'Games' radiobutton
+            change_category("Games");
+        }
 
-      
+        private void categoryStudy_Checked(object sender, RoutedEventArgs e)
+        {
+            // Handler for 'Study' radiobutton
+            change_category("Study");
+        }
 
-   
-        
-    
-    
+        private void categoryOthers_Checked(object sender, RoutedEventArgs e)
+        {
+            // Handler for 'Others' radiobutton
+            change_category("Others");
+        }
+
+        public void change_category(String c)
+        {
+            // Setting the radiobuttons of categories
+            category = c;
+            if (c == "Games")
+                categoryGames.IsChecked = true;
+            else if (c == "Study")
+                categoryStudy.IsChecked = true;
+            else if (c == "Others")
+                categoryOthers.IsChecked = true;
+        }
+
+
+
+
+
+
 
 
 

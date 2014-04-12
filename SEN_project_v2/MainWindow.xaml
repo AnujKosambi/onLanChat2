@@ -118,7 +118,7 @@
                 <RowDefinition  Height="3" />
                 <RowDefinition Height="74*"/>
                 <RowDefinition Height="36"/>
-
+                <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
 
@@ -161,6 +161,22 @@
 
                             </TreeView>
                         </Expander>
+                        <Expander Header="Mobile" HeaderTemplate="{StaticResource offline}"  BorderThickness="0">
+                            <ListView  Margin="10,0,10,0" Name="Mobile" RenderTransformOrigin="-3.353,-1.007"
+                    
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" IsTextSearchEnabled="True" ForceCursor="True"  >
+                                <ListView.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#7F514D4D" Offset="0.009"/>
+                                        <GradientStop Color="#7FFFF2F2" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ListView.Background>
+
+                            </ListView>
+                        </Expander>
                     </StackPanel>
                 </ScrollViewer>
                 <StackPanel  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
@@ -171,9 +187,9 @@
                     <Label Content="Selected"  Background="{x:Null}" Height="25" FontFamily="Segoe UI Semibold" FontWeight="Bold"  />
                     <Label Content="0" HorizontalAlignment="Center" Name="l_Selected"  Background="{x:Null}"  FontFamily="Segoe UI Semibold" FontWeight="Bold" />
                     <Button Content="Refresh"  Grid.Column="1" Name="Refresh"   Height="25" Click="Refresh_Click"/>
-                    <Button Content="Select All" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
+                    <Button Content="SelectAll" x:Name="SelectAll" Click="SelectAll_Click" Height="25" VerticalAlignment="Top"/>
                     <Button Content="Snipping" VerticalAlignment="Top"  Height="25" Name="Snipping" Click="Snipping_Click"/>
-                    <Button  Content="Settings" Name="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"   Height="25" Click="Button_Click_1" FontFamily="Segoe UI Semibold" />
+                    <Button  Content="Settings" Name="Settings" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"   Height="25" Click="Button_Click_1"  />
                 </StackPanel>
 
             </Grid>
@@ -208,8 +224,16 @@
                 <Button Name="filesButton" Content="&lt;&lt; Drag Files Here &gt;&gt;" DragEnter="filesButton_DragEnter" Drop="filesButton_Drop" Click="filesButton_Click" FontFamily="Segoe UI Semibold" />
 
             </Grid>
+            <Grid Grid.Row="4">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton Content="Games" Grid.Column="0" Height="16" HorizontalAlignment="Center" Name="categoryGames" VerticalAlignment="Center" Checked="categoryGames_Checked" />
+                    <RadioButton Content="Study" Grid.Column="1" Height="16" HorizontalAlignment="Center" Name="categoryStudy" VerticalAlignment="Center" Checked="categoryStudy_Checked" />
+                    <RadioButton Content="Others" Grid.Column="2" Height="16" HorizontalAlignment="Center" Name="categoryOthers" VerticalAlignment="Center" IsChecked="True" Checked="categoryOthers_Checked" />
+                </StackPanel>
+            </Grid>
         </Grid>
-        <Grid Grid.Row="4">
+     
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

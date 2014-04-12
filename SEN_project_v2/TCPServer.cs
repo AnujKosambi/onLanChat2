@@ -147,12 +147,13 @@ namespace SEN_project_v2
                     }
                     else if(Flag==1)
                     {
-                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + UserList.xml[ip].CountMessages+"."+
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" +(UserList.xml[ip].CountMessages-1)+"."+
                             string.Join(".",filename.Split('.').Skip(1).ToArray());
                     }
                     else if(Flag==2)
                     {
                         FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + filename;
+                    
                     }
                     else if(Flag==3)
                     {
@@ -165,38 +166,49 @@ namespace SEN_project_v2
                         if (isDir == 0xD)
                             FileName = Path + "\\" + filename;
                     }
-                   
-                   using (FileStream fileIO = File.Open(FileName,FileMode.Create))
-                   // FileStream fileIO = File.Create(FileName);
+                    try
                     {
-                        int l = buffer.Length;
-                        while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, l)) > 0)
+                        using (FileStream fileIO = File.Open(FileName, FileMode.Create))
+                        // FileStream fileIO = File.Create(FileName);
                         {
-                            fileIO.Write(buffer, 0, count);
-                            //progress.Dispatcher.BeginInvoke((Action)(() =>
-                            //{
-                            //    progress.Value++;
-                            //    progress.UpdateLayout();
-                            //}));
+                            int l = buffer.Length;
+                            while (bytesReceived < numberOfBytes && (count = readStream.Read(buffer, 0, l)) > 0)
+                            {
+                                fileIO.Write(buffer, 0, count);
+                                //progress.Dispatcher.BeginInvoke((Action)(() =>
+                                //{
+                                //    progress.Value++;
+                                //    progress.UpdateLayout();
+                                //}));
 
-                            if(Flag!=2)
-                            progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
-                                new DispatcherOperationCallback(delegate { progress.Value++; return null; }), null);
-                     //       progress.Dispatcher.Invoke((()=> {progress.Value++; progress.UpdateLayout()}));
-                            bytesReceived += count;
-                            if ((numberOfBytes - bytesReceived) < buffer.Length)
-                                l = (int)(numberOfBytes - bytesReceived);
+                                if (Flag != 2)
+                                    progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
+                                        new DispatcherOperationCallback(delegate { progress.Value++; return null; }), null);
+                                //       progress.Dispatcher.Invoke((()=> {progress.Value++; progress.UpdateLayout()}));
+                                bytesReceived += count;
+                                if ((numberOfBytes - bytesReceived) < buffer.Length)
+                                    l = (int)(numberOfBytes - bytesReceived);
 
+                            }
+                            fileIO.Flush();
+                            fileIO.Close();
+                          //  fileIO.EndWrite(asyncResult);
                         }
-                        fileIO.Close();
-                    }
-                   if (Flag != 2)
-                    progress.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        progress.Visibility = System.Windows.Visibility.Hidden;
-                        view.RemoveProgressBar(readStream);
+                        if (Flag != 2)
+                            progress.Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                progress.Visibility = System.Windows.Visibility.Hidden;
+                                view.RemoveProgressBar(readStream);
 
-                    }));
+                            }));
+                    }catch(Exception e)
+                    {
+                        System.Windows.MessageBox.Show(e.Message);
+                        if(progress!=null)
+                        progress.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
+                                       new DispatcherOperationCallback(delegate { progress.Visibility = System.Windows.Visibility.Hidden; return null; }), null);
+                    }
+
 
                 }
                 
@@ -231,5 +243,7 @@ namespace SEN_project_v2
                     thread.Abort();
             }
         }
+
+        public IAsyncResult asyncResult { get; set; }
     }
 }

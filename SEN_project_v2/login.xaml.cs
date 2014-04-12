@@ -22,22 +22,22 @@ namespace SEN_project_v2
         {
             InitializeComponent();
         }
-
+        string path = AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml";
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            if (PasswordBox.Password == "admin")
+            System.Xml.XmlDocument xd = new System.Xml.XmlDocument();
+            xd.Load(path);
+            SecurityPW security = new SecurityPW();
+            if (PasswordBoxLogin.Password == security.Decryptstring(xd.SelectSingleNode("UserProfile/General/Password").InnerText))
             {
+
                 new MainWindow().Show();
                 this.Close();
             }
-
             else
             {
-                MessageBox.Show("Error : Invalid username or password !");
+                MessageBox.Show("Wrong Password entered");
             }
-            
-      
         }
     }
 }

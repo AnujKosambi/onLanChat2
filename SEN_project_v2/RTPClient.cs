@@ -80,7 +80,7 @@ namespace SEN_project_v2
             rtpSession = new RtpSession(ipe, new RtpParticipant(cname, name), true, true);
 
             System.Diagnostics.Debug.WriteLine(rtpSession.MulticastInterface.ToString());
-            rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.JPEG, null, 0, 1);
+            rtpSender = rtpSession.CreateRtpSenderFec(name, PayloadType.Chat, null, 0, 1);
             waveWriters = new Dictionary<IPAddress, WaveFileWriter>();
             EvetnBinding();
          
@@ -110,11 +110,11 @@ namespace SEN_project_v2
         }
         private void AudioLoader()
         {
-            waveProvider = new BufferedWaveProvider(new WaveFormat(44100, 2));
+            waveProvider = new BufferedWaveProvider(new WaveFormat(8000, 16, 1));
             waveProvider.DiscardOnBufferOverflow = true;
             waveOut = new DirectSoundOut();
             waveOut.Init(waveProvider);
-         //   waveOut.Volume = VideoConf.vol;
+            waveOut.Volume = VideoConf.vol;
         }
         void RtpEvents_RtpStreamAdded(object sender, RtpEvents.RtpStreamEventArgs ea)
         {
@@ -133,6 +133,7 @@ namespace SEN_project_v2
               if (image == null && vpList!=null)
               {
                   System.IO.MemoryStream ms = new System.IO.MemoryStream(ea.Frame.Buffer);
+  
                   int sizeBytes = 0;
                   Byte[] buffer = new Byte[4];
                   ms.Read(buffer, 0, 4);
@@ -153,11 +154,14 @@ namespace SEN_project_v2
                   ms.Read(audio, 0, audio.Length);
 
                   {
-                      if (ea.RtpStream.FramesReceived > 10)
+                    
                           waveProvider.AddSamples(audio, 0, audio.Length);
-                      if (waveOut.PlaybackState != PlaybackState.Playing)
-                          waveOut.Play();
+                          if (waveOut.PlaybackState != PlaybackState.Playing)
+                          {
+                              waveOut.Play();
 
+                          }
+                      
                   }
               }else if(vpList==null && image!=null)
               {
@@ -231,7 +235,10 @@ namespace SEN_project_v2
             foreach(var wave in waveWriters.Values)
             {
                 wave.Close();
+                
             }
+            if (waveOut != null)
+                waveOut.Dispose();
             if (rtpSession != null)
             {
                 rtpSession.Dispose();

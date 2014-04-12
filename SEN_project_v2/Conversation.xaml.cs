@@ -37,7 +37,7 @@ namespace SEN_project_v2
             path = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + "Pic.png";
             if(File.Exists(path))
             {
-                ProfilePic.Source = new BitmapImage(new Uri(path));
+                ProfilePic.Source = new BitmapImage(new Uri(path)).Clone();
             }
         }
         int messIndex = 0;
@@ -92,11 +92,17 @@ namespace SEN_project_v2
         public void Redraw()
         {
             MessagePanel.Children.Clear();
-            Draw();
 
+            Draw();
+            path = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" + "Pic.png";
+            if (File.Exists(path))
+            {
+                ProfilePic.Source = new BitmapImage(new Uri(path)).Clone();
+            }
         }
         private void Draw()
         {
+            UserList.xml[ip].UnreadMessages = 0;
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 messages = client.fetchMessages();
@@ -129,8 +135,8 @@ namespace SEN_project_v2
 
             Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
 
-            UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage),"General");
-            udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage).ToArray(), ip);
+            UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage), MainWindow.category);
+            udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage).ToArray(), ip, MainWindow.category);
             stream.Close();
             this.Redraw();
         }
@@ -212,7 +218,10 @@ namespace SEN_project_v2
 
         private void UpdatePic_Click(object sender, RoutedEventArgs e)
         {
+
             udp.SendMessageTo(UDP.UpdatePic, ip);
+
+
         }
 
     }

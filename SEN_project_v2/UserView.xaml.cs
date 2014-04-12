@@ -146,12 +146,13 @@ namespace SEN_project_v2
             w.MaxHeight = 700;
         
           
-            UserList.xml[u_ip].UnreadMessages = 0;
+            
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
             if (!UserList.Get(u_ip).IsMobile)
             {
                 if (UserList.xml[u_ip].UnreadMessages > 0)
                     MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
+               
                 TreeViewItem tvi = ((Parent as ListView).Parent as TreeViewItem);
 
 
@@ -173,6 +174,7 @@ namespace SEN_project_v2
                     }
                 }
             }
+            UserList.xml[u_ip].UnreadMessages = 0;
         }
 
         private void sharing_Click(object sender, RoutedEventArgs e)

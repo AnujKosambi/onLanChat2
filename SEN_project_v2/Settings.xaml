@@ -147,7 +147,7 @@
                                 <ColumnDefinition Width="1.5*"/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Name="Send" Content="Send(Default)"/>
-                            <Label Grid.Row="1" Grid.Column="0" Name="Reciive" Content="Receive(Default)"/>
+                            <Label Grid.Row="1" Grid.Column="0" Name="Reciive" Content="Receive Block"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <RadioButton Name="Send_Games" Content="Games" VerticalAlignment="Center" />
                                 <RadioButton Name="Send_Study" Content="Study" VerticalAlignment="Center"/>

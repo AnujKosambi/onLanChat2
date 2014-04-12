@@ -49,8 +49,11 @@ namespace SEN_project_v2
             if (mParent.rtpClient != null)
                 mParent.rtpClient.Dispose();
 
+
             rtpClient = new RTPClient(new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.5.6.7"),
-                (int)MainWindow.Ports.RTP),vp,string.Join("#",MainWindow.hostIPS.Select(x=>x.ToString()).ToArray()), "224.5.6.7");
+                (int)MainWindow.Ports.RTP), vp, string.Join("#", MainWindow.hostIPS.Select(x => x.ToString()).ToArray()), "224.5.6.7");
+            //rtpClient = new RTPClient(new IPEndPoint(host,
+            //    (int)MainWindow.Ports.RTP), vp, string.Join("#", MainWindow.hostIPS.Select(x => x.ToString()).ToArray()), host.ToString());
             mParent.rtpClient = this.rtpClient;
             rtpClient.window = this;
             audio = new Audio();
@@ -210,7 +213,7 @@ namespace SEN_project_v2
                 if (sources.Count >= 0)
                 {   sourceStream = new WaveIn();
                     sourceStream.DeviceNumber = deviceNumber;
-                    sourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(deviceNumber).Channels);
+                    sourceStream.WaveFormat = new WaveFormat(8000, 16, 1);//44100, WaveIn.GetCapabilities(deviceNumber).Channels);
                     sourceStream.RecordingStopped += sourceStream_RecordingStopped;
                     sourceStream.DataAvailable += sourceStream_DataAvailable;
 
@@ -232,6 +235,11 @@ namespace SEN_project_v2
   {
       AddMembers adm = new AddMembers(this);
       adm.Show();
+  }
+
+  private void SettingB_Click(object sender, RoutedEventArgs e)
+  {
+      new Settings(mParent).Show();
   }
 
     

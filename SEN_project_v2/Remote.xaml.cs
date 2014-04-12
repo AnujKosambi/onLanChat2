@@ -33,6 +33,7 @@ namespace SEN_project_v2
         public static int verticalOffset;
         public  List<KeyStatus> waiting;
         public MainWindow mainWindow;
+        public bool change = false;
         public struct KeyStatus
         {
           public  Keys code;
@@ -74,7 +75,7 @@ namespace SEN_project_v2
 
         void mousekeyTimer_Tick(object sender, EventArgs e)
         {
-          // 
+            System.Diagnostics.Debug.WriteLine(MouseFlag);
             if((MouseFlag&1)==1)
                 if(oldMouseFlag!=MouseFlag)
                     User32.mouse_event(0x00000002, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
@@ -90,6 +91,7 @@ namespace SEN_project_v2
             if ((MouseFlag & 2) == 0)
                 if ((oldMouseFlag & 2) == 2)
                     User32.mouse_event(0x0010, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
+            if(change)
             User32.SetCursorPos(mousePos.X, mousePos.Y);
             oldMouseFlag = MouseFlag;
             while(waiting.Count>0)
@@ -97,6 +99,7 @@ namespace SEN_project_v2
                  User32.keybd_event((Byte)ks.code, (Byte)0x45, ks.Flag, 0);
                  waiting.Remove(waiting.First());
             }
+            change = false;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -173,7 +176,7 @@ namespace SEN_project_v2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            mainWindow.IsEnabled = true;
+            mainWindow.Remote.IsEnabled = true;
             
             if (mousekeyTimer != null)
                 mousekeyTimer.Stop();
@@ -231,11 +234,15 @@ namespace SEN_project_v2
             {
                 MouseFlag &= ~2;
             }
-            
+            else if ((wParam.ToInt32() & 0xF) == 0)
+            {
+                MouseFlag =0;
+            }
 
             MainWindow.udp.SendMessageTo(UDP.Mouse + MouseFlag + UDP.Breaker +(mousePos.X-Location.X) + UDP.Breaker + (mousePos.Y-Location.Y), remoteIP);
-          //  System.Diagnostics.Debug.WriteLine(Convert.ToString(wParam.ToInt32(),16) + " " + mousePos.X + " " + mousePos.Y);
+            
           }
+        System.Diagnostics.Debug.WriteLine(Convert.ToString(wParam.ToInt32(), 16) + " " + mousePos.X + " " + mousePos.Y);
         return CallNextHookEx(_hookID, nCode, wParam, lParam);
        }
           private const int WH_MOUSE_LL = 14;
