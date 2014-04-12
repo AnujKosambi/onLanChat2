@@ -36,7 +36,6 @@
             </Button>
             <Label Content="Nick" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ul_Nick" Height="31" FontWeight="SemiBold" />
             <Label Content="IPAddress" HorizontalAlignment="Right" VerticalAlignment="Bottom"  x:Name="ul_ip"/>
-            <Label Content="Machine" HorizontalAlignment="Right" VerticalAlignment="Bottom"  x:Name="ul_machine" FontSize="10"/>
 
         </WrapPanel>
 

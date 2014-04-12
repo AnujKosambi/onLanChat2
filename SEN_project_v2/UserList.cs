@@ -7,11 +7,12 @@ namespace SEN_project_v2
 {
     static class UserList
     {
-         static List<User> Users=new List<User>();
+        public  static List<User> Users=new List<User>();
         public static Dictionary<System.Net.IPAddress, User> OfflineUsers = new Dictionary<System.Net.IPAddress,User>();
         public static Dictionary<System.Net.IPAddress, bool> SelectedUsers = new Dictionary<System.Net.IPAddress, bool>();
         static Dictionary<System.Net.IPAddress,int> indexOf=new Dictionary<System.Net.IPAddress,int>();
         public static Dictionary<System.Net.IPAddress, string> GroupList = new Dictionary<System.Net.IPAddress, string>();
+        public static Dictionary<string, List<System.Net.IPAddress>> UserOfGroup = new Dictionary<string, List<System.Net.IPAddress>>();
         public static Dictionary<System.Net.IPAddress, XMLClient> xml = new Dictionary<System.Net.IPAddress, XMLClient>();
         public static Dictionary<System.Net.IPAddress, Conversation> conversation = new Dictionary<System.Net.IPAddress,Conversation>();
         public static void ClearAllList()
@@ -40,8 +41,11 @@ namespace SEN_project_v2
                 Users.Add(user);
                 indexOf.Add(user.ip, Users.IndexOf(user));
                 GroupList.Add(user.ip, user.groupName);
-                xml.Add(user.ip, new XMLClient(user.ip));
                 
+                xml.Add(user.ip, new XMLClient(user.ip));
+                if (!UserOfGroup.ContainsKey(user.groupName))
+                UserList.UserOfGroup.Add(user.groupName, new List<System.Net.IPAddress>());
+                UserList.UserOfGroup[user.groupName].Add(user.ip);
                 return true;
             }
             return false;
@@ -49,10 +53,9 @@ namespace SEN_project_v2
       
         public static User Get(System.Net.IPAddress ip)
         {
-           
-                return Users.ElementAt(indexOf[ip]);
+          return Users.ElementAt(indexOf[ip]);
             
-            
+          
 
         }
         public static List<System.Net.IPAddress> Selected
@@ -78,6 +81,7 @@ namespace SEN_project_v2
         public static void  Remove(System.Net.IPAddress ip){
             try
             {
+                UserList.UserOfGroup.Remove(UserList.GroupList[ip]);
                 Users.RemoveAt(indexOf[ip]);
                 SelectedUsers.Remove(ip);
                 indexOf.Remove(ip);

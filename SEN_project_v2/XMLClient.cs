@@ -50,6 +50,7 @@ namespace SEN_project_v2
             public DateTime time;
             public String value;
             public Boolean self;
+            public String category; 
         }
         public List<Message> fetchMessages()
         {
@@ -63,6 +64,7 @@ namespace SEN_project_v2
                 m.time = DateTime.Parse(xn.Attributes.GetNamedItem("time").Value);
                 m.self = Boolean.Parse(xn.Attributes.GetNamedItem("self").Value);
                 m.value = xn.InnerText;
+                m.category = xn.Attributes.GetNamedItem("category").Value;
 
                 messageList.Add(m);
             }
@@ -73,13 +75,15 @@ namespace SEN_project_v2
 
             return xmlDoc.GetElementsByTagName("Messages")[0];
         }
-        public void addMessage(DateTime time, String value)
+        public void addMessage(DateTime time, String value,String category)
         {
             XmlElement message = xmlDoc.CreateElement("Message");
             message.SetAttribute("index", CountMessages.ToString());
             message.SetAttribute("time", DateTime.Now + "");
             message.SetAttribute("self", "false");
+            message.SetAttribute("category", category);
             message.InnerText = value;
+
             fetchRootOfMessages().AppendChild(message);
             lastMessage.time = time;
             lastMessage.index = CountMessages;
@@ -87,12 +91,13 @@ namespace SEN_project_v2
             CountMessages++;
             UnreadMessages++;
         }
-        public void addSelfMessage(DateTime time, String value)
+        public void addSelfMessage(DateTime time, String value, String category)
         {
             XmlElement message = xmlDoc.CreateElement("Message");
             message.SetAttribute("index", CountMessages.ToString());
             message.SetAttribute("time", DateTime.Now + "");
             message.SetAttribute("self", "true");
+            message.SetAttribute("category", category);
 
             message.InnerText = value;
             fetchRootOfMessages().AppendChild(message);

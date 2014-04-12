@@ -29,8 +29,24 @@ namespace SEN_project_v2
             {
                 InitializeComponent();
                 MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(message));
-
-                Message.Document = Conversation.TransformImages((FlowDocument)XamlReader.Load(ms), ip, index);
+                if (!UserList.Get(ip).IsMobile)
+                {
+                    Message.Document = Conversation.TransformImages((FlowDocument)XamlReader.Load(ms), ip, index);
+                }
+                else
+                {
+                    string[] splits = message.Split(new String[] { UDP.Breaker }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length > 1)
+                    {
+                        Paragraph para = new Paragraph();
+                        para.Inlines.Add(new Run(splits[0]+"\n"));
+                        Paragraph para2 = new Paragraph();
+                        para.Inlines.Add(new Run(splits[1]));
+                        
+                        Message.Document.Blocks.Add(para);
+                        Message.Document.Blocks.Add(para2);
+                    }
+                }
                 //  Message.Text = message;
                 Time.Text = time;
                 this.xmlClient = client;

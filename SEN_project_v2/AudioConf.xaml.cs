@@ -85,9 +85,9 @@ namespace SEN_project_v2
             timer = new System.Windows.Forms.Timer();
             timer.Tick += timer_Tick;
             timer.Interval = 500;
-            foreach (var souces in audio.sources)
-                AudioSources.Items.Add(souces.ProductName);
-            AudioSources.SelectedIndex = 0;
+            //foreach (var souces in audio.sources)
+            //    AudioSources.Items.Add(souces.ProductName);
+            //AudioSources.SelectedIndex = 0;
         }
          void AudioConf_SizeChanged(object sender, SizeChangedEventArgs e)
          {
@@ -155,9 +155,11 @@ namespace SEN_project_v2
                 document.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
                 System.Xml.XmlNode Microphone = document.SelectSingleNode("UserProfile/Conference/Microphone");
 
+                int index = 0;
                 List<string> productName = audio.sources.Select(x => x.ProductName).ToList();
-                AudioSources.SelectedIndex = productName.FindIndex(x => x == Microphone.InnerText);
-                audio.init(AudioSources.SelectedIndex);
+
+                index = productName.FindIndex(x => x == Microphone.InnerText);
+                audio.init(index);
                 //   waveWriter = new WaveFileWriter("test.wav",audio.sourceStream.WaveFormat);
                 timer.Start();
             
@@ -225,6 +227,12 @@ namespace SEN_project_v2
                 listBytes.Clear();
             }
         }
+
+  private void AddMember_Click(object sender, RoutedEventArgs e)
+  {
+      AddMembers adm = new AddMembers(this);
+      adm.Show();
+  }
 
     
     }

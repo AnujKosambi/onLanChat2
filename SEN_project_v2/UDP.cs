@@ -1,8 +1,8 @@
 ﻿#define UDP
 #if UDP
-//#define UDPConnection
+#define UDPConnection
 #endif
-#define Fake
+//#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
 ///(2) For UDP sending/reciving data verbose ... Define VideoCall
@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using Microsoft.Win32;
+using System.Xml;
 
 namespace SEN_project_v2
 {
@@ -36,6 +37,9 @@ namespace SEN_project_v2
         public const string Disconnect = "<#Disconnect#>";
         public const string Message = "<#Message#>";
         public const string RMessage = "<#RMessage#>";
+        public const string MConnect = "<#MConnect#>";
+        public const string RMConnect = "<\\#MConnect#>";
+        public const string MMessage = "<#MMessage#>";
 
         public const string Videocall = "<#VideoCall#>";
         public const string RVideocall = "<\\#VideoCall#>";
@@ -49,6 +53,8 @@ namespace SEN_project_v2
         public const string RemoveMemberA = "<#RemoveA#>";
         public const string Remote = "<#Remote#>";
         public const string RRemote = "<\\#Remote#>";
+        public const string MobileMouse = "<#MoblieMouse#>";
+
 
         public const string Sharing = "<#Sharing#>";
         public const string SendFile = "<#SendFile#>";
@@ -56,15 +62,17 @@ namespace SEN_project_v2
         public const string RSendDir = "<#RSendDir#>";
         public const string MakeFolder = "<#MakeFolder#>";
         public const string UpdatePic = "<#UpdatePic#>";
-
+        
         public const string EndRemote = "<XEndX>";
         public const string Mouse = "<#M#>";
         public const string Keyboard = "<#K#>";
         public const string Breaker = "<#>";
         private int port;
         private MainWindow window;
+        private XmlDocument settings = new XmlDocument();
+        private List<String> blocked = new List<String>();
         #endregion
-
+        string nickname, groupname;
         public UDP(int port)
         {
             if (port == (int)MainWindow.Ports.UDP)
@@ -76,6 +84,20 @@ namespace SEN_project_v2
             {
                 rtpReceClient = new UdpClient(port);
               
+
+            }
+           
+            if (System.IO.File.Exists("UserSettings.xml") == true)
+            {
+              
+                settings.Load(AppDomain.CurrentDomain.BaseDirectory+ "\\UserSettings.xml");
+                nickname = settings.SelectSingleNode("UserProfile/General/NickName").InnerText;
+                groupname = settings.SelectSingleNode("UserProfile/General/GroupName").InnerText;
+            }
+            else
+            {
+                nickname = Environment.MachineName;
+                groupname = Environment.MachineName;
             }
             sendingClient = new UdpClient();
             rtpSendClient = new UdpClient();
@@ -91,6 +113,25 @@ namespace SEN_project_v2
             System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
 #endif
         }
+        public void SendMessageTo(string value, IPAddress ip,string category)
+        {
+            sendingClient.Connect(new IPEndPoint(ip, port));
+            sendingClient.Send(Encoding.ASCII.GetBytes(category+UDP.Breaker+value), value.Length);
+#if UDPConnection
+            System.Diagnostics.Debug.WriteLine("UDP:||-----Sending:" + value + " to " + ip.ToString() + "------");
+#endif
+        }
+        public void SendMessageTo(Byte[] value, IPAddress ip, String category)
+        {
+            // Connects to the client ip and sends the message
+
+            sendingClient.Connect(new IPEndPoint(ip, port));
+            //            System.Diagnostics.Debug.WriteLine("\nvalue---" + System.Text.Encoding.Default.GetString(value));
+            sendingClient.Send(value.Concat(Encoding.ASCII.GetBytes(Breaker + category)).ToArray(), value.Length + Breaker.Length + category.Length);
+#if UDP
+            System.Diagnostics.Debug.WriteLine("\nUDP:||-----Sending:" + System.Text.Encoding.Default.GetString(value) + " to " + ip.ToString() + "------");
+#endif
+        }
         public void SendMessageTo(Byte[] value, IPAddress ip)
         {
             sendingClient.Connect(new IPEndPoint(ip, port));
@@ -102,10 +143,10 @@ namespace SEN_project_v2
         public void recevingThread()
         {
             recevingClient.Client.ReceiveBufferSize = 1024 * 1024;
-
+            
             while (true)
             {
-
+                
 
                 byte[] data;
                 IPEndPoint recevied = new IPEndPoint(IPAddress.Any, port);
@@ -114,10 +155,23 @@ namespace SEN_project_v2
 
 
                 string stringData = Encoding.ASCII.GetString(data);
-
+                settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
                 System.Diagnostics.Debug.WriteLine("UDP||-----Recevied " + stringData + " from " + recevied.Address + " ----");
+                int asdf = 0;
+                foreach (XmlNode user in settings.SelectNodes("UserProfile/BlockedList/Users/Blockeduser"))
+                {
+                    if (user.InnerText.Equals(recevied.Address.ToString()))
+                    {
+                        asdf = 100;
+                        break;
+                    }
+                }
+                if(asdf==100)
+                {
+                    continue;
+                }
 
-
+                
 
                 #region Connection
                 if (stringData.StartsWith(Connect))
@@ -298,10 +352,12 @@ namespace SEN_project_v2
                 {
                     if (window.remote != null)
                     {
+                        window.remote.change = true;
                         string[] splits = stringData.Split(new String[] { Mouse, Breaker }, StringSplitOptions.RemoveEmptyEntries);
                         if (splits.Length == 3)
                         {
                             SEN_project_v2.Remote.MouseFlag = Convert.ToInt32(splits[0]);
+                            
                             SEN_project_v2.Remote.mousePos.X = Convert.ToInt32(splits[1]);
                             SEN_project_v2.Remote.mousePos.Y = Convert.ToInt32(splits[2]);
 
@@ -337,6 +393,7 @@ namespace SEN_project_v2
                 else if (stringData.StartsWith(Message))
                 {
                     String[] splits = stringData.Split(new String[] { Message }, StringSplitOptions.RemoveEmptyEntries);
+                    
                     receviedMessage(recevied, splits);
 
 
@@ -347,6 +404,59 @@ namespace SEN_project_v2
                     window.nicon.ShowBalloonTip(5, "Message was opened", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
                 }
                 #endregion
+
+                    else if(stringData.StartsWith(MConnect))
+                {
+                        string[] spilts=stringData.Split(new String[]{MConnect},StringSplitOptions.RemoveEmptyEntries);
+                        SendMessageTo(RMConnect, recevied.Address);
+                        window.Dispatcher.BeginInvoke((Action)(() => {
+                            User user=new User(recevied.Address, spilts[0]);
+                            user.IsMobile = true;
+                            if (UserList.Add(user))
+                                window.AddUserToMobileTree(user);
+                        }));
+
+                }
+                else if(stringData.StartsWith(MMessage))
+                {
+                    string[] splits = stringData.Split(new String[] { MMessage }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splits.Length > 0)
+                    {
+
+
+                
+
+                        try
+                        {
+                            window.nicon.ShowBalloonTip(5, "Moblie Message Received In", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+
+                            UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                UserList.conversation[recevied.Address].Redraw();
+                            }));
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+
+                        UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0],"Mobile");
+                        UserView uv = UserList.Get(recevied.Address).userView;
+                        uv.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
+                        }));
+
+
+                    }
+                }
+
+                else if(stringData.StartsWith(MobileMouse))
+                {
+                    string[] splits = stringData.Split(new String[] { MobileMouse,Breaker }, StringSplitOptions.RemoveEmptyEntries);
+          //          if(splits.Length>1)
+                    SEN_project_v2.Remote.User32.SetCursorPos((int)Double.Parse(splits[0]),(int) Double.Parse(splits[1]));
+                }
                 else if (stringData.StartsWith(Sharing))
                 {
                     string path = AppDomain.CurrentDomain.BaseDirectory + "\\Sharing.xml";
@@ -401,10 +511,10 @@ namespace SEN_project_v2
         {
             if (MainWindow.hostIPS.Contains(recevied.Address))
                 MainWindow.hostIP = recevied.Address;
-
            
+            SendMessageTo(RConnect + nickname + UDP.Breaker + groupname, recevied.Address);
             
-            SendMessageTo(RConnect + Environment.MachineName + Breaker + Environment.MachineName+Breaker+recevied.Address, recevied.Address);
+          //  SendMessageTo(RConnect + Environment.MachineName + Breaker + Environment.MachineName+Breaker+recevied.Address, recevied.Address);
 #if UDPConnection
             System.Diagnostics.Debug.WriteLine("-----Sending:" + RConnect + "------");
 #endif
@@ -447,6 +557,7 @@ namespace SEN_project_v2
             {
                 user.hostIP = IPAddress.Parse(splits[2]);
             }
+
             if (UserList.Add(user)|UserList.Get(recevied.Address).IsOffline  )
                 window.Dispatcher.Invoke((Action)(() =>
                 {
@@ -483,37 +594,65 @@ namespace SEN_project_v2
         {
       
           
-            if (splits.Length > 0)
+            if (splits.Length > 0 && splits[0].Contains(Breaker))
             {
+              
 
-               // MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
-                window.Dispatcher.BeginInvoke((Action)(() =>
-                {
-
-                   ( window.groupLists[UserList.Get(recevied.Address).groupName].Header as System.Windows.Controls.Grid).Background =
-                        new ImageBrush(new BitmapImage(new Uri(
-            "pack://application:,,,/Images/rectangle_mediumblue_154x48.png", 
-                UriKind.Absolute))) {  };
-                    System.Diagnostics.Debug.WriteLine(window.groupLists[UserList.Get(recevied.Address).groupName]);
-                }));
-                
-                try
-                {
-                    window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
-                
-                    UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
+                    // MessageBox.Show("Message from ..." + UserList.Get(recevied.Address).nick + splits[0]);
+                    window.Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        UserList.conversation[recevied.Address].Redraw();
-                    }));
-                }catch(Exception e)
-                {
 
+                        (window.groupLists[UserList.Get(recevied.Address).groupName].Header as System.Windows.Controls.Grid).Background =
+                            new ImageBrush(new BitmapImage(new Uri(
+                "pack://application:,,,/Images/rectangle_mediumblue_154x48.png",
+                    UriKind.Absolute))) { };
+                        System.Diagnostics.Debug.WriteLine(window.groupLists[UserList.Get(recevied.Address).groupName]);
+                    }));
+
+                  String cate = splits[0].Substring(splits[0].IndexOf(Breaker) + 3, splits[0].Length - splits[0].IndexOf(Breaker) - Breaker.Length);
+                  settings.Load(AppDomain.CurrentDomain.BaseDirectory + "\\UserSettings.xml");
+                  XmlNode node = settings.SelectSingleNode("UserProfile/BlockedList/Block_Others");
+                  
+                if (cate == "Others" &&  node.InnerText == "Yes")
+                {
+                    return;
                 }
-                UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0]);
-                UserView uv= UserList.Get(recevied.Address).userView;
-                uv.Dispatcher.BeginInvoke((Action)(() => {
-                uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
-                }));
+                node = settings.SelectSingleNode("UserProfile/BlockedList/Block_Games");
+                  
+               if (cate == "Games" && node.InnerText== "Yes")
+                {
+                    return;
+                }
+               node = settings.SelectSingleNode("UserProfile/BlockedList/Block_Study");
+                  
+                if (cate == "Study" && node.InnerText == "Yes")
+                {
+                    return;
+                }
+              
+
+                    try
+                    {
+                        window.nicon.ShowBalloonTip(5, "Message Received From", UserList.Get(recevied.Address).nick, System.Windows.Forms.ToolTipIcon.Info);
+
+                        UserList.conversation[recevied.Address].Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            UserList.conversation[recevied.Address].Redraw();
+                        }));
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                         UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0].Substring(0, splits[0].IndexOf(Breaker)), cate);
+                        UserView uv = UserList.Get(recevied.Address).userView;
+                        uv.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
+                        }));
+                    
+                
             }
         }
         private void receviedRAudioCall(IPEndPoint recevied)

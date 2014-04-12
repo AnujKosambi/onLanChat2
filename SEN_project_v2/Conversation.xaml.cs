@@ -129,7 +129,7 @@ namespace SEN_project_v2
 
             Byte[] Messeage = stream.GetBuffer().Skip(3).ToArray();
 
-            UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage));
+            UserList.xml[ip].addSelfMessage(DateTime.Now, Encoding.ASCII.GetString(Messeage),"General");
             udp.SendMessageTo(Encoding.ASCII.GetBytes(UDP.Message).Concat(Messeage).ToArray(), ip);
             stream.Close();
             this.Redraw();

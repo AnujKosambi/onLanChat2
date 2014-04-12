@@ -33,7 +33,7 @@ namespace SEN_project_v2
                 ul_Nick.Content=(string)value;
             }
         }
-        public string u_machine
+     /*   public string u_machine
         {
             get
             {
@@ -43,7 +43,7 @@ namespace SEN_project_v2
             {
                 ul_machine.Content = (string)value;
             }
-        }
+        }*/
 
         public System.Net.IPAddress u_ip
         {
@@ -75,7 +75,7 @@ namespace SEN_project_v2
             lenght = new Dictionary<NetworkStream, long>();
             ProgressBars = new Dictionary<NetworkStream, ProgressBar>();
             InitializeComponent();
-            
+      
            // Progressbar.Visibility = Visibility.Hidden;
             //this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
@@ -107,7 +107,7 @@ namespace SEN_project_v2
             prog.VerticalAlignment = VerticalAlignment.Stretch;
             prog.HorizontalAlignment = HorizontalAlignment.Stretch;
          
-            prog.Width =150;
+            prog.Width =340;
             ProgressBars.Add(stream, prog);
             StackProgress.Children.Add(prog);
             
@@ -144,11 +144,35 @@ namespace SEN_project_v2
             w.MinHeight = 500;
             w.MaxWidth = 700;
             w.MaxHeight = 700;
-            if (UserList.xml[u_ip].UnreadMessages > 0)
-                MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
+        
+          
             UserList.xml[u_ip].UnreadMessages = 0;
-            
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
+            if (!UserList.Get(u_ip).IsMobile)
+            {
+                if (UserList.xml[u_ip].UnreadMessages > 0)
+                    MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
+                TreeViewItem tvi = ((Parent as ListView).Parent as TreeViewItem);
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+                if (tvi.Background != MainWindow.restoreImage)
+                {
+                    int temp = 0;
+                    foreach (var ip in UserList.UserOfGroup[UserList.GroupList[u_ip]])
+                    {
+                        if (UserList.xml[ip].UnreadMessages != 0)
+                        {
+                            temp++;
+                            break;
+                        }
+                    }
+                    if (temp == 0)
+                    {
+                        (tvi.Header as Grid).Background = MainWindow.restoreImage;
+                    }
+                }
+            }
         }
 
         private void sharing_Click(object sender, RoutedEventArgs e)

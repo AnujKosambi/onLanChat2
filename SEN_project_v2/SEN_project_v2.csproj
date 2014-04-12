@@ -76,6 +76,7 @@
     <Reference Include="LSTCommon">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\LSTCommon.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MSR.LST.Net.Rtp">
       <HintPath>..\..\..\..\..\Downloads\Compressed\RTP_Presenter\RTP Presenter\RTPTeacherPresenter\MSR.LST.Net.Rtp.dll</HintPath>
     </Reference>
@@ -174,6 +175,9 @@
     <Compile Include="VirtualDirectory.xaml.cs">
       <DependentUpon>VirtualDirectory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddMembers.xaml.cs">
+      <DependentUpon>AddMembers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XMLClient.cs" />
     <Page Include="AudioConf.xaml">
       <SubType>Designer</SubType>
@@ -244,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VirtualDirectory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddMembers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

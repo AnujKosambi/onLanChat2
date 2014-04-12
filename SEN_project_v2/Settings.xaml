@@ -149,9 +149,9 @@
                             <Label Grid.Row="0" Grid.Column="0" Name="Send" Content="Send(Default)"/>
                             <Label Grid.Row="1" Grid.Column="0" Name="Reciive" Content="Receive(Default)"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <CheckBox Margin="5,0,0,0" Name="Send_Games" Content="Games" VerticalAlignment="Center"/>
-                                <CheckBox Margin="5,0,0,0" Name="Send_Study" Content="Study" VerticalAlignment="Center"/>
-                                <CheckBox Margin="5,0,0,0"  Name="Send_others" Content="Others" VerticalAlignment="Center"/>
+                                <RadioButton Name="Send_Games" Content="Games" VerticalAlignment="Center" />
+                                <RadioButton Name="Send_Study" Content="Study" VerticalAlignment="Center"/>
+                                <RadioButton Name="Send_Others" Content="Others" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                                 <CheckBox Margin="5,0,0,0" Name="Receive_Games" Content="Games" VerticalAlignment="Center"/>
@@ -164,7 +164,7 @@
 
                 <Expander Header="File Sharing" x:Name="FileSharing" FontFamily="Segoe UI Semibold" FontSize="14" FontWeight="Bold" Expanded="FileSharing_Expanded" Height="253" Margin="0,0,0
                           ,0" HorizontalAlignment="Stretch">
-          
+
                     <Grid>
 
                         <TreeView Grid.Column="0" Name="SharedFiles" BorderBrush="{x:Null}">
