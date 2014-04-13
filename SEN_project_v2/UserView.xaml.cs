@@ -75,7 +75,10 @@ namespace SEN_project_v2
             lenght = new Dictionary<NetworkStream, long>();
             ProgressBars = new Dictionary<NetworkStream, ProgressBar>();
             InitializeComponent();
-      
+            ContextMenu cmenu=new System.Windows.Controls.ContextMenu();
+            StackProgress.ContextMenu = cmenu;
+            
+
            // Progressbar.Visibility = Visibility.Hidden;
             //this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
         }
@@ -98,28 +101,89 @@ namespace SEN_project_v2
             //else
             //    UserList.SelectedUsers.Remove(u_ip);
         }
-        public void AddProgressBar(NetworkStream stream)
+        public void AddProgressBar(NetworkStream stream,string filename)
         {
-           
-            
             ProgressBar prog = new ProgressBar();
+            MenuItem mi = new MenuItem();
+            mi.Header=filename;
+            mi.Click += (a, b) => {
+                MessageBoxResult mbr=MessageBox.Show("Are You Sure to Stop Downloading..!!", filename, MessageBoxButton.YesNo);
+                if (mbr == MessageBoxResult.Yes)
+                {
+                    stream.Close();
+                    RemoveProgressBar(stream);
+                }
+                
+            };
+            StackProgress.ContextMenu.Items.Add(mi);
+            
             
             prog.VerticalAlignment = VerticalAlignment.Stretch;
             prog.HorizontalAlignment = HorizontalAlignment.Stretch;
-         
-            prog.Width =340;
+            prog.Width = 340;
+            prog.Background=System.Windows.Media.Brushes.Transparent;
+            prog.Opacity = 1.0f/( StackProgress.Children.Count+1);
+         //   prog.Foreground = ((StackProgress.Children.Count + 1) % 2 == 0) ? System.Windows.Media.Brushes.LawnGreen : System.Windows.Media.Brushes.Orange;
+            foreach (ProgressBar p in StackProgress.Children)
+            {
+
+                p.Opacity = 1.0f / (StackProgress.Children.Count + 1);
+            }
+            //prog.ToolTip = (prog.Value*100)/prog.Maximum;
+            prog.ValueChanged += (a, b) =>
+            {
+                if (StackProgress.Children.Contains(prog)) 
+                (StackProgress.ContextMenu.Items[StackProgress.Children.IndexOf(prog)] as MenuItem).Header = filename + " " + (int)((prog.Value * 100) / (int)prog.Maximum) + "%";
+             
+            };
             ProgressBars.Add(stream, prog);
             StackProgress.Children.Add(prog);
             
         }
         public void RemoveProgressBar(NetworkStream stream)
         {
+            StackProgress.ContextMenu.Items.RemoveAt(StackProgress.Children.IndexOf(ProgressBars[stream]));
             StackProgress.Children.Remove(ProgressBars[stream]);
+           
             ProgressBars.Remove(stream);
+            foreach (ProgressBar p in StackProgress.Children)
+            {
+
+                p.Opacity = 1.0f / (StackProgress.Children.Count + 1);
+            }
+            
 
         }
+
         private void openChat_Click(object sender, RoutedEventArgs e)
         {
+            if (!UserList.Get(u_ip).IsMobile)
+            {
+                if (UserList.xml[u_ip].UnreadMessages > 0)
+                    MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
+
+                TreeViewItem tvi = ((Parent as ListView).Parent as TreeViewItem);
+
+
+
+                if (tvi.Background != MainWindow.restoreImage)
+                {
+                    int temp = 0;
+                    foreach (var ip in UserList.UserOfGroup[UserList.GroupList[u_ip]])
+                    {
+                        if (UserList.xml[ip].UnreadMessages != 0)
+                        {
+                            temp++;
+                            break;
+                        }
+                    }
+                    if (temp == 0)
+                    {
+                        (tvi.Header as Grid).Background = MainWindow.restoreImage;
+                    }
+                }
+            }
+         
             Window w = new Window();
             Conversation conver =  new Conversation(u_ip) { udp = MainWindow.udp };
             if (UserList.conversation.ContainsKey(u_ip))
@@ -148,32 +212,7 @@ namespace SEN_project_v2
           
             
             this.openChat.Content = UserList.xml[u_ip].UnreadMessages;
-            if (!UserList.Get(u_ip).IsMobile)
-            {
-                if (UserList.xml[u_ip].UnreadMessages > 0)
-                    MainWindow.udp.SendMessageTo(UDP.RMessage, u_ip);
-               
-                TreeViewItem tvi = ((Parent as ListView).Parent as TreeViewItem);
-
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                if (tvi.Background != MainWindow.restoreImage)
-                {
-                    int temp = 0;
-                    foreach (var ip in UserList.UserOfGroup[UserList.GroupList[u_ip]])
-                    {
-                        if (UserList.xml[ip].UnreadMessages != 0)
-                        {
-                            temp++;
-                            break;
-                        }
-                    }
-                    if (temp == 0)
-                    {
-                        (tvi.Header as Grid).Background = MainWindow.restoreImage;
-                    }
-                }
-            }
+      
             UserList.xml[u_ip].UnreadMessages = 0;
         }
 
@@ -181,6 +220,11 @@ namespace SEN_project_v2
         {
             Sharing sharing = new Sharing(u_ip);
             sharing.Show();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
    

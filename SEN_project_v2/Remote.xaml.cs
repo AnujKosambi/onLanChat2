@@ -13,12 +13,14 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+
 namespace SEN_project_v2
 {
     /// <summary>
     /// Interaction logic for Remote.xaml
     /// </summary>
     public partial class Remote : Window
+
     {
         public RTPClient rtpClient;
         public System.Windows.Forms.Timer timer;
@@ -26,6 +28,7 @@ namespace SEN_project_v2
         private ScreenCapture sc;
         public static int MouseFlag=1;
         public static int oldMouseFlag = 1;
+        public static int oldKeyFlag = 0;
         public static User32.POINT mousePos;
         private UDP udp = MainWindow.udp;
         private static IPAddress  remoteIP;
@@ -34,6 +37,8 @@ namespace SEN_project_v2
         public  List<KeyStatus> waiting;
         public MainWindow mainWindow;
         public bool change = false;
+        public static bool IsClient = false;
+        public static bool CanSend = true;
         public struct KeyStatus
         {
           public  Keys code;
@@ -54,7 +59,7 @@ namespace SEN_project_v2
             sc = new ScreenCapture();
             timer = new System.Windows.Forms.Timer();
             mousekeyTimer = new System.Windows.Forms.Timer();
-            timer.Interval = 100;
+            timer.Interval = 10;
             timer.Tick += timer_Tick;
             mousekeyTimer.Interval = 10;
             mousekeyTimer.Tick += mousekeyTimer_Tick;
@@ -76,28 +81,36 @@ namespace SEN_project_v2
         void mousekeyTimer_Tick(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(MouseFlag);
-            if((MouseFlag&1)==1)
-                if(oldMouseFlag!=MouseFlag)
+            if (change)
+            {
+                if (MouseFlag == 1)
+                    // if(oldMouseFlag!=MouseFlag)
                     User32.mouse_event(0x00000002, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
 
-            if ((MouseFlag & 1)==0)
-                if ((oldMouseFlag & 1)==1)
+                if (MouseFlag == 2)
+                    //if ((oldMouseFlag & 1)==1)
                     User32.mouse_event(0x00000004, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
-         
-            if ((MouseFlag & 2) == 2)
-                if (oldMouseFlag != MouseFlag)
+
+                if (MouseFlag == 4)
+                    //if (oldMouseFlag != MouseFlag)
                     User32.mouse_event(0x0008, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
 
-            if ((MouseFlag & 2) == 0)
-                if ((oldMouseFlag & 2) == 2)
+                if (MouseFlag == 5)
+                    // if ((oldMouseFlag & 2) == 2)
                     User32.mouse_event(0x0010, (uint)mousePos.X, (uint)mousePos.Y, 0, UIntPtr.Zero);
-            if(change)
-            User32.SetCursorPos(mousePos.X, mousePos.Y);
+
+                User32.SetCursorPos(mousePos.X-5, mousePos.Y-10);
+            }
             oldMouseFlag = MouseFlag;
+
             while(waiting.Count>0)
+            
             {   KeyStatus ks= waiting.First();
-                 User32.keybd_event((Byte)ks.code, (Byte)0x45, ks.Flag, 0);
-                 waiting.Remove(waiting.First());
+
+       //     System.Diagnostics.Debug.WriteLine(ks.code + " " + ks.Flag);
+                User32.keybd_event((Byte)ks.code,0, ks.Flag==0?1:0x1|0x2, 0);
+            //   User32.keybd_event((Byte)ks.code, (Byte)0x45, 0x0, 0);
+                 waiting.Remove(ks);
             }
             change = false;
         }
@@ -109,7 +122,7 @@ namespace SEN_project_v2
             
         }
         public void Start()
-        {
+        {   
             udp.SendMessageTo(UDP.Remote, remoteIP);
             HookMouse.Start();
             HookKeyboard.Start();
@@ -118,8 +131,9 @@ namespace SEN_project_v2
         {
             timer.Start();
             mousekeyTimer.Start();
-            HookMouse.Stop();
+           HookMouse.Stop();
             HookKeyboard.Stop();
+            IsClient = true;
         }
         public void StopSending()
         {
@@ -167,11 +181,23 @@ namespace SEN_project_v2
         private void Screen_MouseMove(object sender, MouseEventArgs e)
         {
            UpdateMouseData();
+            if(mousePos.X<100 & mousePos.Y<100)
+            {
+                StartButton.Visibility = Visibility.Visible;
+                Exit.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                StartButton.Visibility = Visibility.Hidden;
+                Exit.Visibility = Visibility.Hidden;
+            }
+
         }
         private void UpdateMouseData()
         {
             User32.GetCursorPos(out mousePos);
-         // udp.SendMessageTo(UDP.Mouse + MouseFlag + UDP.Breaker + mousePos.X + UDP.Breaker + mousePos.Y, remoteIP);
+         
 
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -184,8 +210,10 @@ namespace SEN_project_v2
                 timer.Stop();
             if (rtpClient != null)
                 rtpClient.Dispose();
-            HookKeyboard.Stop();
+           HookKeyboard.Stop();
             HookMouse.Stop();
+           udp.SendMessageTo(UDP.EndRemote, remoteIP);
+   //         IsClient = true;
         }
 
     class HookMouse{
@@ -217,32 +245,32 @@ namespace SEN_project_v2
         if (nCode >= 0)
        {
             MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-
+            
             if ((wParam.ToInt32() & 0xF) == 1)
             {
-                MouseFlag |= 1;
+                MouseFlag= 1;
             }
             else if ((wParam.ToInt32() & 0xF) == 2)
             {
-               MouseFlag &=~1;
+               MouseFlag=2;
             }
             else if ((wParam.ToInt32() & 0xF) == 4)
             {
-                MouseFlag |= 2;
+                MouseFlag =4;
             }
             else if ((wParam.ToInt32() & 0xF) == 5)
             {
-                MouseFlag &= ~2;
+                MouseFlag =5;
             }
             else if ((wParam.ToInt32() & 0xF) == 0)
             {
                 MouseFlag =0;
             }
-
+            if (CanSend)
             MainWindow.udp.SendMessageTo(UDP.Mouse + MouseFlag + UDP.Breaker +(mousePos.X-Location.X) + UDP.Breaker + (mousePos.Y-Location.Y), remoteIP);
-            
+    //        System.Diagnostics.Debug.WriteLine(Convert.ToString(wParam.ToInt32(), 16) + " " + hookStruct.flags + " " + mousePos.X + " " + mousePos.Y);
           }
-        System.Diagnostics.Debug.WriteLine(Convert.ToString(wParam.ToInt32(), 16) + " " + mousePos.X + " " + mousePos.Y);
+        
         return CallNextHookEx(_hookID, nCode, wParam, lParam);
        }
           private const int WH_MOUSE_LL = 14;
@@ -325,7 +353,9 @@ namespace SEN_project_v2
             if (nCode >= 0)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
+                if(CanSend)
                 MainWindow.udp.SendMessageTo(UDP.Keyboard + vkCode + UDP.Breaker + (Byte)wParam,remoteIP);
+              //  System.Diagnostics.Debug.WriteLine(vkCode + " " + wParam);
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
@@ -455,6 +485,31 @@ namespace SEN_project_v2
         
         verticalOffset =(int) e.VerticalOffset;
     }
+
+    private void StartButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (StartButton.Content.Equals("Stop"))
+        {
+            StartButton.Content = "Start";
+            CanSend = false;
+            Screen.Cursor = Cursors.Arrow;
+        }
+        else if (StartButton.Content.Equals("Start"))
+        {
+            StartButton.Content = "Stop";
+            CanSend = true;
+            Screen.Cursor = Cursors.None;
+        }
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        
+        this.Close();
+    }
+
+
+
 
 
 

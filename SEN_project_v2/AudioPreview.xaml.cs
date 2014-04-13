@@ -81,6 +81,7 @@ namespace SEN_project_v2
             InitializeComponent();
             SetVisibility(mode);
             _Mode = mode;
+           
         }
         public AudioPreview(Mode mode, System.Net.IPAddress hostIP, Boolean isRemote)
         {

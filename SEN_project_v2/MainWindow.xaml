@@ -174,7 +174,7 @@
                                         <GradientStop Color="#7FFFF2F2" Offset="1"/>
                                     </LinearGradientBrush>
                                 </ListView.Background>
-
+                               
                             </ListView>
                         </Expander>
                     </StackPanel>

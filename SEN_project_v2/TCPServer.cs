@@ -41,6 +41,7 @@ namespace SEN_project_v2
                     Clients.Add(client);
                     Thread thread = new Thread((ThreadStart)delegate { tcpReceving_proc(client); });
                     thread.Priority = ThreadPriority.AboveNormal;
+                    thread.ApartmentState = ApartmentState.STA;
                    
                     Threads.Add(thread);
                     thread.Start();
@@ -102,7 +103,7 @@ namespace SEN_project_v2
                         view = UserList.Get(ip).userView;
                         view.Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            view.AddProgressBar(readStream);
+                            view.AddProgressBar(readStream,filename);
                         }));
 
                         //Thread.Sleep(1000);
@@ -124,11 +125,12 @@ namespace SEN_project_v2
                             progress.Visibility = System.Windows.Visibility.Visible;
                             progress.Maximum = numberOfBytes / (1024 * 8);
                         }));
-                        Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
+                        System.Windows.Forms.SaveFileDialog saveFile = new System.Windows.Forms.SaveFileDialog();
+                        saveFile.RestoreDirectory = true;
                         saveFile.Filter = "("+filename.Split('.').Last()+") Files|*." + filename.Split('.').Last() + "";
                         saveFile.Title = filename;
                         saveFile.FileName = filename;
-                        if (saveFile.ShowDialog().Value == true)
+                        if (saveFile.ShowDialog()==System.Windows.Forms.DialogResult.OK)
                         {
 
                             FileName = saveFile.FileName;
@@ -141,12 +143,15 @@ namespace SEN_project_v2
                             progress.Dispatcher.BeginInvoke((Action)(() =>
                             {
                                 progress.Visibility = System.Windows.Visibility.Hidden;
+                                view.RemoveProgressBar(readStream);
+
                             }));
                             break;
                         }
                     }
                     else if(Flag==1)
                     {
+           
                         FileName = AppDomain.CurrentDomain.BaseDirectory + ip.ToString().Replace('.', '\\') + "\\" +(UserList.xml[ip].CountMessages-1)+"."+
                             string.Join(".",filename.Split('.').Skip(1).ToArray());
                     }

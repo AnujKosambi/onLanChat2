@@ -46,7 +46,10 @@ namespace SEN_project_v2
             Start = false;
             Brush backup = this.Background;
             this.Background = System.Windows.Media.Brushes.Transparent;
-            BitmapSource bs = CreateBitmapSourceFromBitmap(sc.GetRectBitmapBytes((int)rect.Margin.Left, (int)rect.Margin.Top, (int)rect.Width, (int)rect.Height));
+            try
+            {
+                BitmapSource bs = CreateBitmapSourceFromBitmap(sc.GetRectBitmapBytes((int)rect.Margin.Left, (int)rect.Margin.Top, (int)rect.Width, (int)rect.Height));
+           
             MessageBoxResult result= MessageBox.Show("", "Confirm Area", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
@@ -59,6 +62,11 @@ namespace SEN_project_v2
                 rect.Height = 0;
                 rect.Visibility = Visibility.Hidden;
                 this.Background = backup;
+            }
+            }
+            catch (ArgumentException ex)
+            {
+                //MessageBox.Show("Please Select Vaild Area");
             }
    
 

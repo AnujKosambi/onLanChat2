@@ -1,7 +1,7 @@
-﻿#define UDP
-#if UDP
-#define UDPConnection
-#endif
+﻿//#define UDP
+//#if UDP
+//#define UDPConnection
+//#endif
 //#define Fake
 ///<Debug>
 ///(1) For Debuging UDP sending/reciving data  verbose ... Define UDP
@@ -62,7 +62,7 @@ namespace SEN_project_v2
         public const string RSendDir = "<#RSendDir#>";
         public const string MakeFolder = "<#MakeFolder#>";
         public const string UpdatePic = "<#UpdatePic#>";
-        
+        public const string RemoteDecline = "<#RemoteDecline#>";
         public const string EndRemote = "<XEndX>";
         public const string Mouse = "<#M#>";
         public const string Keyboard = "<#K#>";
@@ -119,13 +119,19 @@ namespace SEN_project_v2
         public void SendMessageTo(Byte[] value, IPAddress ip, String category)
         {
             // Connects to the client ip and sends the message
-
-            sendingClient.Connect(new IPEndPoint(ip, port));
-            //            System.Diagnostics.Debug.WriteLine("\nvalue---" + System.Text.Encoding.Default.GetString(value));
-            sendingClient.Send(value.Concat(Encoding.ASCII.GetBytes(Breaker + category)).ToArray(), value.Length + Breaker.Length + category.Length);
+            try
+            {
+                sendingClient.Connect(new IPEndPoint(ip, port));
+                //            System.Diagnostics.Debug.WriteLine("\nvalue---" + System.Text.Encoding.Default.GetString(value));
+                sendingClient.Send(value.Concat(Encoding.ASCII.GetBytes(Breaker + category)).ToArray(), value.Length + Breaker.Length + category.Length);
 #if UDP
             System.Diagnostics.Debug.WriteLine("\nUDP:||-----Sending:" + System.Text.Encoding.Default.GetString(value) + " to " + ip.ToString() + "------");
 #endif
+            }
+            catch(SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
         }
         public void SendMessageTo(Byte[] value, IPAddress ip)
         {
@@ -384,9 +390,40 @@ namespace SEN_project_v2
                 }
                 else if (stringData.StartsWith(EndRemote))
                 {
-                    window.remote.StopSending();
+                 //   window.remote.StopSending();
 
+                    if(window.remote!=null)
+                    {
+                        window.remote.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                           window.remote.StopSending();
+                          
+                           window.Remote.Content = "Remote";
+                           window.remote.Close();
+                        }));
+                    }
+                    if (window.remoteWin != null)
+                    {
+                        window.remoteWin.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            window.remoteWin.Close();
+                        }));
+                    }
                 }
+                else if(stringData.StartsWith(RemoteDecline))
+                {
+                    if (window.remote != null)
+                    {
+                        window.remote.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            //window.remote.StopSending();
+
+                          //  window.Remote.Content = "Remote";
+                            window.remote.Close();
+                        }));
+                    }
+                }
+
                 #endregion
 
                 #region Message
@@ -513,7 +550,7 @@ namespace SEN_project_v2
                         }else
                         {
                             PngBitmapEncoder encoder = new PngBitmapEncoder();
-                            BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/Images/user-icon.png", UriKind.Absolute));
+                            BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/Images/user-icon.png", UriKind.Absolute)).Clone();
                             encoder.Frames.Add(BitmapFrame.Create(image));
                             using (System.IO.FileStream stream = System.IO.File.Create(picpath))
                             {
@@ -524,7 +561,7 @@ namespace SEN_project_v2
                         
                         }
                     }
-                    
+
                    MainWindow.tcp.SendFile(picpath, recevied.Address, 2);
                 }
             }
@@ -660,7 +697,11 @@ namespace SEN_project_v2
                 {
                     return;
                 }
-              
+
+
+                UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0].Substring(0, splits[0].IndexOf(Breaker)), cate);
+             
+                    
 
                     try
                     {
@@ -676,14 +717,13 @@ namespace SEN_project_v2
 
                     }
 
-                         UserList.xml[recevied.Address].addMessage(DateTime.Now, splits[0].Substring(0, splits[0].IndexOf(Breaker)), cate);
-                        UserView uv = UserList.Get(recevied.Address).userView;
-                        uv.Dispatcher.BeginInvoke((Action)(() =>
-                        {
-                            uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
-                        }));
-                    
-                
+
+                    UserView uv = UserList.Get(recevied.Address).userView;
+                    uv.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        uv.openChat.Content = UserList.xml[recevied.Address].UnreadMessages;
+                    }));
+
             }
         }
         private void receviedRAudioCall(IPEndPoint recevied)

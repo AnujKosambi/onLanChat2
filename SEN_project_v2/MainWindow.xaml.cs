@@ -180,6 +180,7 @@ namespace SEN_project_v2
         {
             
             TreeViewItem node = new TreeViewItem();
+            node.IsTabStop = false;
             Dictionary<string, ListView> listViewDic;
             if(groups==Groups)
             {
@@ -195,7 +196,7 @@ namespace SEN_project_v2
             node.FontWeight = FontWeights.SemiBold;
             Style focus = new Style(typeof(TreeViewItem));
             focus.Setters.Add(new Setter(ForegroundProperty, System.Windows.Media.Brushes.DarkBlue));
-            
+            focus.Setters.Add(new Setter(IsTabStopProperty, "false"));
             //// Header
             node.FocusVisualStyle = focus;
             Grid g = new Grid();
@@ -596,7 +597,7 @@ namespace SEN_project_v2
             waiting.Show();
 
         }
-        private void Remote_Click(object sender, RoutedEventArgs e)
+        public void Remote_Click(object sender, RoutedEventArgs e)
         {
 
             if (Remote.Content.Equals("Stop Remote"))
@@ -612,15 +613,15 @@ namespace SEN_project_v2
                 
                 if (UserList.Selected.Count == 1)
                 {
-                    if (!MainWindow.hostIPS.Contains(UserList.Selected.First()))
+                    //if (!MainWindow.hostIPS.Contains(UserList.Selected.First()))
                     {
                         remote = new Remote(this, UserList.Selected.First());
                         remote.Show();
                         remote.Start();
                         Remote.IsEnabled = false;
                     }
-                    else
-                        MessageBox.Show("You can't remotly access you..!");
+                  //  else
+                   //     MessageBox.Show("You can't remotly access you..!");
                 }
                 else
                     MessageBox.Show("Select Excatly One User...");
@@ -687,7 +688,7 @@ namespace SEN_project_v2
             {
                 Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
                 dlg.Title = "Select Any Files";
-
+                dlg.RestoreDirectory = true;
                 dlg.Multiselect = true;
                 Nullable<bool> result = dlg.ShowDialog();
 
@@ -803,7 +804,7 @@ namespace SEN_project_v2
                 stream.Close();
                 
             }
-            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute)).Clone();
             replacementImage.Source = bitmapImage;
             replacementImage.Height = bitmapImage.Height;
             replacementImage.Width = bitmapImage.Width;

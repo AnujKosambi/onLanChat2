@@ -128,7 +128,7 @@ namespace SEN_project_v2
         void RtpStream_FrameReceived(object sender, RtpStream.FrameReceivedEventArgs ea)
         {
 
-            System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
+         //   System.Diagnostics.Debug.WriteLine(ea.RtpStream.Properties.CName+""+ea.RtpStream.Properties.Name);
           window.Dispatcher.Invoke((Action)(() => {
               if (image == null && vpList!=null)
               {

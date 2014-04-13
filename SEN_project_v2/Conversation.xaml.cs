@@ -103,6 +103,7 @@ namespace SEN_project_v2
         private void Draw()
         {
             UserList.xml[ip].UnreadMessages = 0;
+    
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 messages = client.fetchMessages();
@@ -165,7 +166,7 @@ namespace SEN_project_v2
                             if (uic.Child.GetType() == typeof(System.Windows.Controls.Image))
                             {
                                 replacementImage = (System.Windows.Controls.Image)uic.Child;
-                                setImages(files, ip, count, index, replacementImage);
+                                count=setImages(files, ip, count, index, replacementImage);
 
 
                             }
@@ -182,7 +183,7 @@ namespace SEN_project_v2
             MainWindow.tcp.SendFiles(files, ips, 1);
             return img_flowDocument;
         }
-        private void setImages(List<string> files, IPAddress ip, int count, int index, Image replacementImage)
+        private int setImages(List<string> files, IPAddress ip, int count, int index, Image replacementImage)
         {
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)replacementImage.Source));
@@ -190,7 +191,7 @@ namespace SEN_project_v2
             FileStream stream = new FileStream(Path, FileMode.Create);
             encoder.Save(stream);
             stream.Close();
-            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute));
+            BitmapImage bitmapImage = new BitmapImage(new Uri(Path, UriKind.Absolute)).Clone();
             replacementImage.Source = bitmapImage;
             replacementImage.Height = bitmapImage.Height;
             replacementImage.Width = bitmapImage.Width;
@@ -198,15 +199,32 @@ namespace SEN_project_v2
 
             files.Add(Path);
             count++;
-
+            return count;
         }
 
         private void DeleteAll_Click(object sender, RoutedEventArgs e)
         {
             messages = client.fetchMessages();
+            
             foreach (XMLClient.Message m in messages)
             {
                 UserList.xml[ip].deleteMessage(m);
+            }
+           
+            try
+            {
+                DirectoryInfo info = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "\\" + ip.ToString().Replace('.', '\\'));
+                foreach (FileInfo file in info.GetFiles())
+                {
+                    if (file.Name.Split('.').Last().Equals("jpg"))
+                    {
+                        File.Delete(file.FullName);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
             this.Redraw();
         }
@@ -218,7 +236,28 @@ namespace SEN_project_v2
 
         private void UpdatePic_Click(object sender, RoutedEventArgs e)
         {
-
+            ProfilePic.Source=new BitmapImage(new Uri(
+            "pack://application:,,,/Images/user-frame.png", 
+                UriKind.Absolute)).Clone() ;
+            bool check=true;
+            FileStream stream = null;
+            try
+            {
+                if(File.Exists(path))
+                stream = File.OpenRead(path);
+                check = false;
+            }
+            catch (IOException)
+            {
+              
+                check= true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            if (!check)
             udp.SendMessageTo(UDP.UpdatePic, ip);
 
 

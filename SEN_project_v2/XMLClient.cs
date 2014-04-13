@@ -19,8 +19,9 @@ namespace SEN_project_v2
         public XMLClient(IPAddress user)
         {
             this.ip = user;
-            this.nick = UserList.Get(user).nick;
-            this.groupName = UserList.Get(user).groupName;
+            User _user=UserList.Get(user);
+            this.nick = _user.nick;
+            this.groupName = _user.groupName;
             
             path =AppDomain.CurrentDomain.BaseDirectory + "\\" + user.ToString().Replace('.', '\\') + "\\Message.xml";
             xmlDoc = new XmlDocument();

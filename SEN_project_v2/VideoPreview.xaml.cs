@@ -78,6 +78,11 @@ namespace SEN_project_v2
             InitializeComponent();
             SetVisibility(mode);
             _Mode = mode;
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + hostIP.ToString().Replace('.', '\\') + "\\Pic.png";
+            if (System.IO.File.Exists(path))
+            {
+                prev.Source = new BitmapImage(new Uri(path, UriKind.Absolute)).Clone();
+            }
         }
         public VideoPreview(Mode mode, System.Net.IPAddress hostIP,Boolean isRemote)
         {
@@ -90,6 +95,11 @@ namespace SEN_project_v2
             InitializeComponent();
             SetVisibility(mode);
             _Mode = mode;
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + hostIP.ToString().Replace('.', '\\') + "\\Pic.png";
+            if (System.IO.File.Exists(path))
+            {
+                prev.Source = new BitmapImage(new Uri(path, UriKind.Absolute)).Clone();
+            }
         }
         public void SetVisibility(Mode mode)
         {
@@ -177,12 +187,14 @@ namespace SEN_project_v2
 
         }
 
+
         private void decline_Click(object sender, RoutedEventArgs e)
         {
             _Mode = Mode.InCall;
             if (isRemote)
             {
                 window.remoteWin.Close();
+                udp.SendMessageTo(UDP.RemoteDecline, hostIP);
             }
             else
             {
